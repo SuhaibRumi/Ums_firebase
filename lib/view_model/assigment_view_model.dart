@@ -1,46 +1,48 @@
-import 'package:uni_mangement_system/utils/db_helper.dart';
-import 'package:uni_mangement_system/view_model/semester_view_model.dart';
+import '../utils/db_helper.dart';
 
 class AssigmentViewModel {
-  int? assigmentid = 1;
-  String? assigmentdesc = '';
-  String? assigmentName = '';
+  int? assignmentid = 1;
+  String? assignmentdesc = '';
+  String? assignmentName = '';
 
   var dbhelper = DBHelper.instance;
 
   AssigmentViewModel({
-    this.assigmentName,
-    this.assigmentdesc,
-    this.assigmentid,
+    this.assignmentName,
+    this.assignmentdesc,
+    this.assignmentid,
   });
   factory AssigmentViewModel.fromMap(Map map) {
     return AssigmentViewModel(
-      assigmentName: map['assigmentName'],
-      assigmentdesc: map['assigmentdesc'],
-      assigmentid: map['assigmentid'],
+      assignmentName: map['assignmentName'],
+      assignmentdesc: map['assignmentdesc'],
+      assignmentid: map['assignmentid'],
     );
   }
   saveData() async {
     String query =
-        "Insert into Assigments (assigmentName,assigmentdesc) values ('$assigmentName','$assigmentdesc')";
-   await dbhelper.rawInsert(query: query);
+        "Insert into Assignments (assignmentName,assignmentdesc) values ('$assignmentName','$assignmentdesc')";
+    var id = await dbhelper.rawInsert(query: query);
   }
 
   updateData() async {
     String query =
-        "Update Assigments set assigmentName,assigmentdesc where id = '$assigmentid'";
-  await  dbhelper.rawUpdate(query: query);
+        "Update Assignments set assignmentName,assignmentdesc where assignmentid = '$assignmentid'";
+    var id = await dbhelper.rawUpdate(query: query);
   }
 
   deleteData() async {
-    String query = "delete from Assigments where id = '$assigmentid'";
-   await dbhelper.rawDelete(query: query);
+    String query =
+        "delete from Assigments where assignmentid = '$assignmentid'";
+    var id = await dbhelper.rawDelete(query: query);
   }
 
-  Future<List<SemesterViewModel>> getAssigments() async {
-    List<SemesterViewModel> semesters = [];
-    String query = "Select  assigmentName,assigmentdesc from Assigments";
-   await dbhelper.getDataByQuery(query: query);
-    return semesters;
+  Future<List<AssigmentViewModel>> getData() async {
+    List<AssigmentViewModel> assignment = [];
+    String query = "Select * from Assignments";
+    var data = await dbhelper.getDataByQuery(query: query);
+    print(data);
+    assignment = data.map((i) => AssigmentViewModel.fromMap(i)).toList();
+    return assignment;
   }
 }

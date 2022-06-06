@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../view/onboard_screen.dart';
+import 'package:uni_mangement_system/view/view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch()
             .copyWith(secondary: const Color(0xFF63CF93)),
       ),
-      home: const HomeViewPage(),
+      home: const ClassMangemnetScreen(),
     );
   }
 }

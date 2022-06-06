@@ -19,25 +19,25 @@ class SessionViewModel {
   }
   saveData() async {
     String query = "Insert into Session (sessionName) values('$sessionName')";
-   await dbHelper.rawInsert(query: query);
+    var id = await dbHelper.rawInsert(query: query);
   }
 
   updateData() async {
     String query =
-        "Update Session set className = '$sessionName' where id = '$sessionId'";
-   await dbHelper.rawUpdate(query: query);
+        "Update Session set className = '$sessionName' where sessionId = '$sessionId'";
+    var id = await dbHelper.rawUpdate(query: query);
   }
 
   deleteData() async {
-    String query = "delete from Session where id = '$sessionId'";
-    await dbHelper.rawDelete(query: query);
+    String query = "delete from Session where sessionId = '$sessionId'";
+    var id = await dbHelper.rawDelete(query: query);
   }
 
-  Future<List<SessionViewModel>> getClasses() async {
+  Future<List<SessionViewModel>> getData() async {
     List<SessionViewModel> sessions = [];
     String query = "Select className from Session";
-  await dbHelper.getDataByQuery(query: query);
-
+    var data = await dbHelper.getDataByQuery(query: query);
+    sessions = data.map((i) => SessionViewModel.fromMap(i)).toList();
     return sessions;
   }
 }

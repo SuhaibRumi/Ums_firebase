@@ -30,20 +30,20 @@ class DBHelper {
      ClassId Integer primary key autoincrement,
      className text
      );
-create Table Semester(
+  create Table Semester(
   semesterId Integer primary key autoincrement,
   semesterName text
 );
-create Table Session(
+  create Table Session(
   sessionId Integer primary key autoincrement,
   sessionName text
 );
-create Table Assigments(
-  assigmentId Integer primary key autoincrement,
-  assigmentName text,
-  assigmentdesc text
+  create Table Assignments(
+  assignmentId Integer primary key autoincrement,
+  assignmentName text,
+  assignmentdesc text
 );
-create Table Students(
+  create Table Students(
    studId Integer primary key autoincrement,
    assigmentId Integer,
    sessionId Integer,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/view/view.dart';
-import '../constants.dart';
+import '../utils/constants.dart';
 
 class HomeViewPage extends StatelessWidget {
   const HomeViewPage({Key? key}) : super(key: key);

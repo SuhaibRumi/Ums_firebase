@@ -13,31 +13,39 @@ class ClassViewModel {
 
   factory ClassViewModel.fromMap(Map map) {
     return ClassViewModel(
-      classId: map["classId"],
+      classId: map["ClassId"],
       className: map["className"],
     );
   }
 
   saveData() async {
-    String query = "Insert into Classes (className) values('$className')";
-  await dbHelper.rawInsert(query: query);
+    try {
+      String query = "Insert into Classes (className) values('$className')";
+      var id = await dbHelper.rawInsert(query: query);
+    } catch (e) {
+      print(e);
+    }
   }
 
   updateData() async {
     String query =
-        "Update Classes set className = '$className' where id = '$classId'";
-   await dbHelper.rawUpdate(query: query);
+        "Update Classes set className = '$className' where ClassId = '$classId'";
+    var id = await dbHelper.rawUpdate(query: query);
   }
 
   deleteData() async {
-    String query = "delete from Classes where id = '$classId'";
- await dbHelper.rawDelete(query: query);
+    print(classId);
+    String query = "delete from Classes where ClassId = '$classId'";
+    var id = await dbHelper.rawDelete(query: query);
+    print(id);
   }
 
-  Future<List<ClassViewModel>> getClasses() async {
+  Future<List<ClassViewModel>> getData() async {
     List<ClassViewModel> classes = [];
-    String query = "Select className from Classes";
-   await dbHelper.getDataByQuery(query: query);
+    String query = "Select * from Classes";
+    var data = await dbHelper.getDataByQuery(query: query);
+    print(data);
+    classes = data.map((i) => ClassViewModel.fromMap(i)).toList();
 
     return classes;
   }
