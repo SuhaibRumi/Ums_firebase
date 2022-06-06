@@ -26,16 +26,16 @@ class _SemesterScreenState extends State<SemesterScreen> {
       body: FutureBuilder(
           future: semesterViewModel.getSemester(),
           builder: (context, AsyncSnapshot<List<SemesterViewModel>> snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text("Something went wrong"),
-              );
-            }
+             if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(
+                        child: Text("No Class Data Found"),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Text("Something went Wrong"),
+                      );
+                    }
             return Padding(
               padding: const EdgeInsets.only(top: 18.0),
               child: Column(

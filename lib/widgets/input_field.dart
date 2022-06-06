@@ -22,7 +22,7 @@ class InputField extends StatelessWidget {
         style: const TextStyle(color: kTextColor),
         controller: controller,
         decoration: InputDecoration(
-          fillColor: Theme.of(context).primaryColor,
+          // fillColor: Theme.of(context).primaryColor,
           filled: true,
           border: InputBorder.none,
           labelText: lableText,

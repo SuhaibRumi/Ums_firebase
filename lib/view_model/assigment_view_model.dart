@@ -1,39 +1,40 @@
 import '../utils/db_helper.dart';
 
 class AssigmentViewModel {
-  int? assignmentid = 1;
-  String? assignmentdesc = '';
-  String? assignmentName = '';
+  int? assignmentId = 1;
+  String? assignmentDesc = "";
+  String? assignmentName = "";
 
   var dbhelper = DBHelper.instance;
 
   AssigmentViewModel({
     this.assignmentName,
-    this.assignmentdesc,
-    this.assignmentid,
+    this.assignmentDesc,
+    this.assignmentId,
   });
   factory AssigmentViewModel.fromMap(Map map) {
     return AssigmentViewModel(
       assignmentName: map['assignmentName'],
-      assignmentdesc: map['assignmentdesc'],
-      assignmentid: map['assignmentid'],
+      assignmentDesc: map['assignmentDesc'],
+      assignmentId: map['assignmentId'],
     );
   }
   saveData() async {
     String query =
-        "Insert into Assignments (assignmentName,assignmentdesc) values ('$assignmentName','$assignmentdesc')";
+        "Insert into Assignments (assignmentName,assignmentDesc) values ('$assignmentName','$assignmentDesc')";
     var id = await dbhelper.rawInsert(query: query);
+    print(id);
   }
 
   updateData() async {
     String query =
-        "Update Assignments set assignmentName,assignmentdesc where assignmentid = '$assignmentid'";
+        "Update Assignments set assignmentName,assignmentDesc = '$assignmentName','$assignmentId' where assignmentId = '$assignmentId'";
     var id = await dbhelper.rawUpdate(query: query);
   }
 
   deleteData() async {
     String query =
-        "delete from Assigments where assignmentid = '$assignmentid'";
+        "delete from Assigments where assignmentid = '$assignmentId'";
     var id = await dbhelper.rawDelete(query: query);
   }
 

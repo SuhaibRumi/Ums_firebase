@@ -34,19 +34,15 @@ class ClassViewModel {
   }
 
   deleteData() async {
-    print(classId);
     String query = "delete from Classes where ClassId = '$classId'";
     var id = await dbHelper.rawDelete(query: query);
-    print(id);
   }
 
   Future<List<ClassViewModel>> getData() async {
     List<ClassViewModel> classes = [];
     String query = "Select * from Classes";
     var data = await dbHelper.getDataByQuery(query: query);
-    print(data);
     classes = data.map((i) => ClassViewModel.fromMap(i)).toList();
-
     return classes;
   }
 }

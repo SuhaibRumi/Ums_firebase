@@ -40,20 +40,26 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
               const SizedBox(
                 height: 10,
               ),
-              MyButton(
-                  text: "Save Data",
-                  onPrseed: () {
-                    if (isUpdate == false) {
-                      _addData();
-                      _classController.clear();
-                    } else {
-                      _updateDta();
-                      _classController.clear();
-                    }
-                  },
-                  height: 20,
-                  width: 110,
-                  fontsize: 18),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  MyButton(
+                      text: "Save Data",
+                      onPrseed: () {
+                        if (isUpdate == false) {
+                          _addData();
+                          _classController.clear();
+                        } else {
+                          _updateDta();
+                          _classController.clear();
+                        }
+                      },
+                      
+                      height: 40,
+                      width: 110,
+                      fontsize: 14),
+                ],
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -77,7 +83,7 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                         scrollDirection: Axis.horizontal,
                         child: DataTable(
                             columns: const [
-                              DataColumn(label: Text("id")),
+                              DataColumn(label: Text("Class Id")),
                               DataColumn(label: Text("Class Name")),
                               DataColumn(label: Text("Edit")),
                               DataColumn(label: Text("Delete")),
@@ -106,8 +112,7 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                                     setState(() {
                                       classId = row.classId;
                                     });
-                                    // var yes = await _showAlert();
-                                   
+                                    _deleteDta();
                                   },
                                   icon: const Icon(Icons.delete),
                                   splashRadius: 20,
@@ -116,8 +121,7 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                             }).toList()),
                       ),
                     );
-                  }
-                  ),
+                  }),
             ],
           )),
     );
@@ -156,7 +160,7 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                     Navigator.pop(bc, true);
 
                     setState(() {
-                      _deleteDta();
+                      // _deleteDta();
                     });
                   },
                   child: const Text("Yes")),

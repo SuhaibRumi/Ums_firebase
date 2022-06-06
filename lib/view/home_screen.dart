@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
-import 'package:uni_mangement_system/view/assignment_screen.dart';
 import 'package:uni_mangement_system/widgets/header.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -37,10 +36,8 @@ class HomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-            
             ),
-          ),
-         
+          )
         ],
       ),
     );

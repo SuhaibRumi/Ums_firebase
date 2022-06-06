@@ -25,16 +25,16 @@ class _SessionScreenState extends State<SessionScreen> {
       body: FutureBuilder(
           future: sessionViewModel.getData(),
           builder: (context, AsyncSnapshot<List<SessionViewModel>> snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text("Something went wrong"),
-              );
-            }
+             if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(
+                        child: Text("No Class Data Found"),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Text("Something went Wrong"),
+                      );
+                    }
             return Column(
               children: [
                 InputField(
