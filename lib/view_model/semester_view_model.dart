@@ -32,11 +32,11 @@ class SemesterViewModel {
     var id = await dbHelper.rawDelete(query: query);
   }
 
-  Future<List<SemesterViewModel>> getSemester() async {
+  Future<List<SemesterViewModel>> getdata() async {
     List<SemesterViewModel> semesters = [];
-    String query = "Select semesterName from Semester";
+    String query = "Select * from Semester";
     var data = await dbHelper.getDataByQuery(query: query);
-    print(data);
+
     semesters = data.map((i) => SemesterViewModel.fromMap(i)).toList();
     return semesters;
   }

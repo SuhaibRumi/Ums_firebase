@@ -24,7 +24,7 @@ class SessionViewModel {
 
   updateData() async {
     String query =
-        "Update Session set className = '$sessionName' where sessionId = '$sessionId'";
+        "Update Session set sessionName = '$sessionName' where sessionId = '$sessionId'";
     var id = await dbHelper.rawUpdate(query: query);
   }
 
@@ -35,7 +35,7 @@ class SessionViewModel {
 
   Future<List<SessionViewModel>> getData() async {
     List<SessionViewModel> sessions = [];
-    String query = "Select className from Session";
+    String query = "Select * from Session";
     var data = await dbHelper.getDataByQuery(query: query);
     sessions = data.map((i) => SessionViewModel.fromMap(i)).toList();
     return sessions;

@@ -26,28 +26,16 @@ class DBHelper {
 
   FutureOr<void> _onCreateDB(Database db, int version) async {
     await db.execute('''
-     create Table Classes(
-     ClassId Integer primary key autoincrement,
+     create Table `Classes`(
+     classId Integer primary key autoincrement,
      className text
      );
-  create Table Semester(
-  semesterId Integer primary key autoincrement,
-  semesterName text
-);
-  create Table Session(
-  sessionId Integer primary key autoincrement,
-  sessionName text
-);
-  create Table Assignments(
-  assignmentId Integer primary key autoincrement,
-  assignmentName text,
-  assignmentdesc text
-);
-  create Table Students(
+     
+ 
+  create Table `Students`(
    studId Integer primary key autoincrement,
-   assigmentId Integer,
    sessionId Integer,
-   ClassId Integer,
+   classId Integer,
    studRoll Integer primary key,
    sessionId Integer, 
    studName text,
@@ -56,11 +44,33 @@ class DBHelper {
 );
 
 ''');
+
+    await db.execute('''
+    create Table `Semester`(
+      semesterId Integer primary key autoincrement,
+      semesterName text
+     );
+    ''');
+
+    await db.execute('''
+      create Table `Session`(
+      sessionId Integer primary key autoincrement,
+      sessionName text
+    );
+      ''');
+    await db.execute('''
+  create Table `Assignments`(
+  assignmentId Integer primary key autoincrement,
+  assignmentName text,
+  assignmentDesc text
+);
+''');
   }
 
   rawInsert({required String query}) async {
     Database database = await instance.db;
     int id = await database.rawInsert(query);
+
     return id;
   }
 
@@ -80,6 +90,7 @@ class DBHelper {
       {required String query}) async {
     Database database = await instance.db;
     var res = await database.rawQuery(query);
+    print(res);
     return res;
   }
 }

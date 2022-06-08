@@ -13,28 +13,24 @@ class ClassViewModel {
 
   factory ClassViewModel.fromMap(Map map) {
     return ClassViewModel(
-      classId: map["ClassId"],
+      classId: map["classId"],
       className: map["className"],
     );
   }
 
   saveData() async {
-    try {
-      String query = "Insert into Classes (className) values('$className')";
-      var id = await dbHelper.rawInsert(query: query);
-    } catch (e) {
-      print(e);
-    }
+    String query = "Insert into Classes (className) values('$className')";
+    var id = await dbHelper.rawInsert(query: query);
   }
 
   updateData() async {
     String query =
-        "Update Classes set className = '$className' where ClassId = '$classId'";
+        "Update Classes set className = '$className' where classId = '$classId'";
     var id = await dbHelper.rawUpdate(query: query);
   }
 
   deleteData() async {
-    String query = "delete from Classes where ClassId = '$classId'";
+    String query = "delete from Classes where classId = '$classId'";
     var id = await dbHelper.rawDelete(query: query);
   }
 

@@ -23,18 +23,17 @@ class AssigmentViewModel {
     String query =
         "Insert into Assignments (assignmentName,assignmentDesc) values ('$assignmentName','$assignmentDesc')";
     var id = await dbhelper.rawInsert(query: query);
-    print(id);
   }
 
   updateData() async {
     String query =
-        "Update Assignments set assignmentName,assignmentDesc = '$assignmentName','$assignmentId' where assignmentId = '$assignmentId'";
+        "Update Assignments set assignmentName  = '$assignmentName'assignmentDesc = '$assignmentDesc' where assignmentId = '$assignmentId'";
     var id = await dbhelper.rawUpdate(query: query);
   }
 
   deleteData() async {
     String query =
-        "delete from Assigments where assignmentid = '$assignmentId'";
+        "delete from Assignments where assignmentId = '$assignmentId'";
     var id = await dbhelper.rawDelete(query: query);
   }
 
@@ -42,7 +41,6 @@ class AssigmentViewModel {
     List<AssigmentViewModel> assignment = [];
     String query = "Select * from Assignments";
     var data = await dbhelper.getDataByQuery(query: query);
-    print(data);
     assignment = data.map((i) => AssigmentViewModel.fromMap(i)).toList();
     return assignment;
   }

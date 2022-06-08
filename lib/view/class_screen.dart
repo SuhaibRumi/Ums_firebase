@@ -34,34 +34,28 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                 icon: const Icon(
                   Icons.person,
                   size: 30,
-                  color: Colors.white,
+                  color: Colors.grey,
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  MyButton(
-                      text: "Save Data",
-                      onPrseed: () {
-                        if (isUpdate == false) {
-                          _addData();
-                          _classController.clear();
-                        } else {
-                          _updateDta();
-                          _classController.clear();
-                        }
-                      },
-                      
-                      height: 40,
-                      width: 110,
-                      fontsize: 14),
-                ],
-              ),
+              MyButton(
+                  text: "Save Data",
+                  onPrseed: () {
+                    if (isUpdate == false) {
+                      _addData();
+                      _classController.clear();
+                    } else {
+                      _updateDta();
+                      _classController.clear();
+                    }
+                  },
+                  height: 40,
+                  width: 110,
+                  fontsize: 14),
               const SizedBox(
-                height: 10,
+                height: 50,
               ),
               FutureBuilder(
                   future: classViewModel.getData(),
@@ -108,11 +102,11 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                                   splashRadius: 20,
                                 )),
                                 DataCell(IconButton(
-                                  onPressed: () async {
+                                  onPressed: () {
                                     setState(() {
                                       classId = row.classId;
                                     });
-                                    _deleteDta();
+                                    _deleteData();
                                   },
                                   icon: const Icon(Icons.delete),
                                   splashRadius: 20,
@@ -142,7 +136,7 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
     });
   }
 
-  _deleteDta() {
+  _deleteData() {
     classViewModel = ClassViewModel(classId: classId);
     classViewModel.deleteData();
   }

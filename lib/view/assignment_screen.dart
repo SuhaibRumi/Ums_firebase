@@ -11,15 +11,15 @@ class AssignmentScreen extends StatefulWidget {
 }
 
 class _AssignmentScreenState extends State<AssignmentScreen> {
-  final _assigmentController = TextEditingController();
+  final _assigmentNameController = TextEditingController();
   final _assigmentDescController = TextEditingController();
   var assignmentViewModel = AssigmentViewModel();
-  int? assignmetId;
+  int? asignmentId;
   bool isUpdate = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text("Assignemnet Mangement"),
@@ -32,11 +32,9 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
               lableText: "Assignments Name",
               hintText: "Enter your assignment",
               icon: const Icon(Icons.library_books_rounded),
-              controller: _assigmentController,
+              controller: _assigmentNameController,
             ),
-            const SizedBox(
-              height: 12,
-            ),
+            const Divider(),
             InputField(
               lableText: "Description",
               hintText: "",
@@ -51,10 +49,12 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                 onPrseed: () {
                   if (isUpdate == false) {
                     _addData();
-                    _assigmentController.clear();
+                    _assigmentNameController.clear();
+                    _assigmentDescController.clear();
                   } else {
                     _updateDta();
-                    _assigmentController.clear();
+                    _assigmentNameController.clear();
+                    _assigmentDescController.clear();
                   }
                 },
                 height: 40,
@@ -104,10 +104,13 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                             DataCell(IconButton(
                               onPressed: () {
                                 setState(() {
-                                  assignmetId = row.assignmentId;
+                                  asignmentId = row.assignmentId;
                                   isUpdate = true;
                                 });
-                                _assigmentController.text = row.assignmentName!;
+                                _assigmentNameController.text =
+                                    row.assignmentName!;
+                                _assigmentDescController.text =
+                                    row.assignmentDesc!;
                               },
                               icon: const Icon(Icons.edit),
                               splashRadius: 20,
@@ -115,7 +118,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                             DataCell(IconButton(
                               onPressed: () async {
                                 setState(() {
-                                  assignmetId = row.assignmentId;
+                                  asignmentId = row.assignmentId;
                                 });
                                 _deleteDta();
                               },
@@ -136,7 +139,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
 
   _addData() {
     assignmentViewModel = AssigmentViewModel(
-        assignmentName: _assigmentController.text,
+        assignmentName: _assigmentNameController.text,
         assignmentDesc: _assigmentDescController.text);
     assignmentViewModel.saveData();
     setState(() {});
@@ -144,14 +147,17 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
 
   _updateDta() {
     assignmentViewModel = AssigmentViewModel(
-        assignmentId: assignmetId,
-        assignmentName: _assigmentController.text,
+        assignmentId: asignmentId,
+        assignmentName: _assigmentNameController.text,
         assignmentDesc: _assigmentDescController.text);
     assignmentViewModel.updateData();
+    setState(() {
+      isUpdate = false;
+    });
   }
 
   _deleteDta() {
-    assignmentViewModel = AssigmentViewModel(assignmentId: assignmetId);
+    assignmentViewModel = AssigmentViewModel(assignmentId: asignmentId);
     assignmentViewModel.deleteData();
   }
 }

@@ -19,7 +19,7 @@ class MyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Theme.of(context).colorScheme.secondary,
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(4),
       child: InkWell(
         onTap: onPrseed,
         child: AnimatedContainer(

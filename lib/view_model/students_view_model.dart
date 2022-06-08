@@ -1,51 +1,56 @@
 import '../utils/db_helper.dart';
 
 class StudentsViewModel {
-  int? studId = 1;
+  int? studId;
   String? studName = '';
   String? studRoll = '';
-  String? studSession = '';
-  String? className = '';
-  String? sessionName = '';
-  String? semesterName = '';
+  String? studClassName = '';
+  int? classId;
+  int? semesterId;
+  int? sessionId;
+  String? studSessionName = '';
+  String? studSemesterName = '';
   bool? isActive = true;
 
   var dbhelper = DBHelper.instance;
+  StudentsViewModel({
+    this.studId,
+    this.studName,
+    this.studRoll,
+    this.studClassName,
+    this.studSessionName,
+    this.studSemesterName,
+    this.classId,
+    this.semesterId,
+    this.sessionId,
+    this.isActive,
+  });
 
-  StudentsViewModel(
-      {this.studId,
-      this.studName,
-      this.studRoll,
-      this.isActive,
-      this.studSession,
-      this.semesterName,
-      this.className,
-      this.sessionName});
   factory StudentsViewModel.fromMap(Map map) {
     return StudentsViewModel(
         studId: map['studId'],
         studName: map['studName'],
         studRoll: map['studRoll'],
-        studSession: map['studSession'],
-        className: map['className'],
-        semesterName: map['semesterName'],
-        sessionName: map['sessionName'],
+        studSessionName: map['studSessionName'],
+        studClassName: map['studClassName'],
+        studSemesterName: map['studSemesterName'],
         isActive: map['isActive']);
   }
   saveData() async {
     String query =
-        "insert into Students (studName,studRoll,studSession,isActive,className,semesterName,sessionName) values ('$studName','$studRoll','$studSession','$isActive','$semesterName','$sessionName','$className')";
+        "insert into Students (studName,studRoll,isActive,classId,semesterId,sessionId) values ('$studName','$studRoll','$isActive',)";
     var id = await dbhelper.rawInsert(query: query);
   }
 
   updateData() async {
     String query =
-        "Update Students set studName,studRoll,studSession,isActive,className,semesterName,sessionName = '$studName','$studRoll','$studSession','$semesterName','$className','$isActive' = where studId = '$studId'";
+        "Update Students set studName = '$studName', studRoll ='$studRoll',isActive ='$isActive' where studId = '$studId'";
     var id = await dbhelper.rawUpdate(query: query);
   }
 
   deletData() async {
-    String query = "delete from Students where studId  = '$studId'";
+    String query =
+        "delete from Students where studId  = '$studId'";
     var id = await dbhelper.rawDelete(query: query);
   }
 

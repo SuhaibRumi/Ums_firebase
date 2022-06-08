@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:uni_mangement_system/view/view.dart';
+import 'package:uni_mangement_system/view/class_screen.dart';
+import 'package:uni_mangement_system/view/student_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,12 +20,12 @@ class MyApp extends StatelessWidget {
       title: 'University Mangement System',
       theme: ThemeData(
         primaryColor: const Color(0xFF202328),
-        backgroundColor: const Color(0xFF12171D),
+        backgroundColor: const Color.fromARGB(255, 236, 236, 237),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         colorScheme: ColorScheme.fromSwatch()
             .copyWith(secondary: const Color(0xFF63CF93)),
       ),
-      home: const AssignmentScreen(),
+      home: const StudentScreen(),
     );
   }
 }
