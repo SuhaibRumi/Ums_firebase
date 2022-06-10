@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uni_mangement_system/utils/constants.dart';
 import '../view_model/session_view_model.dart';
 import '../widgets/widget.dart';
 
@@ -17,7 +18,6 @@ class _SessionScreenState extends State<SessionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           title: const Text("Session Mangement"),
@@ -26,22 +26,41 @@ class _SessionScreenState extends State<SessionScreen> {
           padding: const EdgeInsets.all(12),
           child: Column(
             children: [
-              InputField(
-                lableText: "Session Name",
-                hintText: "Enter your session",
-                icon: const Icon(Icons.library_books_rounded),
-                controller: _sessionController,
+              Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  elevation: 4,
+                  shadowColor: Colors.grey[500],
+                  child: Column(
+                    children: [
+                      InputField(
+                        lableText: "Session Name",
+                        hintText: "Enter your session",
+                        icon: const Icon(
+                          Icons.library_books_rounded,
+                          color: kSecondary,
+                        ),
+                        controller: _sessionController,
+                      ),
+                    ],
+                  ),
+                ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               MyButton(
                   text: "Save Data",
                   onPrseed: () {
                     if (isUpdate) {
                       _updateDta();
+                      _sessionController.clear();
                     } else {
                       _addData();
+                      _sessionController.clear();
                     }
                   },
                   height: 40,

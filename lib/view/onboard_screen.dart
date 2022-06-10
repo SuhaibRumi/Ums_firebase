@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/view/view.dart';
 import '../utils/constants.dart';
 
-class HomeViewPage extends StatelessWidget {
-  const HomeViewPage({Key? key}) : super(key: key);
+class OnBoardScreen extends StatelessWidget {
+  const OnBoardScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: kCardColor,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(
@@ -25,24 +25,28 @@ class HomeViewPage extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 200.0,
+              top: 160.0,
               left: 100.0,
               right: 100.0,
               child: Column(
                 children: <Widget>[
                   Image.asset(
                     "assets/img/logo.png",
-                    height: 180,
-                    width: 180,
+                    height: 170,
+                    width: 170,
                   ),
-                  const Text(
-                    "Punjab Universty",
-                    style: TextStyle(
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Punjab university".toUpperCase(),
+                    style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 32.0,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.1,
                     ),
+                    textScaleFactor: 1.8,
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -101,7 +105,7 @@ class HomeViewPage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15.0,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                       SizedBox(width: 16.0),

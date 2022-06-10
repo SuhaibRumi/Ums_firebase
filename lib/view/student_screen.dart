@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uni_mangement_system/utils/constants.dart';
 
 import '../view_model/view_model.dart';
 import '../widgets/widget.dart';
@@ -11,26 +12,27 @@ class StudentScreen extends StatefulWidget {
 }
 
 class _StudentScreenState extends State<StudentScreen> {
-  final _studentNameController = TextEditingController();
-  final _studRollController = TextEditingController();
-  final _studSessionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   final _studsemesterNameController = TextEditingController();
-  var studentViewModel = StudentsViewModel();
-  String? classId;
-  String? sessionId;
-  String? semesterId;
-  var classViewModel = ClassViewModel();
-  var sessionViewModel = SessionViewModel();
+  final _studentNameController = TextEditingController();
+  final _studSessionController = TextEditingController();
+  final _studRollController = TextEditingController();
+  final _studClassNameController = TextEditingController();
   var semesterViewModel = SemesterViewModel();
-
+  var studentViewModel = StudentsViewModel();
+  var sessionViewModel = SessionViewModel();
+  var classViewModel = ClassViewModel();
   bool _isActive = true;
   bool isUpdate = false;
   int? studId;
+  int? classId;
+  int? sessionId;
+  int? semesterId;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text("Students Mangement"),
@@ -48,14 +50,38 @@ class _StudentScreenState extends State<StudentScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
+                  key: _formKey,
                   children: [
+                    const SizedBox(
+                      height: 12,
+                    ),
                     InputField(
                       lableText: "Student Name",
                       hintText: "Enter your Name",
-                      icon: const Icon(Icons.person),
+                      icon: const Icon(
+                        Icons.person,
+                        color: kSecondary,
+                      ),
                       controller: _studentNameController,
                     ),
-                    const Divider(),
+                    const SizedBox(height: 8),
+                    const Divider(
+                      endIndent: 12,
+                      indent: 12,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    InputField(
+                      lableText: "Student Roll No",
+                      hintText: "Enter your Name",
+                      icon: const Icon(Icons.data_array, color: kSecondary),
+                      controller: _studRollController,
+                    ),
+                    const Divider(
+                      endIndent: 12,
+                      indent: 12,
+                    ),
                     FutureBuilder(
                         future: classViewModel.getData(),
                         builder: (context,
@@ -64,41 +90,94 @@ class _StudentScreenState extends State<StudentScreen> {
                             return const CircularProgressIndicator();
                           }
                           return DropdownButtonFormField(
-                              hint: const Text("Select Class"),
-                              items: snapshot.data!.map((cls) {
-                                return DropdownMenuItem(
-                                  value: cls.classId,
-                                  child: Text(cls.className ?? ""),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  classId = value.toString();
-                                });
+                            decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.crisis_alert_outlined,
+                                    color: kSecondary)),
+                            autofocus: true,
+                            hint: const Text("Select Class"),
+                            items: snapshot.data!.map((cls) {
+                              return DropdownMenuItem(
+                                value: cls.classId,
+                                child: Text(cls.className ?? ""),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                classId = int.parse(value.toString());
                               });
+                            },
+                            validator: (value) {
+                              if (value == null) {
+                                return "please select your class";
+                              }
+                              return null;
+                            },
+                          );
                         }),
-                    const Divider(),
-                    InputField(
-                      lableText: "Student Roll No",
-                      hintText: "Enter your Name",
-                      icon: const Icon(Icons.data_array),
-                      controller: _studRollController,
-                    ),
-                    const Divider(),
-                    InputField(
-                      lableText: "Student Session",
-                      hintText: "Enter your Name",
-                      icon: const Icon(Icons.label),
-                      controller: _studSessionController,
-                    ),
-                    InputField(
-                      lableText: "Student Semester",
-                      hintText: "Enter your Name",
-                      icon: const Icon(Icons.library_books_rounded),
-                      controller: _studsemesterNameController,
-                    ),
-                    const Divider(),
-                   
+                    FutureBuilder(
+                        future: sessionViewModel.getData(),
+                        builder: (context,
+                            AsyncSnapshot<List<SessionViewModel>> snapshot) {
+                          if (!snapshot.hasData) {
+                            return const CircularProgressIndicator();
+                          }
+                          return DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.book_outlined,
+                                    color: kSecondary)),
+                            autofocus: true,
+                            hint: const Text("Select Session"),
+                            items: snapshot.data!.map((session) {
+                              return DropdownMenuItem(
+                                value: session.sessionId,
+                                child: Text(session.sessionName ?? ""),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                sessionId = int.parse(value.toString());
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null) {
+                                return "please select your session";
+                              }
+                              return null;
+                            },
+                          );
+                        }),
+                    FutureBuilder(
+                        future: semesterViewModel.getdata(),
+                        builder: (context,
+                            AsyncSnapshot<List<SemesterViewModel>> snapshot) {
+                          if (!snapshot.hasData) {
+                            return const CircularProgressIndicator();
+                          }
+                          return DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.description_outlined,
+                                    color: kSecondary)),
+                            hint: const Text("Select Semester"),
+                            items: snapshot.data!.map((semester) {
+                              return DropdownMenuItem(
+                                value: semester.semesterId,
+                                child: Text(semester.semesterName ?? ""),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                semesterId = int.parse(value.toString());
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null) {
+                                return "please select your semester";
+                              }
+                              return null;
+                            },
+                          );
+                        }),
+                    const SizedBox(height: 15),
                   ],
                 ),
               ),
@@ -114,10 +193,14 @@ class _StudentScreenState extends State<StudentScreen> {
                   } else {
                     _updateDta();
                   }
+                  // if (_formKey.currentState!.validate()) {}
                 },
                 height: 40,
                 width: 110,
                 fontsize: 14),
+            const SizedBox(
+              height: 50,
+            ),
             FutureBuilder(builder:
                 (context, AsyncSnapshot<List<StudentsViewModel>> snapshot) {
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -134,6 +217,7 @@ class _StudentScreenState extends State<StudentScreen> {
                 );
               }
               List<StudentsViewModel> students = snapshot.data!;
+
               return SizedBox(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -157,24 +241,23 @@ class _StudentScreenState extends State<StudentScreen> {
                         ),
                         DataCell(
                           Text(
-                            row.studName ?? "",
+                            row.studentName ?? "",
                           ),
                         ),
                         DataCell(
                           Text(
-                            row.studClassName ?? "",
+                            row.className ?? "",
                           ),
                         ),
                         DataCell(
                           Text(row.studRoll ?? ""),
                         ),
                         DataCell(
-                          Text(row.studSessionName ?? ""),
+                          Text(row.sessionName ?? ""),
                         ),
                         DataCell(
-                          Text(row.studSemesterName ?? ""),
+                          Text(row.semesterName ?? ""),
                         ),
-                        
                         DataCell(
                           Switch(
                               value: _isActive,
@@ -194,12 +277,12 @@ class _StudentScreenState extends State<StudentScreen> {
                               studId = row.studId;
                               isUpdate = true;
                             });
-                            _studentNameController.text = row.studName!;
+                            _studentNameController.text = row.studentName!;
                             _studRollController.text = row.studRoll!;
-                            _studSessionController.text = row.studSessionName!;
+                            _studSessionController.text = row.semesterName!;
                             _studsemesterNameController.text =
-                                row.studSemesterName!;
-                            
+                                row.semesterName!;
+                            _studClassNameController.text = row.className!;
                           },
                           icon: const Icon(Icons.edit),
                           splashRadius: 20,
@@ -228,28 +311,43 @@ class _StudentScreenState extends State<StudentScreen> {
 
   _addData() {
     studentViewModel = StudentsViewModel(
-      studName: _studentNameController.text,
-      studRoll: _studRollController.text,
-      studSemesterName: _studsemesterNameController.text,
-      studSessionName: _studSessionController.text,
-    );
+        studentName: _studentNameController.text,
+        studRoll: _studRollController.text,
+        semesterId: semesterId,
+        sessionId: sessionId,
+        classId: classId,
+        isActive: true);
     studentViewModel.saveData();
+    _clearData();
     setState(() {});
   }
 
   _updateDta() {
     studentViewModel = StudentsViewModel(
+      sessionId: sessionId,
+      semesterId: semesterId,
       studId: studId,
-      studName: _studentNameController.text,
+      studentName: _studentNameController.text,
       studRoll: _studRollController.text,
-      studSemesterName: _studsemesterNameController.text,
-      studSessionName: _studSessionController.text,
+      semesterName: _studsemesterNameController.text,
+      sessionName: _studSessionController.text,
     );
     studentViewModel.updateData();
+    _clearData();
   }
 
   _deleteDta() {
-    studentViewModel = StudentsViewModel(studId: studId);
+    studentViewModel = StudentsViewModel(
+      studId: studId,
+    );
     studentViewModel.deletData();
+  }
+
+  _clearData() {
+    _studentNameController.clear();
+    _studRollController.clear();
+    _studsemesterNameController.clear();
+    _studSessionController.clear();
+    _studClassNameController.clear();
   }
 }

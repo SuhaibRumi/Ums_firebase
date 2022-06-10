@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
+
 import '../utils/db_helper.dart';
 
-class AssigmentViewModel {
-  int? assignmentId = 1;
+class AssigmentViewModel extends ChangeNotifier {
+  int? assignmentId;
   String? assignmentDesc = "";
   String? assignmentName = "";
 
@@ -23,18 +25,21 @@ class AssigmentViewModel {
     String query =
         "Insert into Assignments (assignmentName,assignmentDesc) values ('$assignmentName','$assignmentDesc')";
     var id = await dbhelper.rawInsert(query: query);
+    notifyListeners();
   }
 
   updateData() async {
     String query =
-        "Update Assignments set assignmentName  = '$assignmentName'assignmentDesc = '$assignmentDesc' where assignmentId = '$assignmentId'";
+        "Update Assignments set assignmentName  = '$assignmentName', assignmentDesc = '$assignmentDesc' where assignmentId = '$assignmentId'";
     var id = await dbhelper.rawUpdate(query: query);
+    notifyListeners();
   }
 
   deleteData() async {
     String query =
         "delete from Assignments where assignmentId = '$assignmentId'";
     var id = await dbhelper.rawDelete(query: query);
+    notifyListeners();
   }
 
   Future<List<AssigmentViewModel>> getData() async {
@@ -42,6 +47,7 @@ class AssigmentViewModel {
     String query = "Select * from Assignments";
     var data = await dbhelper.getDataByQuery(query: query);
     assignment = data.map((i) => AssigmentViewModel.fromMap(i)).toList();
+    notifyListeners();
     return assignment;
   }
 }

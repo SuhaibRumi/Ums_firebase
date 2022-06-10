@@ -32,16 +32,7 @@ class DBHelper {
      );
      
  
-  create Table `Students`(
-   studId Integer primary key autoincrement,
-   sessionId Integer,
-   classId Integer,
-   studRoll Integer primary key,
-   sessionId Integer, 
-   studName text,
-   studSession text,
-   isActive boolean default true
-);
+  
 
 ''');
 
@@ -65,6 +56,18 @@ class DBHelper {
   assignmentDesc text
 );
 ''');
+
+    await db.execute('''
+   create Table `Students`(
+   studId Integer primary key autoincrement,
+   semesterId Integer,
+   sessionId Integer,
+   classId Integer,
+   studRoll Integer,  
+   studentName text,
+   isActive boolean default true
+);
+''');
   }
 
   rawInsert({required String query}) async {
@@ -77,6 +80,7 @@ class DBHelper {
   rawUpdate({required String query}) async {
     Database database = await instance.db;
     int id = await database.rawUpdate(query);
+
     return id;
   }
 
@@ -90,7 +94,6 @@ class DBHelper {
       {required String query}) async {
     Database database = await instance.db;
     var res = await database.rawQuery(query);
-    print(res);
     return res;
   }
 }

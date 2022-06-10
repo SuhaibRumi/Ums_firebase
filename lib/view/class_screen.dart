@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uni_mangement_system/utils/constants.dart';
 import '../view_model/class_view_model.dart';
 import '../widgets/widget.dart';
 
@@ -18,7 +19,6 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text("Class Mangement"),
@@ -27,18 +27,32 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
           padding: const EdgeInsets.all(12),
           child: Column(
             children: [
-              InputField(
-                controller: _classController,
-                lableText: "Class Name",
-                hintText: "Enter your Class",
-                icon: const Icon(
-                  Icons.person,
-                  size: 30,
-                  color: Colors.grey,
+              Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Card(
+                  color: Colors.white,
+                  elevation: 4,
+                  shadowColor: Colors.grey[500],
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    children: [
+                      InputField(
+                        controller: _classController,
+                        lableText: "Class Name",
+                        hintText: "Enter your Class",
+                        icon: const Icon(
+                          Icons.person,
+                          size: 30,
+                          color: kSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               MyButton(
                   text: "Save Data",

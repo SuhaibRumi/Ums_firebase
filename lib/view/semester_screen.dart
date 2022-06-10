@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uni_mangement_system/utils/constants.dart';
 import '../view_model/view_model.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/input_field.dart';
@@ -19,7 +20,6 @@ class _SemesterScreenState extends State<SemesterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text("Semester Mangement"),
@@ -28,20 +28,34 @@ class _SemesterScreenState extends State<SemesterScreen> {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            InputField(
-              controller: _semeterController,
-              lableText: "Semester Name",
-              hintText: "Enter your semester",
-              icon: const Icon(
-                Icons.menu_book,
-                color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Card(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                elevation: 4,
+                shadowColor: Colors.grey[500],
+                child: Column(
+                  children: [
+                    InputField(
+                      controller: _semeterController,
+                      lableText: "Semester Name",
+                      hintText: "Enter your semester",
+                      icon: const Icon(
+                        Icons.menu_book,
+                        color: kSecondary,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 30,
             ),
             MyButton(
-                text: "Save Data",
+                text: "Submit",
                 onPrseed: () {
                   if (isUpdate == false) {
                     _addData();
@@ -52,7 +66,7 @@ class _SemesterScreenState extends State<SemesterScreen> {
                   }
                 },
                 height: 40,
-                width: 130,
+                width: 110,
                 fontsize: 14),
             const SizedBox(
               height: 20,

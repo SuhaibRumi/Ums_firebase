@@ -6,11 +6,11 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5, 20, 20, 0),
+      padding: const EdgeInsets.fromLTRB(5, 15, 25, 0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Image.asset("assets/img/logo.png", height: 70),
+          Image.asset("assets/img/logo.png", height: 65),
           const Text(
             "Punjab Universty",
             style: TextStyle(
@@ -18,7 +18,7 @@ class Header extends StatelessWidget {
           ),
           const CircleAvatar(
             radius: 25,
-            backgroundImage: AssetImage("assets/img/logo.png"),
+            backgroundImage: AssetImage("assets/img/user-1.jpg"),
           )
         ],
       ),

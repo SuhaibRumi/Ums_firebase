@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uni_mangement_system/utils/constants.dart';
 
 class MyButton extends StatelessWidget {
   final String text;
@@ -18,12 +19,15 @@ class MyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).colorScheme.secondary,
-      borderRadius: BorderRadius.circular(4),
+      shadowColor: kSecondary,
+      elevation: 3.5,
+      color: kPrimaryColor,
+      borderRadius: BorderRadius.circular(8),
       child: InkWell(
+        borderRadius: BorderRadius.circular(8),
         onTap: onPrseed,
         child: AnimatedContainer(
-          duration: const Duration(seconds: 2),
+          duration: const Duration(seconds: 3),
           width: width,
           height: height,
           alignment: Alignment.center,
@@ -33,7 +37,7 @@ class MyButton extends StatelessWidget {
               letterSpacing: 1.2,
               fontSize: fontsize,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         ),

@@ -1,25 +1,27 @@
+import 'package:flutter/cupertino.dart';
+
 import '../utils/db_helper.dart';
 
-class StudentsViewModel {
+class StudentsViewModel extends ChangeNotifier {
   int? studId;
-  String? studName = '';
-  String? studRoll = '';
-  String? studClassName = '';
   int? classId;
-  int? semesterId;
   int? sessionId;
-  String? studSessionName = '';
-  String? studSemesterName = '';
+  int? semesterId;
+  String? studentName = '';
+  String? studRoll = '';
+  String? className = '';
+  String? sessionName = '';
+  String? semesterName = '';
   bool? isActive = true;
 
   var dbhelper = DBHelper.instance;
   StudentsViewModel({
     this.studId,
-    this.studName,
+    this.studentName,
     this.studRoll,
-    this.studClassName,
-    this.studSessionName,
-    this.studSemesterName,
+    this.className,
+    this.sessionName,
+    this.semesterName,
     this.classId,
     this.semesterId,
     this.sessionId,
@@ -29,29 +31,32 @@ class StudentsViewModel {
   factory StudentsViewModel.fromMap(Map map) {
     return StudentsViewModel(
         studId: map['studId'],
-        studName: map['studName'],
+        studentName: map['studentName'],
         studRoll: map['studRoll'],
-        studSessionName: map['studSessionName'],
-        studClassName: map['studClassName'],
-        studSemesterName: map['studSemesterName'],
+        sessionName: map['sessionName'],
+        className: map['className'],
+        semesterName: map['semesterName'],
         isActive: map['isActive']);
   }
   saveData() async {
     String query =
-        "insert into Students (studName,studRoll,isActive,classId,semesterId,sessionId) values ('$studName','$studRoll','$isActive',)";
+        "insert into Students (studentName,studRoll,isActive,sessionId,classId,semesterId) values('$studentName','$studRoll','$isActive','$sessionId','$classId','$semesterId' )";
     var id = await dbhelper.rawInsert(query: query);
+    print(id);
+    notifyListeners();
   }
 
   updateData() async {
     String query =
-        "Update Students set studName = '$studName', studRoll ='$studRoll',isActive ='$isActive' where studId = '$studId'";
+        "Update Students set studentName = '$studentName', studRoll = '$studRoll',isActive ='$isActive', sessionName = '$sessionName', className = '$className', semesterName = '$semesterName where studId = '$studId'";
     var id = await dbhelper.rawUpdate(query: query);
+    notifyListeners();
   }
 
   deletData() async {
-    String query =
-        "delete from Students where studId  = '$studId'";
+    String query = "delete from Students where studId  = '$studId' ";
     var id = await dbhelper.rawDelete(query: query);
+    notifyListeners();
   }
 
   Future<List<StudentsViewModel>> getData() async {
@@ -59,6 +64,7 @@ class StudentsViewModel {
     String query = "Select * from Students ";
     var data = await dbhelper.getDataByQuery(query: query);
     students = data.map((i) => StudentsViewModel.fromMap(i)).toList();
+    notifyListeners();
     return students;
   }
 }

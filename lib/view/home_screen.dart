@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: kPrimaryColor,
       body: ListView(
         children: [
           const Header(),
@@ -19,8 +19,11 @@ class HomeScreen extends StatelessWidget {
               style: const TextStyle(color: kTextColor),
               cursorColor: kTextColor,
               decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 border: InputBorder.none,
-                fillColor: Theme.of(context).primaryColor,
+                fillColor: Theme.of(context).secondaryHeaderColor,
                 filled: true,
                 hintText: ("Search"),
                 hintStyle: const TextStyle(
@@ -37,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

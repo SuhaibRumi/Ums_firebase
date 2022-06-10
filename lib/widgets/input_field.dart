@@ -18,12 +18,11 @@ class InputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: TextField(
+      child: TextFormField(
+        autofocus: true,
         style: const TextStyle(color: kTextColor),
         controller: controller,
         decoration: InputDecoration(
-          // fillColor: Theme.of(context).primaryColor,
-          filled: true,
           border: InputBorder.none,
           labelText: lableText,
           prefixIcon: icon,

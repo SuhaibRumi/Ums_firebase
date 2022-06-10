@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uni_mangement_system/utils/constants.dart';
 import 'package:uni_mangement_system/view_model/assigment_view_model.dart';
 import 'package:uni_mangement_system/widgets/button_widget.dart';
 import 'package:uni_mangement_system/widgets/input_field.dart';
@@ -14,12 +15,11 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
   final _assigmentNameController = TextEditingController();
   final _assigmentDescController = TextEditingController();
   var assignmentViewModel = AssigmentViewModel();
-  int? asignmentId;
+  int? assignmentId;
   bool isUpdate = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text("Assignemnet Mangement"),
@@ -28,24 +28,53 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            InputField(
-              lableText: "Assignments Name",
-              hintText: "Enter your assignment",
-              icon: const Icon(Icons.library_books_rounded),
-              controller: _assigmentNameController,
-            ),
-            const Divider(),
-            InputField(
-              lableText: "Description",
-              hintText: "",
-              icon: const Icon(Icons.description),
-              controller: _assigmentDescController,
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Card(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                elevation: 4,
+                shadowColor: Colors.grey[500],
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: InputField(
+                        lableText: "Assignments Name",
+                        hintText: "Enter your assignment",
+                        icon: const Icon(
+                          Icons.library_books_rounded,
+                          color: kSecondary,
+                        ),
+                        controller: _assigmentNameController,
+                      ),
+                    ),
+                    const Divider(
+                      indent: 15,
+                      endIndent: 15,
+                    ),
+                    InputField(
+                      controller: _assigmentDescController,
+                      lableText: "Description",
+                      hintText: "",
+                      icon: const Icon(
+                        Icons.description,
+                        color: kSecondary,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(
-              height: 12,
+              height: 20,
             ),
             MyButton(
-                text: "Save Data",
+                text: "Submit",
                 onPrseed: () {
                   if (isUpdate == false) {
                     _addData();
@@ -104,7 +133,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                             DataCell(IconButton(
                               onPressed: () {
                                 setState(() {
-                                  asignmentId = row.assignmentId;
+                                  assignmentId = row.assignmentId;
                                   isUpdate = true;
                                 });
                                 _assigmentNameController.text =
@@ -118,7 +147,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                             DataCell(IconButton(
                               onPressed: () async {
                                 setState(() {
-                                  asignmentId = row.assignmentId;
+                                  assignmentId = row.assignmentId;
                                 });
                                 _deleteDta();
                               },
@@ -147,7 +176,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
 
   _updateDta() {
     assignmentViewModel = AssigmentViewModel(
-        assignmentId: asignmentId,
+        assignmentId: assignmentId,
         assignmentName: _assigmentNameController.text,
         assignmentDesc: _assigmentDescController.text);
     assignmentViewModel.updateData();
@@ -157,7 +186,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
   }
 
   _deleteDta() {
-    assignmentViewModel = AssigmentViewModel(assignmentId: asignmentId);
+    assignmentViewModel = AssigmentViewModel(assignmentId: assignmentId);
     assignmentViewModel.deleteData();
   }
 }
