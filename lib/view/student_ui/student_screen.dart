@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
 
-import '../view_model/view_model.dart';
-import '../widgets/widget.dart';
+import '../../view_model/view_model.dart';
+import '../../widgets/widget.dart';
 
 class StudentScreen extends StatefulWidget {
   const StudentScreen({Key? key}) : super(key: key);
@@ -29,6 +29,17 @@ class _StudentScreenState extends State<StudentScreen> {
   int? classId;
   int? sessionId;
   int? semesterId;
+  Future<List<StudentsViewModel>>? data;
+
+  @override
+  void initState() {
+    _loadData();
+    super.initState();
+  }
+
+  _loadData() {
+    data = studentViewModel.getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +197,8 @@ class _StudentScreenState extends State<StudentScreen> {
               height: 20,
             ),
             MyButton(
+              color: kPrimaryColor,
+              
                 text: "Save Data",
                 onPrseed: () {
                   if (isUpdate == false) {
@@ -201,108 +214,109 @@ class _StudentScreenState extends State<StudentScreen> {
             const SizedBox(
               height: 50,
             ),
-            FutureBuilder(builder:
-                (context, AsyncSnapshot<List<StudentsViewModel>> snapshot) {
-              if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(
-                  child: Text(
-                    "No Data Found",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                );
-              }
-              if (snapshot.hasError) {
-                return const Center(
-                  child: Text("Something went Wrong"),
-                );
-              }
-              List<StudentsViewModel> students = snapshot.data!;
+            FutureBuilder(
+                future: data,
+                builder:
+                    (context, AsyncSnapshot<List<StudentsViewModel>> snapshot) {
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        "No Data Found",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text("Something went Wrong"),
+                    );
+                  }
+                  List<StudentsViewModel> students = snapshot.data!;
 
-              return SizedBox(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: DataTable(
-                    columns: const [
-                      DataColumn(label: Text("Student ID")),
-                      DataColumn(label: Text("Student Name")),
-                      DataColumn(label: Text("Student Class")),
-                      DataColumn(label: Text("Student Roll")),
-                      DataColumn(label: Text("Student Session")),
-                      DataColumn(label: Text("Student Semester")),
-                      DataColumn(label: Text("Student Assignmet")),
-                      DataColumn(label: Text("Student Active")),
-                      DataColumn(label: Text("Edit")),
-                      DataColumn(label: Text("Delete")),
-                    ],
-                    rows: students.map((row) {
-                      return DataRow(cells: [
-                        DataCell(
-                          Text(row.studId.toString()),
-                        ),
-                        DataCell(
-                          Text(
-                            row.studentName ?? "",
-                          ),
-                        ),
-                        DataCell(
-                          Text(
-                            row.className ?? "",
-                          ),
-                        ),
-                        DataCell(
-                          Text(row.studRoll ?? ""),
-                        ),
-                        DataCell(
-                          Text(row.sessionName ?? ""),
-                        ),
-                        DataCell(
-                          Text(row.semesterName ?? ""),
-                        ),
-                        DataCell(
-                          Switch(
-                              value: _isActive,
-                              onChanged: (value) {
+                  return SizedBox(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        columns: const [
+                          DataColumn(label: Text("Student ID")),
+                          DataColumn(label: Text("Student Name")),
+                          DataColumn(label: Text("Student Class")),
+                          DataColumn(label: Text("Student Roll")),
+                          DataColumn(label: Text("Student Session")),
+                          DataColumn(label: Text("Student Semester")),
+                          DataColumn(label: Text("Student Active")),
+                          DataColumn(label: Text("Edit")),
+                          DataColumn(label: Text("Delete")),
+                        ],
+                        rows: students.map((row) {
+                          return DataRow(cells: [
+                            DataCell(
+                              Text(row.studId.toString()),
+                            ),
+                            DataCell(
+                              Text(
+                                row.studentName ?? "",
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                row.className ?? "",
+                              ),
+                            ),
+                            DataCell(
+                              Text(row.studRoll ?? ""),
+                            ),
+                            DataCell(
+                              Text(row.sessionName ?? ""),
+                            ),
+                            DataCell(
+                              Text(row.semesterName ?? ""),
+                            ),
+                            DataCell(
+                              Switch(
+                                  value: _isActive,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      if (_isActive) {
+                                        _isActive = true;
+                                      } else {
+                                        _isActive = false;
+                                      }
+                                    });
+                                  }),
+                            ),
+                            DataCell(IconButton(
+                              onPressed: () {
                                 setState(() {
-                                  if (_isActive) {
-                                    _isActive = true;
-                                  } else {
-                                    _isActive = false;
-                                  }
+                                  studId = row.studId;
+                                  isUpdate = true;
                                 });
-                              }),
-                        ),
-                        DataCell(IconButton(
-                          onPressed: () {
-                            setState(() {
-                              studId = row.studId;
-                              isUpdate = true;
-                            });
-                            _studentNameController.text = row.studentName!;
-                            _studRollController.text = row.studRoll!;
-                            _studSessionController.text = row.semesterName!;
-                            _studsemesterNameController.text =
-                                row.semesterName!;
-                            _studClassNameController.text = row.className!;
-                          },
-                          icon: const Icon(Icons.edit),
-                          splashRadius: 20,
-                        )),
-                        DataCell(IconButton(
-                          onPressed: () async {
-                            setState(() {
-                              studId = row.studId;
-                            });
-                            _deleteDta();
-                          },
-                          icon: const Icon(Icons.delete),
-                          splashRadius: 20,
-                        )),
-                      ]);
-                    }).toList(),
-                  ),
-                ),
-              );
-            }),
+                                _studentNameController.text = row.studentName!;
+                                _studRollController.text = row.studRoll!;
+                                _studSessionController.text = row.semesterName!;
+                                _studsemesterNameController.text =
+                                    row.semesterName!;
+                                _studClassNameController.text = row.className!;
+                              },
+                              icon: const Icon(Icons.edit),
+                              splashRadius: 20,
+                            )),
+                            DataCell(IconButton(
+                              onPressed: () async {
+                                setState(() {
+                                  studId = row.studId;
+                                });
+                                _deleteDta();
+                              },
+                              icon: const Icon(Icons.delete),
+                              splashRadius: 20,
+                            )),
+                          ]);
+                        }).toList(),
+                      ),
+                    ),
+                  );
+                }),
           ],
         ),
       ),

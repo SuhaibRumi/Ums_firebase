@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uni_mangement_system/utils/constants.dart';
 
 class MyButton extends StatelessWidget {
   final String text;
@@ -7,6 +6,7 @@ class MyButton extends StatelessWidget {
   final double height;
   final double width;
   final double fontsize;
+  final Color color;
 
   const MyButton({
     Key? key,
@@ -15,16 +15,17 @@ class MyButton extends StatelessWidget {
     required this.height,
     required this.width,
     required this.fontsize,
+    required this.color,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Material(
-      shadowColor: kSecondary,
+      shadowColor: Colors.black,
       elevation: 3.5,
-      color: kPrimaryColor,
-      borderRadius: BorderRadius.circular(8),
+      color: color,
+      borderRadius: BorderRadius.circular(12),
       child: InkWell(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
         onTap: onPrseed,
         child: AnimatedContainer(
           duration: const Duration(seconds: 3),

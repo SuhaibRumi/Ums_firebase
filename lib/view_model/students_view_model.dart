@@ -29,6 +29,10 @@ class StudentsViewModel extends ChangeNotifier {
   });
 
   factory StudentsViewModel.fromMap(Map map) {
+    bool active = false;
+    if (map['isActive'] == 1 || map['isActive'] == true) {
+      active = true;
+    }
     return StudentsViewModel(
         studId: map['studId'],
         studentName: map['studentName'],
@@ -36,7 +40,7 @@ class StudentsViewModel extends ChangeNotifier {
         sessionName: map['sessionName'],
         className: map['className'],
         semesterName: map['semesterName'],
-        isActive: map['isActive']);
+        isActive: active);
   }
   saveData() async {
     String query =
@@ -63,6 +67,7 @@ class StudentsViewModel extends ChangeNotifier {
     List<StudentsViewModel> students = [];
     String query = "Select * from Students ";
     var data = await dbhelper.getDataByQuery(query: query);
+    print(data);
     students = data.map((i) => StudentsViewModel.fromMap(i)).toList();
     notifyListeners();
     return students;

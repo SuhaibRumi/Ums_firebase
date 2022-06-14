@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
-import '../view_model/class_view_model.dart';
-import '../widgets/widget.dart';
+import '../../view_model/session_view_model.dart';
+import '../../widgets/widget.dart';
 
-class ClassMangemnetScreen extends StatefulWidget {
-  const ClassMangemnetScreen({Key? key}) : super(key: key);
+class SessionScreen extends StatefulWidget {
+  const SessionScreen({Key? key}) : super(key: key);
 
   @override
-  State<ClassMangemnetScreen> createState() => _ClassMangemnetScreenState();
+  State<SessionScreen> createState() => _SessionScreenState();
 }
 
-class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
-  final _classController = TextEditingController();
-  var classViewModel = ClassViewModel();
-  int? classId;
+class _SessionScreenState extends State<SessionScreen> {
+  final _sessionController = TextEditingController();
+  var sessionViewModel = SessionViewModel();
+  int? sessionId;
   bool isUpdate = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: const Text("Class Mangement"),
-      ),
-      body: SingleChildScrollView(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          title: const Text("Session Mangement"),
+        ),
+        body: SingleChildScrollView(
           padding: const EdgeInsets.all(12),
           child: Column(
             children: [
@@ -31,38 +30,38 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                 padding: const EdgeInsets.only(top: 12.0),
                 child: Card(
                   color: Colors.white,
-                  elevation: 4,
-                  shadowColor: Colors.grey[500],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
+                  elevation: 4,
+                  shadowColor: Colors.grey[500],
                   child: Column(
                     children: [
                       InputField(
-                        controller: _classController,
-                        lableText: "Class Name",
-                        hintText: "Enter your Class",
+                        lableText: "Session Name",
+                        hintText: "Enter your session",
                         icon: const Icon(
-                          Icons.person,
-                          size: 30,
+                          Icons.library_books_rounded,
                           color: kSecondary,
                         ),
+                        controller: _sessionController,
                       ),
                     ],
                   ),
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               MyButton(
+                color: kPrimaryColor ,
                   text: "Save Data",
                   onPrseed: () {
-                    if (isUpdate == false) {
-                      _addData();
-                      _classController.clear();
-                    } else {
+                    if (isUpdate) {
                       _updateDta();
-                      _classController.clear();
+                      _sessionController.clear();
+                    } else {
+                      _addData();
+                      _sessionController.clear();
                     }
                   },
                   height: 40,
@@ -72,12 +71,15 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                 height: 50,
               ),
               FutureBuilder(
-                  future: classViewModel.getData(),
-                  builder:
-                      (context, AsyncSnapshot<List<ClassViewModel>> snapshot) {
+                  future: sessionViewModel.getData(),
+                  builder: (context,
+                      AsyncSnapshot<List<SessionViewModel>> snapshot) {
                     if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       return const Center(
-                        child: Text("No Class Data Found"),
+                        child: Text(
+                          "No Data Found",
+                          style: TextStyle(fontSize: 18),
+                        ),
                       );
                     }
                     if (snapshot.hasError) {
@@ -85,42 +87,46 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                         child: Text("Something went Wrong"),
                       );
                     }
-                    List<ClassViewModel> classes = snapshot.data!;
+                    List<SessionViewModel> session = snapshot.data!;
                     return SizedBox(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: DataTable(
                             columns: const [
-                              DataColumn(label: Text("Class Id")),
-                              DataColumn(label: Text("Class Name")),
+                              DataColumn(label: Text("Session ID")),
+                              DataColumn(label: Text("Session Name")),
                               DataColumn(label: Text("Edit")),
                               DataColumn(label: Text("Delete")),
                             ],
-                            rows: classes.map((row) {
+                            rows: session.map((row) {
                               return DataRow(cells: [
                                 DataCell(
-                                  Text(row.classId.toString()),
+                                  Text(
+                                    row.sessionId.toString(),
+                                  ),
                                 ),
                                 DataCell(
-                                  Text(row.className ?? ""),
+                                  Text(
+                                    row.sessionName ?? "",
+                                  ),
                                 ),
                                 DataCell(IconButton(
                                   onPressed: () {
                                     setState(() {
-                                      classId = row.classId;
+                                      sessionId = row.sessionId;
                                       isUpdate = true;
                                     });
-                                    _classController.text = row.className!;
+                                    _sessionController.text = row.sessionName!;
                                   },
                                   icon: const Icon(Icons.edit),
                                   splashRadius: 20,
                                 )),
                                 DataCell(IconButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     setState(() {
-                                      classId = row.classId;
+                                      sessionId = row.sessionId;
                                     });
-                                    _deleteData();
+                                    _deleteDta();
                                   },
                                   icon: const Icon(Icons.delete),
                                   splashRadius: 20,
@@ -131,54 +137,27 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                     );
                   }),
             ],
-          )),
-    );
+          ),
+        ));
   }
 
   _addData() {
-    classViewModel = ClassViewModel(className: _classController.text);
-    classViewModel.saveData();
+    sessionViewModel = SessionViewModel(sessionName: _sessionController.text);
+    sessionViewModel.saveData();
     setState(() {});
   }
 
   _updateDta() {
-    classViewModel =
-        ClassViewModel(classId: classId, className: _classController.text);
-    classViewModel.updateData();
+    sessionViewModel = SessionViewModel(
+        sessionId: sessionId, sessionName: _sessionController.text);
+    sessionViewModel.updateData();
     setState(() {
       isUpdate = false;
     });
   }
 
-  _deleteData() {
-    classViewModel = ClassViewModel(classId: classId);
-    classViewModel.deleteData();
-  }
-
-  _showAlert() async {
-    await showDialog(
-        context: context,
-        builder: (bc) {
-          return AlertDialog(
-            title: const Text("Delete"),
-            content: const Text("Do you want to delete this record?"),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(bc, true);
-
-                    setState(() {
-                      // _deleteDta();
-                    });
-                  },
-                  child: const Text("Yes")),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(bc, false);
-                  },
-                  child: const Text("No"))
-            ],
-          );
-        });
+  _deleteDta() {
+    sessionViewModel = SessionViewModel(sessionId: sessionId);
+    sessionViewModel.deleteData();
   }
 }

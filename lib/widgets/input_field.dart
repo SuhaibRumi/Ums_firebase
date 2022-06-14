@@ -20,7 +20,7 @@ class InputField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: TextFormField(
         autofocus: true,
-        style: const TextStyle(color: kTextColor),
+        // style: const TextStyle(color: kTextColor),
         controller: controller,
         decoration: InputDecoration(
           border: InputBorder.none,

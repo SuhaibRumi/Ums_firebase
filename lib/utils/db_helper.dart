@@ -63,7 +63,7 @@ class DBHelper {
    semesterId Integer,
    sessionId Integer,
    classId Integer,
-   studRoll Integer,  
+   studRoll text,  
    studentName text,
    isActive boolean default true
 );

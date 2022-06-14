@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
-import 'package:uni_mangement_system/view/onboard_screen.dart';
+
+import 'view/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,14 +11,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'University Mangement System',
+      title: 'University Management System',
       theme: ThemeData(
         primaryColor: kCardColor,
         backgroundColor: kBGColor,
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch()
             .copyWith(secondary: const Color(0xFF63CF93)),
       ),
-      home: const OnBoardScreen(),
+      home: const SplashScreen(),
     );
   }
 }

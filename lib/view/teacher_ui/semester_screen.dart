@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
-import '../view_model/view_model.dart';
-import '../widgets/button_widget.dart';
-import '../widgets/input_field.dart';
+import '../../view_model/view_model.dart';
+import '../../widgets/button_widget.dart';
+import '../../widgets/input_field.dart';
 
 class SemesterScreen extends StatefulWidget {
   const SemesterScreen({Key? key}) : super(key: key);
@@ -55,6 +55,7 @@ class _SemesterScreenState extends State<SemesterScreen> {
               height: 30,
             ),
             MyButton(
+              color: kPrimaryColor,
                 text: "Submit",
                 onPrseed: () {
                   if (isUpdate == false) {

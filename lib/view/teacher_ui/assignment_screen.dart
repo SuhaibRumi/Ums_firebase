@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:uni_mangement_system/utils/constants.dart';
-import 'package:uni_mangement_system/view_model/assigment_view_model.dart';
-import 'package:uni_mangement_system/widgets/button_widget.dart';
-import 'package:uni_mangement_system/widgets/input_field.dart';
+import '../../utils/constants.dart';
+import '../../view_model/assigment_view_model.dart';
+import '../../widgets/button_widget.dart';
+import '../../widgets/input_field.dart';
 
 class AssignmentScreen extends StatefulWidget {
   const AssignmentScreen({Key? key}) : super(key: key);
@@ -12,8 +12,8 @@ class AssignmentScreen extends StatefulWidget {
 }
 
 class _AssignmentScreenState extends State<AssignmentScreen> {
-  final _assigmentNameController = TextEditingController();
-  final _assigmentDescController = TextEditingController();
+  final _assignmentNameController = TextEditingController();
+  final _assignmentDescController = TextEditingController();
   var assignmentViewModel = AssigmentViewModel();
   int? assignmentId;
   bool isUpdate = false;
@@ -22,7 +22,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text("Assignemnet Mangement"),
+        title: const Text("Assignment Management"),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
@@ -47,7 +47,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                           Icons.library_books_rounded,
                           color: kSecondary,
                         ),
-                        controller: _assigmentNameController,
+                        controller: _assignmentNameController,
                       ),
                     ),
                     const Divider(
@@ -55,7 +55,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                       endIndent: 15,
                     ),
                     InputField(
-                      controller: _assigmentDescController,
+                      controller: _assignmentDescController,
                       lableText: "Description",
                       hintText: "",
                       icon: const Icon(
@@ -74,16 +74,18 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
               height: 20,
             ),
             MyButton(
+              color: kPrimaryColor,
+             
                 text: "Submit",
                 onPrseed: () {
                   if (isUpdate == false) {
                     _addData();
-                    _assigmentNameController.clear();
-                    _assigmentDescController.clear();
+                    _assignmentNameController.clear();
+                    _assignmentDescController.clear();
                   } else {
                     _updateDta();
-                    _assigmentNameController.clear();
-                    _assigmentDescController.clear();
+                    _assignmentNameController.clear();
+                    _assignmentDescController.clear();
                   }
                 },
                 height: 40,
@@ -136,9 +138,9 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                                   assignmentId = row.assignmentId;
                                   isUpdate = true;
                                 });
-                                _assigmentNameController.text =
+                                _assignmentNameController.text =
                                     row.assignmentName!;
-                                _assigmentDescController.text =
+                                 _assignmentDescController.text =
                                     row.assignmentDesc!;
                               },
                               icon: const Icon(Icons.edit),
@@ -168,8 +170,8 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
 
   _addData() {
     assignmentViewModel = AssigmentViewModel(
-        assignmentName: _assigmentNameController.text,
-        assignmentDesc: _assigmentDescController.text);
+        assignmentName: _assignmentNameController.text,
+        assignmentDesc:  _assignmentDescController.text);
     assignmentViewModel.saveData();
     setState(() {});
   }
@@ -177,8 +179,8 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
   _updateDta() {
     assignmentViewModel = AssigmentViewModel(
         assignmentId: assignmentId,
-        assignmentName: _assigmentNameController.text,
-        assignmentDesc: _assigmentDescController.text);
+        assignmentName: _assignmentNameController.text,
+        assignmentDesc:  _assignmentDescController.text);
     assignmentViewModel.updateData();
     setState(() {
       isUpdate = false;
