@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
 import '../../view_model/view_model.dart';
-import '../../widgets/button_widget.dart';
+import '../../widgets/custom_button.dart';
 import '../../widgets/input_field.dart';
 
 class SemesterScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _SemesterScreenState extends State<SemesterScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text("Semester Mangement"),
+        title: const Text("Mange Semester "),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8),
@@ -55,7 +55,7 @@ class _SemesterScreenState extends State<SemesterScreen> {
               height: 30,
             ),
             MyButton(
-              color: kPrimaryColor,
+                color: kPrimaryColor,
                 text: "Submit",
                 onPrseed: () {
                   if (isUpdate == false) {

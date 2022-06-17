@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../view.dart';
-import '../../../utils/constants.dart';
+import '../../utils/constants.dart';
+import 'stu_sign_form.dart';
 
 class StudentLoginBody extends StatelessWidget {
   const StudentLoginBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: SingleChildScrollView(
+    return SingleChildScrollView(
       child: SizedBox(
         width: double.infinity,
         child: Padding(
@@ -21,17 +20,17 @@ class StudentLoginBody extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                "Welcome Back",
+                "STUDENT'S ",
                 style: TextStyle(
-                    fontSize: 28,
+                    fontSize: 25,
                     color: kPrimaryColor,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.w600),
               ),
               SizedBox(
-                height: 8,
+                height: 5,
               ),
               Text(
-                "Sign in with your email and password ",
+                " Sign in with your email and password ",
                 style: TextStyle(
                     fontSize: 18,
                     color: kTextColor,
@@ -46,6 +45,6 @@ class StudentLoginBody extends StatelessWidget {
           ),
         ),
       ),
-    ));
+    );
   }
 }

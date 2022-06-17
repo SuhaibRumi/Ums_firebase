@@ -23,23 +23,27 @@ class SignField extends StatelessWidget {
         style: const TextStyle(color: kTextColor),
         controller: controller,
         decoration: InputDecoration(
-          fillColor: Colors.grey[300],
+          fillColor: Colors.grey[100],
           filled: true,
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(17),
+              borderRadius: BorderRadius.circular(50),
               borderSide: const BorderSide(color: kTextColor),
               gapPadding: 10),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(17),
+              borderRadius: BorderRadius.circular(20),
               borderSide: const BorderSide(color: kTextColor),
               gapPadding: 10),
           border: InputBorder.none,
           labelText: lableText,
           prefixIcon: icon,
           labelStyle: const TextStyle(
-              fontSize: 18, fontWeight: FontWeight.w500, color: kTextColor),
+              fontSize: 20, fontWeight: FontWeight.w500, color: kCardColor),
           hintText: hintText,
-          hintStyle: const TextStyle(fontSize: 12, color: kTextColor),
+          hintStyle: const TextStyle(
+            fontSize: 14,
+            color: kTextColor,
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ),
     );

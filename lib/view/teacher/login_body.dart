@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
-import 'sign_form.dart';
+import 'teacher_sign_form.dart';
 
 class TeacherLoginBody extends StatelessWidget {
   const TeacherLoginBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: SingleChildScrollView(
+    return SingleChildScrollView(
       child: SizedBox(
         width: double.infinity,
         child: Padding(
@@ -21,7 +20,7 @@ class TeacherLoginBody extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                "Welcome Back",
+                "TEACHER'S",
                 style: TextStyle(
                     fontSize: 28,
                     color: kPrimaryColor,
@@ -44,6 +43,6 @@ class TeacherLoginBody extends StatelessWidget {
           ),
         ),
       ),
-    ));
+    );
   }
 }

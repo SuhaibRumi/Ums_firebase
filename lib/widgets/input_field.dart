@@ -27,7 +27,7 @@ class InputField extends StatelessWidget {
           labelText: lableText,
           prefixIcon: icon,
           labelStyle: const TextStyle(
-              fontSize: 16, fontWeight: FontWeight.w500, color: kTextColor),
+              fontSize: 16, fontWeight: FontWeight.w500, color: kCardColor),
           hintText: hintText,
           hintStyle: const TextStyle(fontSize: 14, color: kTextColor),
         ),

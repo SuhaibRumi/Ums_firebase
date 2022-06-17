@@ -21,7 +21,7 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text("Class Mangement"),
+        title: const Text(" Mange Class  "),
       ),
       body: SingleChildScrollView(
           padding: const EdgeInsets.all(12),
@@ -55,8 +55,7 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                 height: 20,
               ),
               MyButton(
-              color: kPrimaryColor,
-               
+                  color: kPrimaryColor,
                   text: "Save Data",
                   onPrseed: () {
                     if (isUpdate == false) {

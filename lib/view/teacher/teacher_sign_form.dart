@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
-import '../../widgets/student_sign_field.dart';
-import '../../widgets/button_widget.dart';
+import '../../widgets/custom_outline_button.dart';
+import '../../widgets/widget.dart';
+import 'teacher_profile.dart';
+import 'teacher_register.dart';
 
 class TeacherSignForm extends StatefulWidget {
   const TeacherSignForm({Key? key}) : super(key: key);
@@ -42,32 +44,29 @@ class _TeacherSignFormState extends State<TeacherSignForm> {
             ),
             MyButton(
                 color: kPrimaryColor,
-                text: 'Sign In',
-                onPrseed: () {},
+                text: 'Sign In'.toUpperCase(),
+                onPrseed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const TeacherProfile(),
+                      ));
+                },
                 height: 50,
                 width: MediaQuery.of(context).size.width - 60,
-                fontsize: 22),
+                fontsize: 18),
             const SizedBox(
               height: 30,
             ),
-            SizedBox(
-              height: 50,
-              width: MediaQuery.of(context).size.width - 60,
-              child: OutlinedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.grey[200]),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    "Register",
-                    style: TextStyle(fontSize: 18),
-                  )),
+            MyOutlineButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => TeacherRegister(),
+                    ));
+              },
+              text: "Register",
             ),
             const SizedBox(
               height: 30,
@@ -76,7 +75,10 @@ class _TeacherSignFormState extends State<TeacherSignForm> {
                 onPressed: () {},
                 child: const Text(
                   'Forget Password?',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ))
           ],
         ),

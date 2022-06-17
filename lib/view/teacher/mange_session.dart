@@ -53,7 +53,7 @@ class _SessionScreenState extends State<SessionScreen> {
                 height: 30,
               ),
               MyButton(
-                color: kPrimaryColor ,
+                  color: kPrimaryColor,
                   text: "Save Data",
                   onPrseed: () {
                     if (isUpdate) {

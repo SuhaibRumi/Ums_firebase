@@ -1,17 +1,6 @@
 export 'home_page.dart';
 export 'onboard_screen.dart';
 export 'splash_screen.dart';
-export 'teacher_ui/assignment_screen.dart';
-export 'teacher_ui/class_screen.dart';
-export 'teacher_ui/session_screen.dart';
-export 'teacher_ui/body_login.dart';
-export 'teacher_ui/login.dart';
-export 'teacher_ui/register.dart';
-export 'teacher_ui/sign_form.dart';
-export 'student_ui/student_screen.dart';
-export 'student_ui/login/stu_login.dart';
-export 'student_ui/student_screen.dart';
-export 'student_ui/stu_register.dart';
-export 'student_ui/login/stu_login_body.dart';
-export 'student_ui/login/stu_sign_form.dart';
-export '../widgets/student_sign_field.dart';
+
+
+

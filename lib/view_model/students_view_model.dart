@@ -46,7 +46,7 @@ class StudentsViewModel extends ChangeNotifier {
     String query =
         "insert into Students (studentName,studRoll,isActive,sessionId,classId,semesterId) values('$studentName','$studRoll','$isActive','$sessionId','$classId','$semesterId' )";
     var id = await dbhelper.rawInsert(query: query);
-    print(id);
+  
     notifyListeners();
   }
 
@@ -65,9 +65,10 @@ class StudentsViewModel extends ChangeNotifier {
 
   Future<List<StudentsViewModel>> getData() async {
     List<StudentsViewModel> students = [];
-    String query = "Select * from Students ";
+    String query =
+        " Select studId, studentName,studRoll, isActive, semesterName, sessionName, className from Students s left join Classes c on c.classId = s.classId left join Semester sm on sm.SemesterId = s.SemesterId left join Session ss on ss.sessionId = s.sessionId";
     var data = await dbhelper.getDataByQuery(query: query);
-    print(data);
+
     students = data.map((i) => StudentsViewModel.fromMap(i)).toList();
     notifyListeners();
     return students;

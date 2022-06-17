@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
-
-import 'view/splash_screen.dart';
+import 'package:uni_mangement_system/view/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,8 +18,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'University Management System',
       theme: ThemeData(
-        primaryColor: kCardColor,
-        backgroundColor: kBGColor,
+        primaryColor: kPrimaryColor,
+        backgroundColor: kCardColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         colorScheme: ColorScheme.fromSwatch()
             .copyWith(secondary: const Color(0xFF63CF93)),

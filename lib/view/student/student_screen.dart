@@ -39,10 +39,12 @@ class _StudentScreenState extends State<StudentScreen> {
 
   _loadData() {
     data = studentViewModel.getData();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    _loadData();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -106,12 +108,17 @@ class _StudentScreenState extends State<StudentScreen> {
                                     color: kSecondary)),
                             autofocus: true,
                             hint: const Text("Select Class"),
-                            items: snapshot.data!.map((cls) {
-                              return DropdownMenuItem(
-                                value: cls.classId,
-                                child: Text(cls.className ?? ""),
-                              );
-                            }).toList(),
+                            items: const [
+                              DropdownMenuItem(
+                                  value: "data", child: Text("data"))
+                            ]
+                            //  snapshot.data!.map((cls) {
+                            //   return DropdownMenuItem(
+                            //     value: cls.classId,
+                            //     child: Text(cls.className ?? ""),
+                            //   );
+                            // }).toList()
+                            ,
                             onChanged: (value) {
                               setState(() {
                                 classId = int.parse(value.toString());
@@ -197,8 +204,7 @@ class _StudentScreenState extends State<StudentScreen> {
               height: 20,
             ),
             MyButton(
-              color: kPrimaryColor,
-              
+                color: kPrimaryColor,
                 text: "Save Data",
                 onPrseed: () {
                   if (isUpdate == false) {
@@ -332,8 +338,9 @@ class _StudentScreenState extends State<StudentScreen> {
         classId: classId,
         isActive: true);
     studentViewModel.saveData();
-    _clearData();
+
     setState(() {});
+    _clearData();
   }
 
   _updateDta() {
@@ -347,7 +354,9 @@ class _StudentScreenState extends State<StudentScreen> {
       sessionName: _studSessionController.text,
     );
     studentViewModel.updateData();
-    _clearData();
+    setState(() {
+      isUpdate = false;
+    });
   }
 
   _deleteDta() {
