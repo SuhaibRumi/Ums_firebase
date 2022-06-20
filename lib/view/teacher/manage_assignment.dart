@@ -12,7 +12,7 @@ class AssignmentScreen extends StatefulWidget {
 }
 
 class _AssignmentScreenState extends State<AssignmentScreen> {
-  final _assignmentNameController = TextEditingController();
+  // final _assignmentNameController = TextEditingController();
   final _assignmentNoController = TextEditingController();
   var assignmentViewModel = AssigmentViewModel();
   int? assignmentId;
@@ -22,7 +22,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text("Mange Assignment "),
+        title: const Text("Manage Assignment "),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
@@ -40,32 +40,33 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 15.0),
-                      child: InputField(
-                        lableText: "Assignment Name",
-                        hintText: "Enter your assignment",
-                        icon: const Icon(
-                          Icons.library_books_rounded,
-                          color: kSecondary,
+                      child: DropdownButtonFormField(
+                        alignment: Alignment.center,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.book_outlined,
+                          ),
                         ),
-                        controller: _assignmentNameController,
+                        hint: const Text("Select Session"),
+                        items: [
+                          DropdownMenuItem(
+                              value: "data",
+                              child: Column(
+                                children: const <Widget>[
+                                  Text("2021-2023"),
+                                ],
+                              )),
+                        ],
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return "please select your Session";
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                    const Divider(
-                      indent: 15,
-                      endIndent: 15,
-                    ),
-                    InputField(
-                      lableText: "Assignments No:",
-                      hintText: "",
-                      icon: const Icon(
-                        Icons.library_books_rounded,
-                        color: kSecondary,
-                      ),
-                      controller: _assignmentNoController,
-                    ),
-                    const Divider(
-                      indent: 15,
-                      endIndent: 15,
                     ),
                     DropdownButtonFormField(
                       alignment: Alignment.center,
@@ -119,36 +120,28 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                         return null;
                       },
                     ),
-                    DropdownButtonFormField(
-                      alignment: Alignment.center,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.book_outlined,
-                        ),
+                    
+                    InputField(
+                      lableText: "Assignments No:",
+                      hintText: "",
+                      icon: const Icon(
+                        Icons.library_books_rounded,
+                        color: kSecondary,
                       ),
-                      hint: const Text("Select Session"),
-                      items: [
-                        DropdownMenuItem(
-                            value: "data",
-                            child: Column(
-                              children: const <Widget>[
-                                Text("2021-2023"),
-                              ],
-                            ))
-                      ],
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return "please select your Session";
-                        }
-                        return null;
-                      },
+                      controller: _assignmentNoController,
                     ),
-                    const SizedBox(
-                      height: 15,
+                    const Divider(
+                      thickness: 1.2,
                     ),
+                    TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "Upload file",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),),
                   ],
                 ),
               ),
@@ -158,7 +151,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
             ),
             MyButton(
                 color: kPrimaryColor,
-                text: "Submit",
+                text: "Save Data",
                 onPrseed: () {},
                 height: 40,
                 width: 110,

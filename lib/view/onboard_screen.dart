@@ -104,23 +104,23 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                       padding: const EdgeInsets.only(left: 40.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50.0),
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: kSecondary,
                       ),
                       child: Row(
                         children: const <Widget>[
                           Text(
                             "GET STARTED",
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w500,
+                              color: kCardColor,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(width: 16.0),
+                          // SizedBox(width: 8.0),
                           Icon(
                             Icons.keyboard_arrow_right,
-                            color: Colors.white,
-                            size: 24.0,
+                            color: kCardColor,
+                            size: 30.0,
                           ),
                         ],
                       ),

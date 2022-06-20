@@ -3,24 +3,22 @@ import 'package:uni_mangement_system/utils/constants.dart';
 
 import '../../widgets/widget.dart';
 
-class MangeQuize extends StatefulWidget {
-  const MangeQuize({Key? key}) : super(key: key);
+class ManageTimeTable extends StatefulWidget {
+  const ManageTimeTable({Key? key}) : super(key: key);
 
   @override
-  State<MangeQuize> createState() => _MangeQuizeState();
+  State<ManageTimeTable> createState() => _ManageTimeTableState();
 }
 
-class _MangeQuizeState extends State<MangeQuize> {
-  final _quizSubjectNameController = TextEditingController();
-  final _quizSubjectNoController = TextEditingController();
-
+class _ManageTimeTableState extends State<ManageTimeTable> {
+  final _timeTableController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           elevation: 2,
           backgroundColor: kPrimaryColor,
-          title: const Text("Mange Quize ")),
+          title: const Text("Send Time Tables")),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -37,32 +35,33 @@ class _MangeQuizeState extends State<MangeQuize> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 15.0),
-                      child: InputField(
-                        lableText: " Quiz Name",
-                        hintText: "Enter your Quiz",
-                        icon: const Icon(
-                          Icons.library_books_rounded,
-                          color: kSecondary,
+                      child: DropdownButtonFormField(
+                        alignment: Alignment.center,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.book_outlined,
+                          ),
                         ),
-                        controller: _quizSubjectNameController,
+                        hint: const Text("Select Session"),
+                        items: [
+                          DropdownMenuItem(
+                              value: "data",
+                              child: Column(
+                                children: const <Widget>[
+                                  Text("2021-2023"),
+                                ],
+                              )),
+                        ],
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return "please select your Session";
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                    const Divider(
-                      indent: 15,
-                      endIndent: 15,
-                    ),
-                    InputField(
-                      lableText: "Quiz No:",
-                      hintText: "",
-                      icon: const Icon(
-                        Icons.library_books_rounded,
-                        color: kSecondary,
-                      ),
-                      controller: _quizSubjectNoController,
-                    ),
-                    const Divider(
-                      indent: 15,
-                      endIndent: 15,
                     ),
                     DropdownButtonFormField(
                       alignment: Alignment.center,
@@ -116,35 +115,28 @@ class _MangeQuizeState extends State<MangeQuize> {
                         return null;
                       },
                     ),
-                    DropdownButtonFormField(
-                      alignment: Alignment.center,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.book_outlined,
+                    InputField(
+                      lableText: "Time Table",
+                      hintText: "Set your Time",
+                      icon: const Icon(
+                        Icons.library_books_rounded,
+                        color: kSecondary,
+                      ),
+                      controller: _timeTableController,
+                    ),
+                    const Divider(
+                      indent: 15,
+                      endIndent: 15,
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Upload file",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      hint: const Text("Select Session"),
-                      items: [
-                        DropdownMenuItem(
-                            value: "data",
-                            child: Column(
-                              children: const <Widget>[
-                                Text("2021-2023"),
-                              ],
-                            ))
-                      ],
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return "please select your Session";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
                     ),
                   ],
                 ),
@@ -155,7 +147,7 @@ class _MangeQuizeState extends State<MangeQuize> {
             ),
             MyButton(
                 color: kPrimaryColor,
-                text: "Upload Quiz",
+                text: "Save Data",
                 onPrseed: () {},
                 height: 40,
                 width: 120,

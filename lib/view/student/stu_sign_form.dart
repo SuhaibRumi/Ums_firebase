@@ -44,7 +44,7 @@ class _StudentSignFormState extends State<StudentSignForm> {
             ),
             MyButton(
                 color: kPrimaryColor,
-                text: 'SIGN IN',
+                text: 'Sign In',
                 onPrseed: () {
                   Navigator.push(
                       context,
@@ -53,7 +53,7 @@ class _StudentSignFormState extends State<StudentSignForm> {
                 },
                 height: 50,
                 width: MediaQuery.of(context).size.width - 60,
-                fontsize: 20),
+                fontsize: 18),
             const SizedBox(
               height: 30,
             ),

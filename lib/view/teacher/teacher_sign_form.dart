@@ -44,7 +44,7 @@ class _TeacherSignFormState extends State<TeacherSignForm> {
             ),
             MyButton(
                 color: kPrimaryColor,
-                text: 'Sign In'.toUpperCase(),
+                text: 'Sign In',
                 onPrseed: () {
                   Navigator.push(
                       context,
@@ -63,7 +63,7 @@ class _TeacherSignFormState extends State<TeacherSignForm> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => TeacherRegister(),
+                      builder: (_) => const TeacherRegister(),
                     ));
               },
               text: "Register",

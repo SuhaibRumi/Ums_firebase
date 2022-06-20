@@ -18,14 +18,16 @@ class StudentProfile extends StatelessWidget {
             textScaleFactor: 1.2,
           ),
         ),
-        body: Column(
-          children: <Widget>[
-            StudentDashboard(
-              heading: "Welcome Student".toUpperCase(),
-              imgUrl: 'assets/img/user-1.jpg',
-              username: "Arsalnali@gmail.com",
-            ),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              StudentDashboard(
+                heading: "Welcome Student".toUpperCase(),
+                imgUrl: 'assets/img/user-1.jpg',
+                username: "Arsalnali@gmail.com",
+              ),
+            ],
+          ),
         ),
         drawer: const StudentDrawer(),
       ),

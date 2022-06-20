@@ -26,7 +26,11 @@ class MyOutlineButton extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             text,
-            style: const TextStyle(fontSize: 18, color: Colors.white),
+            style: const TextStyle(
+                fontSize: 18,
+                color: kPrimaryColor,
+                letterSpacing: 1.1,
+                fontWeight: FontWeight.w500),
           )),
     );
   }

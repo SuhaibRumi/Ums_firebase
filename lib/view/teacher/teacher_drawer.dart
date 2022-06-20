@@ -91,15 +91,17 @@ class TeacherDrawer extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const MangeQuize())),
+                  MaterialPageRoute(builder: (_) => const ManageQuize())),
               leading: const Icon(Icons.menu_book, color: kPrimaryColor)),
           ListTile(
               title: const Text(
                 "Mange Notification",
                 style: TextStyle(fontSize: 16),
               ),
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const MangeNotification())),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const ManageNotification())),
               leading: const Icon(Icons.menu_book, color: kPrimaryColor)),
           ListTile(
               title: const Text(
@@ -107,7 +109,7 @@ class TeacherDrawer extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const MangeTimeTable())),
+                  MaterialPageRoute(builder: (_) => const ManageTimeTable())),
               leading: const Icon(Icons.menu_book, color: kPrimaryColor)),
           ListTile(
               title: const Text(
@@ -115,7 +117,7 @@ class TeacherDrawer extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const MangeCourse())),
+                  MaterialPageRoute(builder: (_) => const ManageCourse())),
               leading: const Icon(Icons.manage_search_outlined,
                   color: kPrimaryColor)),
           ListTile(
@@ -123,7 +125,7 @@ class TeacherDrawer extends StatelessWidget {
                 "Logout",
                 style: TextStyle(fontSize: 16),
               ),
-              onTap: () => Navigator.push(context,
+              onTap: () => Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (_) => const TeacherLogin())),
               leading: const Icon(Icons.logout_outlined, color: kPrimaryColor)),
         ],

@@ -17,14 +17,16 @@ class TeacherProfile extends StatelessWidget {
             textScaleFactor: 1.2,
           ),
         ),
-        body: Column(
-          children: const <Widget>[
-            TeacherDashboard(
-              imgUrl: "assets/img/user-1.jpg",
-              heading: "Welcome Back!",
-              username: "Sharyzahid@gmail.com ",
-            ),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: const <Widget>[
+              TeacherDashboard(
+                imgUrl: "assets/img/user-1.jpg",
+                heading: "Welcome Back!",
+                username: "Sharyzahid@gmail.com ",
+              ),
+            ],
+          ),
         ),
         drawer: const TeacherDrawer(),
       ),

@@ -3,22 +3,23 @@ import 'package:uni_mangement_system/utils/constants.dart';
 
 import '../../widgets/widget.dart';
 
-class MangeTimeTable extends StatefulWidget {
-  const MangeTimeTable({Key? key}) : super(key: key);
+class ManageNotification extends StatefulWidget {
+  const ManageNotification({Key? key}) : super(key: key);
 
   @override
-  State<MangeTimeTable> createState() => _MangeTimeTableState();
+  State<ManageNotification> createState() => _ManageNotificationState();
 }
 
-class _MangeTimeTableState extends State<MangeTimeTable> {
-  final _timeTableController = TextEditingController();
+class _ManageNotificationState extends State<ManageNotification> {
+  final _notificationController = TextEditingController();
+  final _notificationDescController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           elevation: 2,
           backgroundColor: kPrimaryColor,
-          title: const Text("Send Time Tables")),
+          title: const Text("Manage Notification")),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -35,19 +36,33 @@ class _MangeTimeTableState extends State<MangeTimeTable> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 15.0),
-                      child: InputField(
-                        lableText: "Time Table",
-                        hintText: "Set your Time",
-                        icon: const Icon(
-                          Icons.library_books_rounded,
-                          color: kSecondary,
+                      child: DropdownButtonFormField(
+                        alignment: Alignment.center,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.book_outlined,
+                          ),
                         ),
-                        controller: _timeTableController,
+                        hint: const Text("Select Session"),
+                        items: [
+                          DropdownMenuItem(
+                              value: "data",
+                              child: Column(
+                                children: const <Widget>[
+                                  Text("2021-2023"),
+                                ],
+                              )),
+                        ],
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return "please select your Session";
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                    const Divider(
-                      indent: 15,
-                      endIndent: 15,
                     ),
                     DropdownButtonFormField(
                       alignment: Alignment.center,
@@ -101,35 +116,40 @@ class _MangeTimeTableState extends State<MangeTimeTable> {
                         return null;
                       },
                     ),
-                    DropdownButtonFormField(
-                      alignment: Alignment.center,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.book_outlined,
+                    InputField(
+                      lableText: "Title",
+                      hintText: "Enter Notification",
+                      icon: const Icon(
+                        Icons.library_books_rounded,
+                        color: kSecondary,
+                      ),
+                      controller: _notificationController,
+                    ),
+                    const Divider(
+                      indent: 15,
+                      endIndent: 15,
+                    ),
+                    InputField(
+                      lableText: " Notification Description:",
+                      hintText: "",
+                      icon: const Icon(
+                        Icons.library_books_rounded,
+                        color: kSecondary,
+                      ),
+                      controller: _notificationDescController,
+                    ),
+                    const Divider(
+                      thickness: 1.2,
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Upload file",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      hint: const Text("Select Session"),
-                      items: [
-                        DropdownMenuItem(
-                            value: "data",
-                            child: Column(
-                              children: const <Widget>[
-                                Text("2021-2023"),
-                              ],
-                            ))
-                      ],
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return "please select your Session";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
                     ),
                   ],
                 ),
@@ -140,10 +160,10 @@ class _MangeTimeTableState extends State<MangeTimeTable> {
             ),
             MyButton(
                 color: kPrimaryColor,
-                text: "Upload file",
+                text: "Save Data",
                 onPrseed: () {},
                 height: 40,
-                width: 120,
+                width: 150,
                 fontsize: 14),
             const SizedBox(
               height: 10,

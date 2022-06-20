@@ -3,22 +3,24 @@ import 'package:uni_mangement_system/utils/constants.dart';
 
 import '../../widgets/widget.dart';
 
-class MangeNotification extends StatefulWidget {
-  const MangeNotification({Key? key}) : super(key: key);
+class ManageQuize extends StatefulWidget {
+  const ManageQuize({Key? key}) : super(key: key);
 
   @override
-  State<MangeNotification> createState() => _MangeNotificationState();
+  State<ManageQuize> createState() => _ManageQuizeState();
 }
 
-class _MangeNotificationState extends State<MangeNotification> {
-  final _titleController = TextEditingController();
+class _ManageQuizeState extends State<ManageQuize> {
+  final _quizSubjectNameController = TextEditingController();
+  final _quizSubjectNoController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           elevation: 2,
           backgroundColor: kPrimaryColor,
-          title: const Text("Mange Notification")),
+          title: const Text("Mange Quize ")),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -35,19 +37,33 @@ class _MangeNotificationState extends State<MangeNotification> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 15.0),
-                      child: InputField(
-                        lableText: "Title",
-                        hintText: "Enter Notification",
-                        icon: const Icon(
-                          Icons.library_books_rounded,
-                          color: kSecondary,
+                      child: DropdownButtonFormField(
+                        alignment: Alignment.center,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.book_outlined,
+                          ),
                         ),
-                        controller: _titleController,
+                        hint: const Text("Select Session"),
+                        items: [
+                          DropdownMenuItem(
+                              value: "data",
+                              child: Column(
+                                children: const <Widget>[
+                                  Text("2021-2023"),
+                                ],
+                              )),
+                        ],
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return "please select your Session";
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                    const Divider(
-                      indent: 15,
-                      endIndent: 15,
                     ),
                     DropdownButtonFormField(
                       alignment: Alignment.center,
@@ -101,35 +117,31 @@ class _MangeNotificationState extends State<MangeNotification> {
                         return null;
                       },
                     ),
-                    DropdownButtonFormField(
-                      alignment: Alignment.center,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.book_outlined,
+                    const Divider(
+                      indent: 15,
+                      endIndent: 15,
+                    ),
+                    InputField(
+                      lableText: "Quiz No:",
+                      hintText: "",
+                      icon: const Icon(
+                        Icons.library_books_rounded,
+                        color: kSecondary,
+                      ),
+                      controller: _quizSubjectNoController,
+                    ),
+                    const Divider(
+                      thickness: 1.2,
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Upload file",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      hint: const Text("Select Session"),
-                      items: [
-                        DropdownMenuItem(
-                            value: "data",
-                            child: Column(
-                              children: const <Widget>[
-                                Text("2021-2023"),
-                              ],
-                            ))
-                      ],
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return "please select your Session";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
                     ),
                   ],
                 ),
@@ -140,10 +152,10 @@ class _MangeNotificationState extends State<MangeNotification> {
             ),
             MyButton(
                 color: kPrimaryColor,
-                text: "Send notification",
+                text: "Save Data",
                 onPrseed: () {},
                 height: 40,
-                width: 150,
+                width: 120,
                 fontsize: 14),
             const SizedBox(
               height: 10,

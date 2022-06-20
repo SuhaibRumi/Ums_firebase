@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
 import '../../widgets/widget.dart';
 
-class MangeCourse extends StatefulWidget {
-  const MangeCourse({Key? key}) : super(key: key);
+class ManageCourse extends StatefulWidget {
+  const ManageCourse({Key? key}) : super(key: key);
 
   @override
-  State<MangeCourse> createState() => _MangeCourseState();
+  State<ManageCourse> createState() => _ManageCourseState();
 }
 
-class _MangeCourseState extends State<MangeCourse> {
+class _ManageCourseState extends State<ManageCourse> {
   final _courseNameController = TextEditingController();
   final _courseNoController = TextEditingController();
 
@@ -18,7 +18,7 @@ class _MangeCourseState extends State<MangeCourse> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
-          title: const Text("Mange Course"),
+          title: const Text("Manage Course"),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(12),
@@ -36,30 +36,33 @@ class _MangeCourseState extends State<MangeCourse> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 15.0),
-                        child: InputField(
-                          lableText: "Course Name",
-                          hintText: "Enter your assignment",
-                          icon: const Icon(
-                            Icons.library_books_rounded,
+                        child: DropdownButtonFormField(
+                          alignment: Alignment.center,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.book_outlined,
+                            ),
                           ),
-                          controller: _courseNameController ,
+                          hint: const Text("Select Session"),
+                          items: [
+                            DropdownMenuItem(
+                                value: "data",
+                                child: Column(
+                                  children: const <Widget>[
+                                    Text("2021-2023"),
+                                  ],
+                                )),
+                          ],
+                          onChanged: (value) {
+                            setState(() {});
+                          },
+                          validator: (value) {
+                            if (value == null) {
+                              return "please select your Session";
+                            }
+                            return null;
+                          },
                         ),
-                      ),
-                      const Divider(
-                        indent: 15,
-                        endIndent: 15,
-                      ),
-                      InputField(
-                        lableText: "Course No:",
-                        hintText: "",
-                        icon: const Icon(
-                          Icons.numbers_outlined,
-                        ),
-                        controller: _courseNoController,
-                      ),
-                      const Divider(
-                        indent: 15,
-                        endIndent: 15,
                       ),
                       DropdownButtonFormField(
                         alignment: Alignment.center,
@@ -113,32 +116,27 @@ class _MangeCourseState extends State<MangeCourse> {
                           return null;
                         },
                       ),
-                      DropdownButtonFormField(
-                        alignment: Alignment.center,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.book_outlined,
+                      InputField(
+                        lableText: "Course Name",
+                        hintText: "Enter your assignment",
+                        icon: const Icon(
+                          Icons.library_books_rounded,
+                        ),
+                        controller: _courseNameController,
+                      ),
+                      const Divider(
+                        indent: 15,
+                        endIndent: 15,
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "Upload file",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        hint: const Text("Select Session"),
-                        items: [
-                          DropdownMenuItem(
-                              value: "data",
-                              child: Column(
-                                children: const <Widget>[
-                                  Text("2021-2023"),
-                                ],
-                              ))
-                        ],
-                        onChanged: (value) {
-                          setState(() {});
-                        },
-                        validator: (value) {
-                          if (value == null) {
-                            return "please select your Session";
-                          }
-                          return null;
-                        },
                       ),
                     ],
                   ),
@@ -157,7 +155,6 @@ class _MangeCourseState extends State<MangeCourse> {
               const SizedBox(
                 height: 50,
               ),
-              
             ],
           ),
         ));

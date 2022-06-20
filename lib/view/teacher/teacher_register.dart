@@ -25,9 +25,9 @@ class _TeacherRegisterState extends State<TeacherRegister> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: SizedBox(
-            // color: Colors.white,
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             child: Column(children: <Widget>[
@@ -110,12 +110,6 @@ class _TeacherRegisterState extends State<TeacherRegister> {
                           Icons.design_services,
                         ),
                       ),
-                      const Divider(
-                        thickness: 2,
-                        endIndent: 15,
-                        indent: 15,
-                      ),
-                      
                     ],
                   ),
                 ),

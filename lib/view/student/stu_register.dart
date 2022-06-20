@@ -17,13 +17,13 @@ class _StudentRegisterState extends State<StudentRegister> {
   final _studentNameController = TextEditingController();
   final _studentEmailController = TextEditingController();
   final _studentPasswordController = TextEditingController();
-  final _studentSessionController = TextEditingController();
   final _studentRollNoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
@@ -114,6 +114,46 @@ class _StudentRegisterState extends State<StudentRegister> {
                           endIndent: 15,
                           indent: 15,
                         ),
+                        InputField(
+                          controller: _studentRollNoController,
+                          lableText: "Reg No",
+                          hintText: "Enter your Reg no",
+                          icon: const Icon(
+                            Icons.star_purple500_sharp,
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 2,
+                          endIndent: 15,
+                          indent: 15,
+                        ),
+                        DropdownButtonFormField(
+                          alignment: Alignment.center,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.book_outlined,
+                            ),
+                          ),
+                          hint: const Text("Select Session"),
+                          items: [
+                            DropdownMenuItem(
+                                value: "data",
+                                child: Column(
+                                  children: const <Widget>[
+                                    Text("2021-2023"),
+                                  ],
+                                )),
+                          ],
+                          onChanged: (value) {
+                            setState(() {});
+                          },
+                          validator: (value) {
+                            if (value == null) {
+                              return "please select your Session";
+                            }
+                            return null;
+                          },
+                        ),
                         DropdownButtonFormField(
                           alignment: Alignment.center,
                           decoration: const InputDecoration(
@@ -162,33 +202,6 @@ class _StudentRegisterState extends State<StudentRegister> {
                           validator: (value) {
                             if (value == null) {
                               return "please select your Semester";
-                            }
-                            return null;
-                          },
-                        ),
-                        DropdownButtonFormField(
-                          alignment: Alignment.center,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.book_outlined,
-                            ),
-                          ),
-                          hint: const Text("Select Session"),
-                          items: [
-                            DropdownMenuItem(
-                                value: "data",
-                                child: Column(
-                                  children: const <Widget>[
-                                    Text("2021-2023"),
-                                  ],
-                                ))
-                          ],
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          validator: (value) {
-                            if (value == null) {
-                              return "please select your Session";
                             }
                             return null;
                           },
