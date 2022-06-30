@@ -1,49 +1,55 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:uni_mangement_system/utils/db_helper.dart';
+import 'package:uni_mangement_system/models/class_model.dart';
+
+import 'package:uni_mangement_system/utils/firebase_utility.dart';
 
 class ClassViewModel extends ChangeNotifier {
-  int? classId;
+  String? classId = "";
   String? className = "";
-
-  var dbHelper = DBHelper.instance;
 
   ClassViewModel({
     this.classId,
     this.className,
   });
 
-  factory ClassViewModel.fromMap(Map map) {
+  factory ClassViewModel.fromMap(DocumentSnapshot map) {
+    var cls = Class.fromMap(map);
+    // print(map);
     return ClassViewModel(
-      classId: map["classId"],
-      className: map["className"],
+      classId: cls.classId,
+      className: cls.className,
     );
   }
 
   saveData() async {
-    String query = "Insert into Classes (className) values('$className')";
-    var id = await dbHelper.rawInsert(query: query);
-    notifyListeners();
+    var cls = Class(className: className);
+    // print(cls);
+    try {
+      await FirebaseUtility.addData(collection: "class", doc: cls.toMap());
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 
   updateData() async {
-    String query =
-        "Update Classes set className = '$className' where classId = '$classId'";
-    var id = await dbHelper.rawUpdate(query: query);
+    var cls = Class(className: className);
+    await FirebaseUtility.updateData(
+        collection: 'class', docId: classId!, doc: cls.toMap());
     notifyListeners();
   }
 
   deleteData() async {
-    String query = "delete from Classes where classId = '$classId'";
-    var id = await dbHelper.rawDelete(query: query);
+    var cls = Class(classId: classId);
+    await FirebaseUtility.deleteData(collection: "class", docId: classId!);
     notifyListeners();
   }
 
-  Future<List<ClassViewModel>> getData() async {
-    List<ClassViewModel> classes = [];
-    String query = "Select * from Classes";
-    var data = await dbHelper.getDataByQuery(query: query);
-    classes = data.map((i) => ClassViewModel.fromMap(i)).toList();
+  getData() {
+    var data =
+        FirebaseUtility.getData(collection: "class", orderBy: "className");
     notifyListeners();
-    return classes;
+    return data;
   }
 }

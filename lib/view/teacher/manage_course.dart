@@ -121,6 +121,7 @@ class _ManageCourseState extends State<ManageCourse> {
                         hintText: "Enter your assignment",
                         icon: const Icon(
                           Icons.library_books_rounded,
+                          
                         ),
                         controller: _courseNameController,
                       ),

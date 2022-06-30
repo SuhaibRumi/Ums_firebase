@@ -5,9 +5,14 @@ class CardNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
-      title: Text("Test"),
-      subtitle: Text("1 #ch Data Base"),
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 8,
+      shadowColor: Colors.grey[500],
+      child: const ListTile(
+        title: Text("Test"),
+        subtitle: Text("1 #ch Data Base"),
+      ),
     );
   }
 }

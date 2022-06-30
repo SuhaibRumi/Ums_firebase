@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "165057550345",
+    "project_id": "ums-app-4a3c8",
+    "storage_bucket": "ums-app-4a3c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165057550345:android:9ef644c0b0b4367c9c80d8",
+        "android_client_info": {
+          "package_name": "com.example.uni_mangement_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165057550345-0kqlq2u7fd35a646hcunvl90vrramamq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw1rsHY7KpLuhsboFSN3eKsFdBLCKLHtM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165057550345-0kqlq2u7fd35a646hcunvl90vrramamq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

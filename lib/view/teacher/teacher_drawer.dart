@@ -46,7 +46,7 @@ class TeacherDrawer extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
             leading: const Icon(
-              Icons.group,
+              Icons.group_outlined,
               color: kPrimaryColor,
             ),
             onTap: () {
@@ -62,7 +62,7 @@ class TeacherDrawer extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
             leading: const Icon(
-              Icons.description,
+              Icons.bookmark_add_outlined,
               color: kPrimaryColor,
             ),
             onTap: () => Navigator.push(context,
@@ -79,12 +79,22 @@ class TeacherDrawer extends StatelessWidget {
           ),
           ListTile(
               title: const Text(
+                "Mange Course Content",
+                style: TextStyle(fontSize: 16),
+              ),
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const ManageCourse())),
+              leading: const Icon(Icons.manage_search_outlined,
+                  color: kPrimaryColor)),
+          ListTile(
+              title: const Text(
                 "Mange Assignment",
                 style: TextStyle(fontSize: 16),
               ),
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const AssignmentScreen())),
-              leading: const Icon(Icons.bookmark_add, color: kPrimaryColor)),
+              leading:
+                  const Icon(Icons.description_outlined, color: kPrimaryColor)),
           ListTile(
               title: const Text(
                 "Mange Quize",
@@ -92,7 +102,8 @@ class TeacherDrawer extends StatelessWidget {
               ),
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const ManageQuize())),
-              leading: const Icon(Icons.menu_book, color: kPrimaryColor)),
+              leading:
+                  const Icon(Icons.ads_click_outlined, color: kPrimaryColor)),
           ListTile(
               title: const Text(
                 "Mange Notification",
@@ -102,7 +113,8 @@ class TeacherDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (_) => const ManageNotification())),
-              leading: const Icon(Icons.menu_book, color: kPrimaryColor)),
+              leading: const Icon(Icons.notifications_outlined,
+                  color: kPrimaryColor)),
           ListTile(
               title: const Text(
                 "Mange Time Table",
@@ -110,16 +122,8 @@ class TeacherDrawer extends StatelessWidget {
               ),
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const ManageTimeTable())),
-              leading: const Icon(Icons.menu_book, color: kPrimaryColor)),
-          ListTile(
-              title: const Text(
-                "Mange Course Content",
-                style: TextStyle(fontSize: 16),
-              ),
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const ManageCourse())),
-              leading: const Icon(Icons.manage_search_outlined,
-                  color: kPrimaryColor)),
+              leading:
+                  const Icon(Icons.punch_clock_outlined, color: kPrimaryColor)),
           ListTile(
               title: const Text(
                 "Logout",

@@ -10,7 +10,7 @@ class TeacherLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.grey[100],
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: kCardColor,

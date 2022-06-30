@@ -27,14 +27,13 @@ class _StudentRegisterState extends State<StudentRegister> {
         body: SingleChildScrollView(
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
             child: Column(
               children: <Widget>[
                 Image.asset(
                   "assets/img/splash.png",
                   fit: BoxFit.contain,
                   height: 180,
-                  width: MediaQuery.of(context).size.width,
+                  width: MediaQuery.of(context).size.width - 50,
                 ),
                 const SizedBox(
                   height: 10,
@@ -44,7 +43,7 @@ class _StudentRegisterState extends State<StudentRegister> {
                   child: Text(
                     "Student Register".toUpperCase(),
                     style: const TextStyle(
-                        fontSize: 23,
+                        fontSize: 22,
                         color: kTextColor,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.2),
@@ -210,14 +209,17 @@ class _StudentRegisterState extends State<StudentRegister> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 MyButton(
                     text: "Register".toUpperCase(),
                     onPrseed: () {},
                     height: 50,
                     width: MediaQuery.of(context).size.width - 40,
                     fontsize: 18,
-                    color: kPrimaryColor)
+                    color: kPrimaryColor),
+                const SizedBox(
+                  height: 20,
+                )
               ],
             ),
           ),

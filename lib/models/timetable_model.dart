@@ -1,6 +1,6 @@
-class Quiz {
-  final String? quizId;
-  final String? quizNo;
+class TimeTable {
+  final String? timeTableId;
+  final String? timeTableDesc;
   final String? sessionId;
   final String? classId;
   final String? semesterId;
@@ -8,19 +8,20 @@ class Quiz {
   final String? semesterName;
   final String? className;
 
-  Quiz(
-      {this.quizId,
-      this.quizNo,
+  TimeTable(
+      {this.timeTableId,
+      this.timeTableDesc,
       this.sessionId,
       this.classId,
       this.semesterId,
       this.sessionName,
       this.semesterName,
       this.className});
-  factory Quiz.fromMap(Map map) {
-    return Quiz(
-      quizId: map['quizId'],
-      quizNo: map['quizNo'],
+
+  factory TimeTable.fromMap(Map map) {
+    return TimeTable(
+      timeTableId: map['timeTableId'],
+      timeTableDesc: map['timeTableDesc'],
       classId: map['classId'],
       className: map['className'],
       sessionId: map['semesterId'],
@@ -32,25 +33,26 @@ class Quiz {
   toMap() {
     Map<String, dynamic> row = {};
     row = {
-      'quizId':quizId,
-      'quizNo':quizNo,
-       'classId': classId,
+      'timeTableId': timeTableId,
+      'timeTableDesc': timeTableDesc,
+      'classId': classId,
       'className': className,
       'sessionId': sessionId,
       'sessionName': sessionName,
       'semesterId': semesterId,
       'semesterName': semesterName,
     };
+    return row;
   }
-
 }
-class QuizList {
-  final List<Quiz> quizList;
-  QuizList({required this.quizList});
 
-  factory QuizList.fromMap(List data) {
-    List<Quiz> quizes = [];
-    quizes = data.map((i) => Quiz.fromMap(i)).toList();
-    return QuizList(quizList: quizes);
+class TimeTableList {
+  final List<TimeTable> timeTableList;
+  TimeTableList({required this.timeTableList});
+
+  factory TimeTableList.fromMap(List data) {
+    List<TimeTable> timeTable = [];
+    timeTable = data.map((i) => TimeTable.fromMap(i)).toList();
+    return TimeTableList(timeTableList: timeTable);
   }
 }

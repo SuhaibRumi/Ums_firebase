@@ -1,0 +1,35 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class Session {
+  final String? sessionId;
+  final String? sessionName;
+
+  Session({this.sessionId, this.sessionName});
+
+  factory Session.fromMap(DocumentSnapshot map) {
+    return Session(
+      sessionId: map.id,
+      sessionName: map['sessionName'],
+    );
+  }
+  toMap() {
+    Map<String, dynamic> row = {};
+    row = {
+      
+      'sessionName': sessionName,
+    };
+    return row;
+  }
+}
+
+class SessionList {
+  final List<Session> sessionList;
+
+  SessionList({required this.sessionList});
+
+  factory SessionList.fromMap(List data) {
+    List<Session> session = [];
+    session = data.map((e) => Session.fromMap(e)).toList();
+    return SessionList(sessionList: session);
+  }
+}

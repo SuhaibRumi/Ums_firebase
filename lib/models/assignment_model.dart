@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Assignment {
   final String? assignmentId;
   final String? assignmentNo;
@@ -18,37 +20,33 @@ class Assignment {
       this.assignmentId,
       this.assignmentNo});
 
-  factory Assignment.fromMap(Map map) {
+  factory Assignment.fromMap(DocumentSnapshot map) {
     return Assignment(
-      assignmentId: map['id'],
+      assignmentId: map.id,
       assignmentNo: map['assignmentNo'],
-      classId: map['classId'],
+      classId: map.id,
       className: map['className'],
-      sessionId: map['semesterId'],
+      sessionId: map.id,
       sessionName: map['sessionName'],
-      semesterId: map['semesterId'],
+      semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }
   toMap() {
     Map<String, dynamic> row = {};
     row = {
-      'assignmentId': assignmentId,
       'assignmentNo': assignmentNo,
-      'classId': classId,
       'className': className,
-      'sessionId': sessionId,
       'sessionName': sessionName,
-      'semesterId': semesterId,
       'semesterName': semesterName,
     };
+    return row;
   }
 }
 
 class AssignmentList {
   final List<Assignment> assignmentList;
   AssignmentList({required this.assignmentList});
-
   factory AssignmentList.fromMap(List data) {
     List<Assignment> assignments = [];
     assignments = data.map((i) => Assignment.fromMap(i)).toList();

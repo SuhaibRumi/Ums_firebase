@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
 import '../../view_model/view_model.dart';
@@ -14,7 +15,7 @@ class SemesterScreen extends StatefulWidget {
 class _SemesterScreenState extends State<SemesterScreen> {
   final _semeterController = TextEditingController();
   var semesterViewModel = SemesterViewModel();
-  int? semesterId;
+  String? semesterId;
   bool isUpdate = false;
 
   @override
@@ -72,11 +73,10 @@ class _SemesterScreenState extends State<SemesterScreen> {
             const SizedBox(
               height: 20,
             ),
-            FutureBuilder(
-                future: semesterViewModel.getdata(),
-                builder:
-                    (context, AsyncSnapshot<List<SemesterViewModel>> snapshot) {
-                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            StreamBuilder<QuerySnapshot>(
+                stream: semesterViewModel.getData(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                     return const Center(
                       child: Text("No Data Found"),
                     );
@@ -86,22 +86,20 @@ class _SemesterScreenState extends State<SemesterScreen> {
                       child: Text("Something went Wrong"),
                     );
                   }
-                  List<SemesterViewModel> semester = snapshot.data!;
+                  List<SemesterViewModel> semester = snapshot.data!.docs
+                      .map((e) => SemesterViewModel.fromMap(e))
+                      .toList();
                   return SizedBox(
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: DataTable(
                         columns: const [
-                          DataColumn(label: Text("Semester ID")),
                           DataColumn(label: Text("Semester Name")),
                           DataColumn(label: Text("Edit")),
                           DataColumn(label: Text("delete")),
                         ],
                         rows: semester.map((row) {
                           return DataRow(cells: [
-                            DataCell(
-                              Text(row.semesterId.toString()),
-                            ),
                             DataCell(
                               Text(row.semesterName ?? ""),
                             ),

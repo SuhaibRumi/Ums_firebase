@@ -1,53 +1,89 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uni_mangement_system/models/assignment_model.dart';
 
-import '../utils/db_helper.dart';
+import '../utils/utlis.dart';
 
 class AssigmentViewModel extends ChangeNotifier {
-  int? assignmentId;
-  String? assignmentDesc = "";
-  String? assignmentName = "";
+  final String? assignmentId;
+  final String? assignmentNo;
+  final String? sessionId;
+  final String? classId;
+  final String? semesterId;
+  final String? sessionName;
+  final String? semesterName;
+  final String? className;
 
-  var dbhelper = DBHelper.instance;
+  AssigmentViewModel(
+      {this.assignmentId,
+      this.assignmentNo,
+      this.sessionId,
+      this.classId,
+      this.semesterId,
+      this.sessionName,
+      this.semesterName,
+      this.className});
 
-  AssigmentViewModel({
-    this.assignmentName,
-    this.assignmentDesc,
-    this.assignmentId,
-  });
-  factory AssigmentViewModel.fromMap(Map map) {
+  factory AssigmentViewModel.fromMap(DocumentSnapshot map) {
+    var assignments = Assignment.fromMap(map);
+    // print(map);
     return AssigmentViewModel(
-      assignmentName: map['assignmentName'],
-      assignmentDesc: map['assignmentDesc'],
-      assignmentId: map['assignmentId'],
+      assignmentId: assignments.assignmentId,
+      assignmentNo: assignments.assignmentNo,
+      semesterId: assignments.semesterId,
+      semesterName: assignments.semesterName,
+      sessionId: assignments.sessionId,
+      sessionName: assignments.sessionName,
+      classId: assignments.classId,
+      className: assignments.className,
     );
   }
+
   saveData() async {
-    String query =
-        "Insert into Assignments (assignmentName,assignmentDesc) values ('$assignmentName','$assignmentDesc')";
-    var id = await dbhelper.rawInsert(query: query);
+    var assignments = Assignment(
+        assignmentNo: assignmentNo,
+        semesterName: semesterName,
+        sessionName: sessionName,
+        className: className);
+    try {
+      await FirebaseUtility.addData(
+          collection: "assignment", doc: assignments.toMap());
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
     notifyListeners();
   }
 
   updateData() async {
-    String query =
-        "Update Assignments set assignmentName  = '$assignmentName', assignmentDesc = '$assignmentDesc' where assignmentId = '$assignmentId'";
-    var id = await dbhelper.rawUpdate(query: query);
+    var assignments = Assignment(
+        assignmentNo: assignmentNo,
+        semesterName: semesterName,
+        sessionName: sessionName,
+        className: className);
+    await FirebaseUtility.updateData(
+        collection: 'assignment',
+        docId: assignmentId!,
+        doc: assignments.toMap());
     notifyListeners();
   }
 
   deleteData() async {
-    String query =
-        "delete from Assignments where assignmentId = '$assignmentId'";
-    var id = await dbhelper.rawDelete(query: query);
+    var assignments = Assignment(
+        assignmentId: assignmentId,
+       
+        );
+  await FirebaseUtility.deleteData(collection: "assignment", docId: assignmentId!);
+    notifyListeners();
     notifyListeners();
   }
 
-  Future<List<AssigmentViewModel>> getData() async {
-    List<AssigmentViewModel> assignment = [];
-    String query = "Select * from Assignments";
-    var data = await dbhelper.getDataByQuery(query: query);
-    assignment = data.map((i) => AssigmentViewModel.fromMap(i)).toList();
+  getData() {
+    var data = FirebaseUtility.getData(
+      collection: "assignment",
+      orderBy: "assignmentNo",
+    );
     notifyListeners();
-    return assignment;
+    return data;
   }
 }

@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Lottie.asset('assets/img/splash2.json', height: 200, width: 300),
+        child: Lottie.asset('assets/img/splash2.json', height: 200, width: 280),
       ),
     );
   }

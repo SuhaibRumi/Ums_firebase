@@ -165,7 +165,7 @@ class _StudentScreenState extends State<StudentScreen> {
                           );
                         }),
                     FutureBuilder(
-                        future: semesterViewModel.getdata(),
+                        future: semesterViewModel.getData(),
                         builder: (context,
                             AsyncSnapshot<List<SemesterViewModel>> snapshot) {
                           if (!snapshot.hasData) {

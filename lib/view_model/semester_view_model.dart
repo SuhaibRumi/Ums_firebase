@@ -1,47 +1,49 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:uni_mangement_system/utils/db_helper.dart';
+import 'package:uni_mangement_system/models/model.dart';
+import 'package:uni_mangement_system/utils/firebase_utility.dart';
 
 class SemesterViewModel extends ChangeNotifier {
-  int? semesterId;
+  String? semesterId;
   String? semesterName = '';
-
-  var dbHelper = DBHelper.instance;
 
   SemesterViewModel({this.semesterId, this.semesterName});
 
-  factory SemesterViewModel.fromMap(Map map) {
+  factory SemesterViewModel.fromMap(DocumentSnapshot map) {
+    var semesters = Semester.fromMap(map);
     return SemesterViewModel(
-      semesterId: map['semesterId'],
-      semesterName: map['semesterName'],
-    );
+        semesterId: semesters.semesterId, semesterName: semesters.semesterName);
   }
 
   savaData() async {
-    String query =
-        "Insert into Semester (semesterName) values('$semesterName')";
-    var id = await dbHelper.rawInsert(query: query);
-    notifyListeners();
+    var semester = Semester(semesterName: semesterName);
+    try {
+      await FirebaseUtility.addData(
+          collection: "semester", doc: semester.toMap());
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 
   updateData() async {
-    String query =
-        "Update Semester set semesterName = '$semesterName' where semesterId = '$semesterId' ";
-    var id = await dbHelper.rawUpdate(query: query);
+    var semester = Semester(semesterName: semesterName);
+    await FirebaseUtility.updateData(
+        collection: "semester", docId: semesterId!, doc: semester.toMap());
     notifyListeners();
   }
 
   deleteData() async {
-    String query = "delete from Semester where semesterId = '$semesterId' ";
-    var id = await dbHelper.rawDelete(query: query);
+    var semester = Semester(semesterId: semesterId);
+    await FirebaseUtility.deleteData(
+        collection: "semester", docId: semesterId!);
     notifyListeners();
   }
 
-  Future<List<SemesterViewModel>> getdata() async {
-    List<SemesterViewModel> semesters = [];
-    String query = "Select * from Semester";
-    var data = await dbHelper.getDataByQuery(query: query);
-    semesters = data.map((i) => SemesterViewModel.fromMap(i)).toList();
+  
+  getData() {
+    var data = FirebaseUtility.getData(collection: 'semester', orderBy: "semesterName");
     notifyListeners();
-    return semesters;
+    return data;
   }
 }

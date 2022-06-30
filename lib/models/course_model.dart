@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Course {
   final String? courseId;
   final String? courseName;
@@ -18,37 +20,33 @@ class Course {
       this.classId,
       this.className});
 
-  factory Course.fromMap(Map map) {
+  factory Course.fromMap(DocumentSnapshot map) {
     return Course(
-      courseId: map['courseId'],
+      courseId: map.id,
       courseName: map['courseName'],
-      classId: map['classId'],
+      classId: map.id,
       className: map['className'],
-      sessionId: map['semesterId'],
+      sessionId: map.id,
       sessionName: map['sessionName'],
-      semesterId: map['semesterId'],
+      semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }
   toMap() {
     Map<String, dynamic> row = {};
     row = {
-      'courseId':courseId,
-      'courseName':courseName,
-      'classId':classId,
-      'className':className,
-      'sessionId':sessionId,
-      'sessionName':sessionName,
-      'semesterId':semesterId,
-      'semesterName':semesterName,
+      'courseName': courseName,
+      'className': className,
+      'sessionName': sessionName,
+      'semesterName': semesterName,
     };
+    return row;
   }
 }
 
 class CourseList {
   final List<Course> courseList;
   CourseList({required this.courseList});
-
   factory CourseList.fromMap(List data) {
     List<Course> course = [];
     course = data.map((i) => Course.fromMap(i)).toList();

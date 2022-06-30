@@ -1,19 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Class {
   final String? classId;
   final String? className;
 
   Class({this.classId, this.className});
 
-  factory Class.fromMap(Map map) {
+  factory Class.fromMap(DocumentSnapshot map) {
+    // print(map.data());
     return Class(
-      classId: map['classId'],
+      classId: map.id,
       className: map['className'],
     );
   }
   toMap() {
     Map<String, dynamic> row = {};
     row = {
-      'classId': classId,
       'className': className,
     };
     return row;
@@ -22,9 +24,8 @@ class Class {
 
 class ClassList {
   final List<Class> classList;
-
   ClassList({required this.classList});
-  factory ClassList.fromMap(List data) {
+  factory ClassList.fromJson(List data) {
     List<Class> classes = [];
     classes = data.map((i) => Class.fromMap(i)).toList();
     return ClassList(classList: classes);

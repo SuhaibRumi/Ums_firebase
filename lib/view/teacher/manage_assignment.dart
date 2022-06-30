@@ -120,13 +120,11 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                         return null;
                       },
                     ),
-                    
                     InputField(
                       lableText: "Assignments No:",
                       hintText: "",
                       icon: const Icon(
                         Icons.library_books_rounded,
-                        color: kSecondary,
                       ),
                       controller: _assignmentNoController,
                     ),
@@ -134,14 +132,15 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                       thickness: 1.2,
                     ),
                     TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Upload file",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),),
+                      onPressed: () {},
+                      child: const Text(
+                        "Upload file",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

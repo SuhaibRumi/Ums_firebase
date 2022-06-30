@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../utils/db_helper.dart';
+
 
 class StudentsViewModel extends ChangeNotifier {
   int? studId;
@@ -14,7 +14,7 @@ class StudentsViewModel extends ChangeNotifier {
   String? semesterName = '';
   bool? isActive = true;
 
-  var dbhelper = DBHelper.instance;
+ 
   StudentsViewModel({
     this.studId,
     this.studentName,
@@ -43,33 +43,19 @@ class StudentsViewModel extends ChangeNotifier {
         isActive: active);
   }
   saveData() async {
-    String query =
-        "insert into Students (studentName,studRoll,isActive,sessionId,classId,semesterId) values('$studentName','$studRoll','$isActive','$sessionId','$classId','$semesterId' )";
-    var id = await dbhelper.rawInsert(query: query);
-  
     notifyListeners();
   }
 
   updateData() async {
-    String query =
-        "Update Students set studentName = '$studentName', studRoll = '$studRoll',isActive ='$isActive', sessionName = '$sessionName', className = '$className', semesterName = '$semesterName where studId = '$studId'";
-    var id = await dbhelper.rawUpdate(query: query);
     notifyListeners();
   }
 
   deletData() async {
-    String query = "delete from Students where studId  = '$studId' ";
-    var id = await dbhelper.rawDelete(query: query);
     notifyListeners();
   }
 
   Future<List<StudentsViewModel>> getData() async {
     List<StudentsViewModel> students = [];
-    String query =
-        " Select studId, studentName,studRoll, isActive, semesterName, sessionName, className from Students s left join Classes c on c.classId = s.classId left join Semester sm on sm.SemesterId = s.SemesterId left join Session ss on ss.sessionId = s.sessionId";
-    var data = await dbhelper.getDataByQuery(query: query);
-
-    students = data.map((i) => StudentsViewModel.fromMap(i)).toList();
     notifyListeners();
     return students;
   }

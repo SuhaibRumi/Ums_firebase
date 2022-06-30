@@ -120,7 +120,7 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
                       hintText: "Set your Time",
                       icon: const Icon(
                         Icons.library_books_rounded,
-                        color: kSecondary,
+                        
                       ),
                       controller: _timeTableController,
                     ),

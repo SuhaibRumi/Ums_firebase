@@ -46,7 +46,7 @@ class StudentDrawer extends StatelessWidget {
         ListTile(
           title: const Text("View Assignment"),
           leading: const Icon(
-            Icons.group,
+            Icons.menu_book_outlined,
             color: kPrimaryColor,
           ),
           onTap: () {
@@ -57,7 +57,7 @@ class StudentDrawer extends StatelessWidget {
         ListTile(
           title: const Text("View Course"),
           leading: const Icon(
-            Icons.description,
+            Icons.description_outlined,
             color: kPrimaryColor,
           ),
           onTap: () => Navigator.push(
@@ -65,20 +65,26 @@ class StudentDrawer extends StatelessWidget {
         ),
         ListTile(
           title: const Text("View Quize"),
-          leading: const Icon(Icons.book, color: kPrimaryColor),
+          leading: const Icon(Icons.ads_click_outlined, color: kPrimaryColor),
           onTap: () => Navigator.push(
               context, MaterialPageRoute(builder: (_) => const ViewQuiz())),
         ),
         ListTile(
           title: const Text("View Notification"),
-          leading: const Icon(Icons.notifications, color: kPrimaryColor),
+          leading: const Icon(Icons.notifications_active_outlined,
+              color: kPrimaryColor),
           onTap: () => Navigator.push(context,
               MaterialPageRoute(builder: (_) => const ViewNotification())),
         ),
         ListTile(
+          title: const Text("Download TimeTable"),
+          leading: const Icon(Icons.download_outlined, color: kPrimaryColor),
+          onTap: () {},
+        ),
+        ListTile(
           title: const Text("Logout"),
           leading: const Icon(Icons.logout_outlined, color: kPrimaryColor),
-          onTap: () => Navigator.push(
+          onTap: () => Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => const StudentLogin())),
         ),
       ]),

@@ -37,9 +37,6 @@ class StudentLoginBody extends StatelessWidget {
                     fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
-                height: 30,
-              ),
               StudentSignForm(),
             ],
           ),

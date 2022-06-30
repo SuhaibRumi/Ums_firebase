@@ -1,48 +1,55 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:uni_mangement_system/utils/db_helper.dart';
+import 'package:uni_mangement_system/models/model.dart';
+
+import '../utils/utlis.dart';
 
 class SessionViewModel extends ChangeNotifier {
-  int? sessionId;
+  String? sessionId = '';
   String? sessionName = '';
-
-  var dbHelper = DBHelper.instance;
 
   SessionViewModel({
     this.sessionId,
     this.sessionName,
   });
 
-  factory SessionViewModel.fromMap(Map map) {
+  factory SessionViewModel.fromMap(DocumentSnapshot map) {
+    var session = Session.fromMap(map);
+
     return SessionViewModel(
-      sessionId: map['sessionId'],
-      sessionName: map['sessionName'],
+      sessionId: session.sessionId,
+      sessionName: session.sessionName,
     );
   }
   saveData() async {
-    String query = "Insert into Session (sessionName) values('$sessionName')";
-    var id = await dbHelper.rawInsert(query: query);
+    var session = Session(sessionName: sessionName);
+    try {
+      await FirebaseUtility.addData(
+          collection: "Session", doc: session.toMap());
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
     notifyListeners();
   }
 
   updateData() async {
-    String query =
-        "Update Session set sessionName = '$sessionName' where sessionId = '$sessionId'";
-    var id = await dbHelper.rawUpdate(query: query);
+    var session = Session(sessionName: sessionName);
+    await FirebaseUtility.updateData(
+        collection: 'Session', docId: sessionId!, doc: session.toMap());
     notifyListeners();
   }
 
   deleteData() async {
-    String query = "delete from Session where sessionId = '$sessionId'";
-    var id = await dbHelper.rawDelete(query: query);
+    var session = Session(sessionId: sessionId);
+    await FirebaseUtility.deleteData(collection: "Session", docId: sessionId!);
     notifyListeners();
   }
 
-  Future<List<SessionViewModel>> getData() async {
-    List<SessionViewModel> sessions = [];
-    String query = "Select * from Session";
-    var data = await dbHelper.getDataByQuery(query: query);
-    sessions = data.map((i) => SessionViewModel.fromMap(i)).toList();
+  getData() {
+    var data =
+        FirebaseUtility.getData(collection: "Session", orderBy: "sessionName");
     notifyListeners();
-    return sessions;
+    return data;
   }
 }

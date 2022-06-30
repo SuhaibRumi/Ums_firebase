@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
                   color: Colors.white,
                   letterSpacing: 1.2,
                 ),
-                textScaleFactor: 1.3,
+                textScaleFactor: 1,
               ),
               const Spacer(),
               Row(
@@ -64,17 +64,18 @@ class HomePage extends StatelessWidget {
                       width: 140,
                       fontsize: 18),
                   MyButton(
-                      color: kSecondary,
-                      text: "Teacher".toUpperCase(),
-                      onPrseed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const TeacherLogin()));
-                      },
-                      height: 45,
-                      width: 140,
-                      fontsize: 18,),
+                    color: kSecondary,
+                    text: "Teacher".toUpperCase(),
+                    onPrseed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const TeacherLogin()));
+                    },
+                    height: 45,
+                    width: 140,
+                    fontsize: 18,
+                  ),
                 ],
               ),
               const Spacer(),

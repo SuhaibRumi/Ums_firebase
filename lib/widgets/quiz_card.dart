@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
-import 'package:uni_mangement_system/widgets/text_widget.dart';
 
 class QuizCard extends StatelessWidget {
   const QuizCard({Key? key}) : super(key: key);
@@ -18,16 +17,20 @@ class QuizCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const TextWidget(
-                color: kTextColor,
-                text: 'Computer',
-                fontSize: 20,
+              const Text(
+                'Computer',
+                style: TextStyle(
+                  color: kTextColor,
+                  fontSize: 20,
+                ),
               ),
               const Divider(
                 thickness: 2.2,
               ),
-              const TextWidget(
-                  text: "Quize #: 10", color: kTextColor, fontSize: 18),
+              const Text(
+                "Quize #: 10",
+                style: TextStyle(color: kTextColor, fontSize: 18),
+              ),
               const SizedBox(
                 height: 10,
               ),

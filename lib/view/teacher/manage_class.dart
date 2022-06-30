@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
 import '../../view_model/class_view_model.dart';
@@ -13,7 +14,7 @@ class ClassMangemnetScreen extends StatefulWidget {
 class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
   final _classController = TextEditingController();
   var classViewModel = ClassViewModel();
-  int? classId;
+  String? classId;
   bool isUpdate = false;
 
   @override
@@ -44,7 +45,6 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                         icon: const Icon(
                           Icons.person,
                           size: 30,
-                          color: kSecondary,
                         ),
                       ),
                     ],
@@ -72,11 +72,10 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
               const SizedBox(
                 height: 50,
               ),
-              FutureBuilder(
-                  future: classViewModel.getData(),
-                  builder:
-                      (context, AsyncSnapshot<List<ClassViewModel>> snapshot) {
-                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              StreamBuilder<QuerySnapshot>(
+                  stream: classViewModel.getData(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                       return const Center(
                         child: Text("No Class Data Found"),
                       );
@@ -86,13 +85,15 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                         child: Text("Something went Wrong"),
                       );
                     }
-                    List<ClassViewModel> classes = snapshot.data!;
+                    List<ClassViewModel> classes = snapshot.data!.docs
+                        .map((e) => ClassViewModel.fromMap(e))
+                        .toList();
+
                     return SizedBox(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: DataTable(
                             columns: const [
-                              DataColumn(label: Text("Class Id")),
                               DataColumn(label: Text("Class Name")),
                               DataColumn(label: Text("Edit")),
                               DataColumn(label: Text("Delete")),
@@ -100,15 +101,12 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                             rows: classes.map((row) {
                               return DataRow(cells: [
                                 DataCell(
-                                  Text(row.classId.toString()),
-                                ),
-                                DataCell(
                                   Text(row.className ?? ""),
                                 ),
                                 DataCell(IconButton(
                                   onPressed: () {
                                     setState(() {
-                                      classId = row.classId;
+                                      classId = row.classId.toString();
                                       isUpdate = true;
                                     });
                                     _classController.text = row.className!;
@@ -119,7 +117,7 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                                 DataCell(IconButton(
                                   onPressed: () {
                                     setState(() {
-                                      classId = row.classId;
+                                      classId = row.classId.toString();
                                     });
                                     _deleteData();
                                   },

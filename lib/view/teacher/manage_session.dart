@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
 import '../../view_model/session_view_model.dart';
@@ -13,7 +14,7 @@ class SessionScreen extends StatefulWidget {
 class _SessionScreenState extends State<SessionScreen> {
   final _sessionController = TextEditingController();
   var sessionViewModel = SessionViewModel();
-  int? sessionId;
+  String? sessionId;
   bool isUpdate = false;
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,6 @@ class _SessionScreenState extends State<SessionScreen> {
                         hintText: "Enter your session",
                         icon: const Icon(
                           Icons.library_books_rounded,
-                          color: kSecondary,
                         ),
                         controller: _sessionController,
                       ),
@@ -70,11 +70,10 @@ class _SessionScreenState extends State<SessionScreen> {
               const SizedBox(
                 height: 50,
               ),
-              FutureBuilder(
-                  future: sessionViewModel.getData(),
-                  builder: (context,
-                      AsyncSnapshot<List<SessionViewModel>> snapshot) {
-                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              StreamBuilder<QuerySnapshot>(
+                  stream: sessionViewModel.getData(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                       return const Center(
                         child: Text(
                           "No Data Found",
@@ -87,24 +86,20 @@ class _SessionScreenState extends State<SessionScreen> {
                         child: Text("Something went Wrong"),
                       );
                     }
-                    List<SessionViewModel> session = snapshot.data!;
+                    List<SessionViewModel> session = snapshot.data!.docs
+                        .map((e) => SessionViewModel.fromMap(e))
+                        .toList();
                     return SizedBox(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: DataTable(
                             columns: const [
-                              DataColumn(label: Text("Session ID")),
                               DataColumn(label: Text("Session Name")),
                               DataColumn(label: Text("Edit")),
                               DataColumn(label: Text("Delete")),
                             ],
                             rows: session.map((row) {
                               return DataRow(cells: [
-                                DataCell(
-                                  Text(
-                                    row.sessionId.toString(),
-                                  ),
-                                ),
                                 DataCell(
                                   Text(
                                     row.sessionName ?? "",
