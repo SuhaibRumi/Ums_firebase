@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
-import 'package:uni_mangement_system/view/teacher/manage_session.dart';
+import 'package:uni_mangement_system/view/teacher/teacher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

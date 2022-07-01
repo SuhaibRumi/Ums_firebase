@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../models/model.dart';
 import '../utils/utlis.dart';
 
 class CourseViewModel extends ChangeNotifier {
@@ -23,32 +25,62 @@ class CourseViewModel extends ChangeNotifier {
     this.sessionId,
   });
 
-  factory CourseViewModel.fromMap(Map map) {
+  factory CourseViewModel.fromMap(DocumentSnapshot map) {
+    var courses = Course.fromMap(map);
     return CourseViewModel(
-      courseId: map['courseId'].toString(),
-      courseName: map['courseName'],
-      className: map['className'],
-      sessionName: map['semesterName'],
-      semesterName: map['semesterName'],
+      courseId: courses.courseId,
+      courseName: courses.courseName,
+      classId: courses.classId,
+      className: courses.className,
+      sessionId: courses.sessionId,
+      sessionName: courses.semesterName,
+      semesterId: courses.semesterId,
+      semesterName: courses.semesterName,
     );
   }
   saveData() async {
+    var courses = Course(
+        courseName: courseName,
+        semesterName: semesterName,
+        sessionName: sessionName,
+        className: className);
+    try {
+      await FirebaseUtility.addData(collection: "course", doc: courses.toMap());
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
     notifyListeners();
   }
 
   updateData() async {
+    var courses = Course(
+        courseName: courseName,
+        semesterName: semesterName,
+        sessionName: sessionName,
+        className: className);
+
+    await FirebaseUtility.updateData(
+        collection: 'course', docId: courseId!, doc: courses.toMap());
     notifyListeners();
   }
 
   deleteData() async {
+    var courses = Course(
+      courseId: courseId,
+    );
+    await FirebaseUtility.deleteData(
+      collection: "course",
+      docId: courseId!,
+    );
     notifyListeners();
   }
 
-  deleteAllData() async {}
-
   getData() {
-    var data =
-        FirebaseUtility.getData(collection: "class", orderBy: "className");
+    var data = FirebaseUtility.getData(
+      collection: "course",
+      orderBy: "courseName",
+    );
     notifyListeners();
     return data;
   }

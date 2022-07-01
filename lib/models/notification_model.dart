@@ -1,4 +1,6 @@
-class Notification {
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class Notifications {
   final String? notificationId;
   final String? notificationDes;
   final String? notificationName;
@@ -9,7 +11,7 @@ class Notification {
   final String? semesterName;
   final String? className;
 
-  Notification(
+  Notifications(
       {this.notificationId,
       this.notificationDes,
       this.notificationName,
@@ -20,43 +22,38 @@ class Notification {
       this.semesterName,
       this.className});
 
-  factory Notification.fromMap(Map map) {
-    return Notification(
-      notificationId: map['notificationId'],
+  factory Notifications.fromMap(DocumentSnapshot map) {
+    return Notifications(
+      notificationId: map.id,
       notificationName: map['notificationName'],
       notificationDes: map['notificationDes'],
-      classId: map['classId'],
+      classId: map.id,
       className: map['className'],
-      sessionId: map['semesterId'],
+      sessionId: map.id,
       sessionName: map['sessionName'],
-      semesterId: map['semesterId'],
+      semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }
   toMap() {
     Map<String, dynamic> row = {};
     row = {
-      'notificationId': notificationId,
       'notificationName': notificationName,
       'notificationDes': notificationDes,
-      'classId': classId,
       'className': className,
-      'sessionId': sessionId,
       'sessionName': sessionName,
-      'semesterId': semesterId,
       'semesterName': semesterName,
     };
+    return row;
   }
 }
 
 class NotificationList {
-  final List<Notification> notificationList;
-
+  final List<Notifications> notificationList;
   NotificationList({required this.notificationList});
-
   factory NotificationList.fromMAp(List data) {
-    List<Notification> notifications = [];
-    notifications = data.map((i) => Notification.fromMap(i)).toList();
+    List<Notifications> notifications = [];
+    notifications = data.map((i) => Notifications.fromMap(i)).toList();
     return NotificationList(notificationList: notifications);
   }
 }

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Quiz {
   final String? quizId;
   final String? quizNo;
@@ -17,28 +19,24 @@ class Quiz {
       this.sessionName,
       this.semesterName,
       this.className});
-  factory Quiz.fromMap(Map map) {
+  factory Quiz.fromMap(DocumentSnapshot map) {
     return Quiz(
-      quizId: map['quizId'],
+      quizId: map.id,
       quizNo: map['quizNo'],
-      classId: map['classId'],
+      classId: map.id,
       className: map['className'],
-      sessionId: map['semesterId'],
+      sessionId: map.id,
       sessionName: map['sessionName'],
-      semesterId: map['semesterId'],
+      semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }
   toMap() {
     Map<String, dynamic> row = {};
     row = {
-      'quizId': quizId,
       'quizNo': quizNo,
-      'classId': classId,
       'className': className,
-      'sessionId': sessionId,
       'sessionName': sessionName,
-      'semesterId': semesterId,
       'semesterName': semesterName,
     };
     return row;
@@ -48,7 +46,6 @@ class Quiz {
 class QuizList {
   final List<Quiz> quizList;
   QuizList({required this.quizList});
-
   factory QuizList.fromMap(List data) {
     List<Quiz> quizes = [];
     quizes = data.map((i) => Quiz.fromMap(i)).toList();

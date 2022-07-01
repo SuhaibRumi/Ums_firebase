@@ -14,18 +14,18 @@ class SessionViewModel extends ChangeNotifier {
   });
 
   factory SessionViewModel.fromMap(DocumentSnapshot map) {
-    var session = Session.fromMap(map);
+    var sessions = Session.fromMap(map);
 
     return SessionViewModel(
-      sessionId: session.sessionId,
-      sessionName: session.sessionName,
+      sessionId: sessions.sessionId,
+      sessionName: sessions.sessionName,
     );
   }
   saveData() async {
-    var session = Session(sessionName: sessionName);
+    var sessions = Session(sessionName: sessionName);
     try {
       await FirebaseUtility.addData(
-          collection: "Session", doc: session.toMap());
+          collection: "Session", doc: sessions.toMap());
       notifyListeners();
     } catch (e) {
       print(e);
@@ -34,21 +34,21 @@ class SessionViewModel extends ChangeNotifier {
   }
 
   updateData() async {
-    var session = Session(sessionName: sessionName);
+    var sessions = Session(sessionName: sessionName);
     await FirebaseUtility.updateData(
-        collection: 'Session', docId: sessionId!, doc: session.toMap());
+        collection: 'Session', docId: sessionId!, doc: sessions.toMap());
     notifyListeners();
   }
 
   deleteData() async {
-    var session = Session(sessionId: sessionId);
+   
     await FirebaseUtility.deleteData(collection: "Session", docId: sessionId!);
     notifyListeners();
   }
 
   getData() {
     var data =
-        FirebaseUtility.getData(collection: "Session", orderBy: "sessionName");
+        FirebaseUtility.getData(collection: "Session", orderBy: "sessionsName");
     notifyListeners();
     return data;
   }

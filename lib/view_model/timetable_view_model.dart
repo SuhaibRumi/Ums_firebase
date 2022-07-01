@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:uni_mangement_system/models/model.dart';
 
 import '../utils/utlis.dart';
-
 
 class TimeTableViewModel extends ChangeNotifier {
   String? timeTableId = '';
@@ -13,7 +14,6 @@ class TimeTableViewModel extends ChangeNotifier {
   String? semesterName = '';
   String? className = '';
 
-  
   TimeTableViewModel({
     this.timeTableId,
     this.timeTableDesc,
@@ -25,31 +25,29 @@ class TimeTableViewModel extends ChangeNotifier {
     this.sessionName,
   });
 
-  factory TimeTableViewModel.fromMap(Map map) {
+  factory TimeTableViewModel.fromMap(DocumentSnapshot map) {
+    var time = TimeTable.fromMap(map);
     return TimeTableViewModel(
-      timeTableId: map['timeTableId'],
-      timeTableDesc: map['timeTableDesc'],
-      classId: map['className'],
-      sessionId: map['sessionName'],
-      semesterId: map['semesterName'],
+      timeTableId:time.timeTableId,
+      timeTableDesc:time.timeTableDesc,
+      classId: time.classId,
+      sessionId: time.semesterId,
+      semesterId:time.semesterId
     );
   }
-  saveData() async {
-   
-  }
+  saveData() async {}
 
   updateData() async {
-   
     notifyListeners();
   }
 
   deleteData() async {
-    
     notifyListeners();
   }
-getData() {
+
+  getData() {
     var data =
-        FirebaseUtility.getData(collection: "class", orderBy: "className");
+        FirebaseUtility.getData(collection: "timeTable", orderBy: "timeTableDesc");
     notifyListeners();
     return data;
   }

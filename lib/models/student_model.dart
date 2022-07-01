@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Student {
   final String? id;
   final String? name;
@@ -27,17 +29,17 @@ class Student {
     this.className,
   });
 
-  factory Student.fromMap(Map map) {
+  factory Student.fromMap(DocumentSnapshot map) {
     return Student(
-        id: map['id'],
+        id: map.id,
         name: map['name'],
         email: map['email'],
         password: map['password'],
         rollNo: map['rollNo'],
         regNo: map['regNo'],
-        classId: map['classId'],
-        semtserId: map['semtserId'],
-        sessionId: map['sessionId'],
+        classId: map.id,
+        semtserId: map.id,
+        sessionId: map.id,
         sessionName: map['sessionName'],
         semesterName: map['semesterName'],
         className: map['className']);
@@ -45,15 +47,11 @@ class Student {
   toMap() {
     Map<String, dynamic> row = {};
     row = {
-      'id': id,
       'name': name,
       'email': email,
       'password': password,
       'rollNo': rollNo,
       ' regNo': regNo,
-      'classId': classId,
-      'semtserId': semtserId,
-      'sessionId': sessionId,
       'semesterName': semesterName,
       'sessionName': sessionName,
       'className': className,

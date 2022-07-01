@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TimeTable {
   final String? timeTableId;
   final String? timeTableDesc;
@@ -18,28 +20,24 @@ class TimeTable {
       this.semesterName,
       this.className});
 
-  factory TimeTable.fromMap(Map map) {
+  factory TimeTable.fromMap(DocumentSnapshot map) {
     return TimeTable(
-      timeTableId: map['timeTableId'],
+      timeTableId: map.id,
       timeTableDesc: map['timeTableDesc'],
-      classId: map['classId'],
+      classId: map.id,
       className: map['className'],
-      sessionId: map['semesterId'],
+      sessionId: map.id,
       sessionName: map['sessionName'],
-      semesterId: map['semesterId'],
+      semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }
   toMap() {
     Map<String, dynamic> row = {};
     row = {
-      'timeTableId': timeTableId,
       'timeTableDesc': timeTableDesc,
-      'classId': classId,
       'className': className,
-      'sessionId': sessionId,
       'sessionName': sessionName,
-      'semesterId': semesterId,
       'semesterName': semesterName,
     };
     return row;

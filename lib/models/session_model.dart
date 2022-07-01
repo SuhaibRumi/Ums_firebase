@@ -9,14 +9,13 @@ class Session {
   factory Session.fromMap(DocumentSnapshot map) {
     return Session(
       sessionId: map.id,
-      sessionName: map['sessionName'],
+      sessionName: map['sessionsName'],
     );
   }
   toMap() {
     Map<String, dynamic> row = {};
     row = {
-      
-      'sessionName': sessionName,
+      'sessionsName': sessionName,
     };
     return row;
   }

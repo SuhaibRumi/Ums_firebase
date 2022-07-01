@@ -3,3 +3,8 @@ export 'class_view_model.dart';
 export 'students_view_model.dart';
 export 'semester_view_model.dart';
 export 'session_view_model.dart';
+export 'course_view_model.dart';
+export 'notification_view_model.dart';
+export 'quiz_view_model.dart';
+export 'teacher_view_model.dart';
+export 'timetable_view_model.dart';

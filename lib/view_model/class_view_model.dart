@@ -41,7 +41,7 @@ class ClassViewModel extends ChangeNotifier {
   }
 
   deleteData() async {
-    var cls = Class(classId: classId);
+   
     await FirebaseUtility.deleteData(collection: "class", docId: classId!);
     notifyListeners();
   }

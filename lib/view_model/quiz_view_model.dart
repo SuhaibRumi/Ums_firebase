@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uni_mangement_system/models/model.dart';
 
 import '../utils/utlis.dart';
-
 
 class QuizViewModel extends ChangeNotifier {
   String? quizId = '';
@@ -13,7 +14,6 @@ class QuizViewModel extends ChangeNotifier {
   String? semesterName = '';
   String? className = '';
 
-  
   QuizViewModel({
     this.quizId,
     this.quizNo,
@@ -25,27 +25,26 @@ class QuizViewModel extends ChangeNotifier {
     this.sessionName,
   });
 
-  factory QuizViewModel.fromMap(Map map) {
+  factory QuizViewModel.fromMap(DocumentSnapshot map) {
+    var quizes = Quiz.fromMap(map);
     return QuizViewModel(
-      quizId: map['quizId'],
-      quizNo: map['quizNo'],
-      classId: map['className'],
-      sessionId: map['semesterName'],
-      semesterId: map['sessionName'],
+      quizId: quizes.quizId,
+      quizNo: quizes.quizNo,
+      classId: quizes.classId,
+      sessionId: quizes.sessionId,
+      semesterId:quizes.semesterId,
     );
   }
   saveData() async {
-
+    
     notifyListeners();
   }
 
   updateData() async {
-    
     notifyListeners();
   }
 
   deleteData() async {
-    
     notifyListeners();
   }
 

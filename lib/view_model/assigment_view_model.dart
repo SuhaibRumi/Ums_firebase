@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:uni_mangement_system/models/assignment_model.dart';
-
+import '../models/model.dart';
 import '../utils/utlis.dart';
 
 class AssigmentViewModel extends ChangeNotifier {
@@ -69,13 +68,10 @@ class AssigmentViewModel extends ChangeNotifier {
   }
 
   deleteData() async {
-    var assignments = Assignment(
-        assignmentId: assignmentId,
-       
-        );
-  await FirebaseUtility.deleteData(collection: "assignment", docId: assignmentId!);
+  
+  await FirebaseUtility.deleteData(collection: "assignment", docId: assignmentId!,);
     notifyListeners();
-    notifyListeners();
+
   }
 
   getData() {

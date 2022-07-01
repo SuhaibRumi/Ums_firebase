@@ -25,10 +25,10 @@ class _StudentScreenState extends State<StudentScreen> {
   var classViewModel = ClassViewModel();
   bool _isActive = true;
   bool isUpdate = false;
-  int? studId;
-  int? classId;
-  int? sessionId;
-  int? semesterId;
+  String? studId;
+  String? classId;
+  String? sessionId;
+  String? semesterId;
   Future<List<StudentsViewModel>>? data;
 
   @override
@@ -121,7 +121,7 @@ class _StudentScreenState extends State<StudentScreen> {
                             ,
                             onChanged: (value) {
                               setState(() {
-                                classId = int.parse(value.toString());
+                                classId = (value.toString());
                               });
                             },
                             validator: (value) {
@@ -153,7 +153,7 @@ class _StudentScreenState extends State<StudentScreen> {
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                sessionId = int.parse(value.toString());
+                                sessionId = (value.toString());
                               });
                             },
                             validator: (value) {
@@ -184,7 +184,7 @@ class _StudentScreenState extends State<StudentScreen> {
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                semesterId = int.parse(value.toString());
+                                semesterId =(value.toString());
                               });
                             },
                             validator: (value) {

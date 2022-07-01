@@ -1,35 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Teacher {
-  final String? teacherId;
-  final String? teacherName;
-  final String? teacherEmail;
-  final String? teacherPassword;
-  final String? teacherDepartment;
+  final String? id;
+  final String? name;
+  final String? email;
+  final String? password;
+  final String? department;
 
   Teacher({
-    this.teacherId,
-    this.teacherName,
-    this.teacherEmail,
-    this.teacherPassword,
-    this.teacherDepartment,
+    this.id,
+    this.name,
+    this.email,
+    this.password,
+    this.department,
   });
 
-  factory Teacher.fromMap(Map map) {
+  factory Teacher.fromMap(DocumentSnapshot map) {
     return Teacher(
-      teacherId: map['teacherId'],
-      teacherName: map['teacherName'],
-      teacherEmail: map['teacherEmail'],
-      teacherPassword: map['teacherPassword'],
-      teacherDepartment: map['teacherDepartment'],
+      id: map.id,
+      name: map['name'],
+      email: map['email'],
+      password: map['password'],
+      department: map['department'],
     );
   }
   toMap() {
     Map<String, dynamic> row = {};
     row = {
-      'teacherId': teacherId,
-      ' teacherName': teacherName,
-      'teacherEmail': teacherEmail,
-      ' teacherPassword': teacherPassword,
-      'teacherDepartment': teacherDepartment,
+      ' name': name,
+      'email': email,
+      ' password': password,
+      'department': department,
     };
     return row;
   }

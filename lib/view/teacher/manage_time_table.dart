@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
 
+import '../../view_model/view_model.dart';
 import '../../widgets/widget.dart';
 
 class ManageTimeTable extends StatefulWidget {
@@ -11,7 +13,25 @@ class ManageTimeTable extends StatefulWidget {
 }
 
 class _ManageTimeTableState extends State<ManageTimeTable> {
-  final _timeTableController = TextEditingController();
+  final _timeTableDecsController = TextEditingController();
+
+  var timeTableViewModel = TimeTableViewModel();
+  var courseViewModel = CourseViewModel();
+  var semesterViewModel = SemesterViewModel();
+  var sessionViewModel = SessionViewModel();
+  var classViewModel = ClassViewModel();
+
+  var classState = GlobalKey<FormFieldState>();
+  var sessionState = GlobalKey<FormFieldState>();
+  var semesterState = GlobalKey<FormFieldState>();
+
+  bool isUpdate = false;
+  String? classId;
+  String? sessionId;
+  String? semesterId;
+  String? courseId;
+  String? timetableId;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,96 +53,119 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
                 shadowColor: Colors.grey[500],
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: DropdownButtonFormField(
-                        alignment: Alignment.center,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.book_outlined,
-                          ),
-                        ),
-                        hint: const Text("Select Session"),
-                        items: [
-                          DropdownMenuItem(
-                              value: "data",
-                              child: Column(
-                                children: const <Widget>[
-                                  Text("2021-2023"),
-                                ],
-                              )),
-                        ],
-                        onChanged: (value) {
-                          setState(() {});
-                        },
-                        validator: (value) {
-                          if (value == null) {
-                            return "please select your Session";
+                    StreamBuilder<QuerySnapshot>(
+                        stream: semesterViewModel.getData(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const CircularProgressIndicator();
                           }
-                          return null;
-                        },
-                      ),
-                    ),
-                    DropdownButtonFormField(
-                      alignment: Alignment.center,
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                        Icons.crisis_alert_outlined,
-                      )),
-                      hint: const Text("Select Class"),
-                      items: [
-                        DropdownMenuItem(
-                            value: "data",
-                            child: Column(
-                              children: const <Widget>[
-                                Text("BSCS"),
-                              ],
-                            ))
-                      ],
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return "please select your class";
-                        }
-                        return null;
-                      },
-                    ),
-                    DropdownButtonFormField(
-                      alignment: Alignment.center,
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                        Icons.description_outlined,
-                      )),
-                      hint: const Text("Select Semeter"),
-                      items: [
-                        DropdownMenuItem(
-                            value: "data",
-                            child: Column(
-                              children: const <Widget>[
-                                Text("1st"),
-                              ],
-                            ))
-                      ],
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return "please select your Semester";
-                        }
-                        return null;
-                      },
-                    ),
+                          List<SessionViewModel> sessions = snapshot.data!.docs
+                              .map((e) => SessionViewModel.fromMap(e))
+                              .toList();
+                          return DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.book_outlined,
+                                    color: kSecondary)),
+                            value: classId,
+                            key: classState,
+                            hint: const Text("Select Session"),
+                            items: sessions.map((session) {
+                              return DropdownMenuItem(
+                                value: session.sessionId.toString(),
+                                child: Text(session.sessionName ?? ""),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                sessionId = value!.toString();
+                              });
+                            },
+                            // validator: (value) {
+                            //   if (value == null) {
+                            //     return "please select your session";
+                            //   }
+                            //   return null;
+                            // },
+                          );
+                        }),
+                    StreamBuilder<QuerySnapshot>(
+                        stream: classViewModel.getData(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const CircularProgressIndicator();
+                          }
+                          List<ClassViewModel> classes = snapshot.data!.docs
+                              .map((e) => ClassViewModel.fromMap(e))
+                              .toList();
+                          return DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.book_outlined,
+                                    color: kSecondary)),
+                            value: classId,
+                            key: classState,
+                            hint: const Text("Select Class"),
+                            items: classes.map((cls) {
+                              return DropdownMenuItem(
+                                value: cls.classId.toString(),
+                                child: Text(cls.className ?? ""),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                classId = value!.toString();
+                              });
+                            },
+                            // validator: (value) {
+                            //   if (value == null) {
+                            //     return "please select your class";
+                            //   }
+                            //   return null;
+                            // },
+                          );
+                        }),
+                    StreamBuilder<QuerySnapshot>(
+                        stream: semesterViewModel.getData(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const CircularProgressIndicator();
+                          }
+                          List<SemesterViewModel> semesters = snapshot
+                              .data!.docs
+                              .map((e) => SemesterViewModel.fromMap(e))
+                              .toList();
+                          return DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.description_outlined,
+                                    color: kSecondary)),
+                            key: semesterState,
+                            value: semesterId,
+                            hint: const Text("Select Semester"),
+                            items: semesters.map((semester) {
+                              return DropdownMenuItem(
+                                value: semester.semesterId.toString(),
+                                child: Text(semester.semesterName ?? ""),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                semesterId = value!.toString();
+                              });
+                            },
+                            // validator: (value) {
+                            //   if (value == null) {
+                            //     return "please select your semester";
+                            //   }
+                            //   return null;
+                            // },
+                          );
+                        }),
                     InputField(
                       lableText: "Time Table",
                       hintText: "Set your Time",
                       icon: const Icon(
                         Icons.library_books_rounded,
-                        
                       ),
-                      controller: _timeTableController,
+                      controller: _timeTableDecsController,
                     ),
                     const Divider(
                       indent: 15,
@@ -148,16 +191,120 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
             MyButton(
                 color: kPrimaryColor,
                 text: "Save Data",
-                onPrseed: () {},
+                onPrseed: () {
+                   if (isUpdate == false) {
+                      _addData();
+                      _timeTableDecsController.clear();
+                    } else {
+                      _updateDta();
+                      _timeTableDecsController.clear();
+                    }
+                },
                 height: 40,
                 width: 120,
                 fontsize: 14),
             const SizedBox(
               height: 10,
             ),
+            StreamBuilder<QuerySnapshot>(
+                stream: timeTableViewModel.getData(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Center(
+                      child: Text("No Data Found"),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text("Something went Wrong"),
+                    );
+                  }
+                  List<TimeTableViewModel> timeTable = snapshot.data!.docs
+                      .map((e) => TimeTableViewModel.fromMap(e))
+                      .toList();
+
+                  return SizedBox(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                          columns: const [
+                            DataColumn(label: Text("TimeTable Description")),
+                            DataColumn(label: Text("Session Name")),
+                            DataColumn(label: Text("Class Name")),
+                            DataColumn(label: Text("Semeter Name")),
+                            DataColumn(label: Text("Edit")),
+                            DataColumn(label: Text("Delete")),
+                          ],
+                          rows: timeTable.map((row) {
+                            return DataRow(cells: [
+                              DataCell(
+                                Text(row.timeTableDesc ?? ""),
+                              ),
+                              DataCell(
+                                Text(row.sessionName ?? ""),
+                              ),
+                              DataCell(
+                                Text(row.className ?? ""),
+                              ),
+                              DataCell(
+                                Text(row.semesterName ?? ""),
+                              ),
+                              DataCell(IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    timetableId = row.timeTableId.toString();
+                                    row.classId.toString();
+                                    row.semesterId.toString();
+                                    row.sessionId.toString();
+                                    isUpdate = true;
+                                  });
+                                  _timeTableDecsController.text =
+                                      row.timeTableDesc!;
+                                },
+                                icon: const Icon(Icons.edit),
+                                splashRadius: 20,
+                              )),
+                              DataCell(IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    timetableId = row.timeTableId.toString();
+                                  });
+                                  _deleteData();
+                                },
+                                icon: const Icon(Icons.delete),
+                                splashRadius: 20,
+                              )),
+                            ]);
+                          }).toList()),
+                    ),
+                  );
+                }),
           ],
         ),
       ),
     );
+  }
+
+  _addData() {
+    timeTableViewModel =
+        TimeTableViewModel(timeTableDesc: _timeTableDecsController.text);
+    timeTableViewModel.saveData();
+    setState(() {});
+  }
+
+  _updateDta() {
+    timeTableViewModel = TimeTableViewModel(
+        timeTableId: timetableId, timeTableDesc: _timeTableDecsController.text);
+    timeTableViewModel.updateData();
+    setState(() {
+      isUpdate = false;
+    });
+  }
+
+  _deleteData() {
+    timeTableViewModel = TimeTableViewModel(
+      timeTableId: timetableId,
+    );
+    timeTableViewModel.deleteData();
   }
 }

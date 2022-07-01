@@ -12,7 +12,8 @@ class SemesterViewModel extends ChangeNotifier {
   factory SemesterViewModel.fromMap(DocumentSnapshot map) {
     var semesters = Semester.fromMap(map);
     return SemesterViewModel(
-        semesterId: semesters.semesterId, semesterName: semesters.semesterName);
+        semesterId: semesters.semesterId, 
+        semesterName: semesters.semesterName);
   }
 
   savaData() async {
@@ -34,7 +35,7 @@ class SemesterViewModel extends ChangeNotifier {
   }
 
   deleteData() async {
-    var semester = Semester(semesterId: semesterId);
+   
     await FirebaseUtility.deleteData(
         collection: "semester", docId: semesterId!);
     notifyListeners();
