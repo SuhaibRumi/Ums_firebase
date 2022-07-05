@@ -3,8 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Class {
   final String? classId;
   final String? className;
+    final String? fileUrl;
 
-  Class({this.classId, this.className});
+  
+
+  Class({this.classId, this.className,this.fileUrl
+  });
 
   factory Class.fromMap(DocumentSnapshot map) {
     // print(map.data());

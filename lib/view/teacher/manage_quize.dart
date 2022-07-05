@@ -13,8 +13,8 @@ class ManageQuize extends StatefulWidget {
 }
 
 class _ManageQuizeState extends State<ManageQuize> {
-  
   final _quizNoController = TextEditingController();
+
   var quizViewModel = QuizViewModel();
   var courseViewModel = CourseViewModel();
   var semesterViewModel = SemesterViewModel();
@@ -31,6 +31,9 @@ class _ManageQuizeState extends State<ManageQuize> {
   String? semesterId;
   String? courseId;
   String? quizId;
+  String? className;
+  String? sessionName;
+  String? semesterName;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,7 @@ class _ManageQuizeState extends State<ManageQuize> {
                 child: Column(
                   children: [
                     StreamBuilder<QuerySnapshot>(
-                        stream: semesterViewModel.getData(),
+                        stream: sessionViewModel.getData(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
                             return const CircularProgressIndicator();
@@ -66,18 +69,18 @@ class _ManageQuizeState extends State<ManageQuize> {
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.book_outlined,
                                     color: kSecondary)),
-                            value: classId,
-                            key: classState,
+                            value: sessionName,
+                            key: sessionState,
                             hint: const Text("Select Session"),
                             items: sessions.map((session) {
                               return DropdownMenuItem(
-                                value: session.sessionId.toString(),
+                                value: session.sessionName.toString(),
                                 child: Text(session.sessionName ?? ""),
                               );
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                sessionId = value!.toString();
+                                sessionName = value.toString();
                               });
                             },
                             // validator: (value) {
@@ -101,18 +104,18 @@ class _ManageQuizeState extends State<ManageQuize> {
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.book_outlined,
                                     color: kSecondary)),
-                            value: classId,
+                            value: className,
                             key: classState,
                             hint: const Text("Select Class"),
                             items: classes.map((cls) {
                               return DropdownMenuItem(
-                                value: cls.classId.toString(),
+                                value: cls.className.toString(),
                                 child: Text(cls.className ?? ""),
                               );
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                classId = value!.toString();
+                                className = value.toString();
                               });
                             },
                             // validator: (value) {
@@ -137,18 +140,19 @@ class _ManageQuizeState extends State<ManageQuize> {
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.description_outlined,
                                     color: kSecondary)),
+                            value: semesterName,
                             key: semesterState,
-                            value: semesterId,
+
                             hint: const Text("Select Semester"),
                             items: semesters.map((semester) {
                               return DropdownMenuItem(
-                                value: semester.semesterId.toString(),
+                                value: semester.semesterName.toString(),
                                 child: Text(semester.semesterName ?? ""),
                               );
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                semesterId = value!.toString();
+                                semesterName = value.toString();
                               });
                             },
                             // validator: (value) {
@@ -195,7 +199,15 @@ class _ManageQuizeState extends State<ManageQuize> {
             MyButton(
                 color: kPrimaryColor,
                 text: "Save Data",
-                onPrseed: () {},
+                onPrseed: () {
+                  if (isUpdate == false) {
+                    _addData();
+                    _quizNoController.clear();
+                  } else {
+                    _updateDta();
+                    _quizNoController.clear();
+                  }
+                },
                 height: 40,
                 width: 120,
                 fontsize: 14),
@@ -248,7 +260,7 @@ class _ManageQuizeState extends State<ManageQuize> {
                               DataCell(IconButton(
                                 onPressed: () {
                                   setState(() {
-                                   quizId  = row.quizId.toString();
+                                    quizId = row.quizId.toString();
                                     isUpdate = true;
                                   });
                                   _quizNoController.text = row.quizNo!;
@@ -276,16 +288,19 @@ class _ManageQuizeState extends State<ManageQuize> {
       ),
     );
   }
-  ddData() {
+
+  _addData() {
     quizViewModel = QuizViewModel(
-      quizNo: _quizNoController.text,
-    );
+        quizNo: _quizNoController.text,
+        semesterName: semesterName,
+        sessionName: sessionName,
+        className: className);
     quizViewModel.saveData();
     setState(() {});
   }
 
   _updateDta() {
-     quizViewModel = QuizViewModel(
+    quizViewModel = QuizViewModel(
       quizId: quizId,
       quizNo: _quizNoController.text,
     );
@@ -297,7 +312,7 @@ class _ManageQuizeState extends State<ManageQuize> {
 
   _deleteData() {
     quizViewModel = QuizViewModel(
-     quizId: quizId,
+      quizId: quizId,
     );
     quizViewModel.deleteData();
   }

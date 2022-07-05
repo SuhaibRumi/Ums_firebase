@@ -7,8 +7,10 @@ import 'package:uni_mangement_system/utils/firebase_utility.dart';
 class ClassViewModel extends ChangeNotifier {
   String? classId = "";
   String? className = "";
+  String? fileUrl = '';
 
   ClassViewModel({
+    this.fileUrl,
     this.classId,
     this.className,
   });
@@ -26,7 +28,7 @@ class ClassViewModel extends ChangeNotifier {
     var cls = Class(className: className);
     // print(cls);
     try {
-      await FirebaseUtility.addData(collection: "class", doc: cls.toMap());
+      await FirebaseUtility.addData(collection: "classes", doc: cls.toMap());
       notifyListeners();
     } catch (e) {
       print(e);
@@ -36,19 +38,19 @@ class ClassViewModel extends ChangeNotifier {
   updateData() async {
     var cls = Class(className: className);
     await FirebaseUtility.updateData(
-        collection: 'class', docId: classId!, doc: cls.toMap());
+        collection: 'classes', docId: classId!, doc: cls.toMap());
     notifyListeners();
   }
 
   deleteData() async {
    
-    await FirebaseUtility.deleteData(collection: "class", docId: classId!);
+    await FirebaseUtility.deleteData(collection: "classes", docId: classId!);
     notifyListeners();
   }
 
   getData() {
     var data =
-        FirebaseUtility.getData(collection: "class", orderBy: "className");
+        FirebaseUtility.getData(collection: "classes", orderBy: "className");
     notifyListeners();
     return data;
   }

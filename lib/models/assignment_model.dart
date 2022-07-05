@@ -9,9 +9,11 @@ class Assignment {
   final String? sessionName;
   final String? semesterName;
   final String? className;
-
+  final String? fileUrl;
   Assignment(
+    
       {this.sessionId,
+      this.fileUrl,
       this.classId,
       this.semesterId,
       this.sessionName,
@@ -24,11 +26,11 @@ class Assignment {
     return Assignment(
       assignmentId: map.id,
       assignmentNo: map['assignmentNo'],
-      classId: map.id,
+      // classId: map.id,
       className: map['className'],
-      sessionId: map.id,
+      // sessionId: map.id,
       sessionName: map['sessionName'],
-      semesterId: map.id,
+      // semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }
@@ -40,6 +42,7 @@ class Assignment {
       'sessionName': sessionName,
       'semesterName': semesterName,
     };
+    // print(row);
     return row;
   }
 }

@@ -10,8 +10,10 @@ class TeacherViewModel extends ChangeNotifier {
   String? teacherEmail = '';
   String? teacherPassword = '';
   String? teacherDepartment = '';
+  String? fileUrl = '';
 
   TeacherViewModel({
+    this.fileUrl,
     this.teacherId,
     this.teacherName,
     this.teacherEmail,
@@ -25,24 +27,43 @@ class TeacherViewModel extends ChangeNotifier {
         teacherId: teacher.id,
         teacherName: teacher.name,
         teacherEmail: teacher.email,
-        teacherPassword: teacher.email,
-        teacherDepartment: teacher.password);
+        teacherPassword: teacher.password,
+        teacherDepartment: teacher.department);
   }
 
   saveData() async {
+    var teacher = Teacher(
+      name: teacherName,
+      email: teacherEmail,
+      password: teacherPassword,
+      department: teacherDepartment,
+    );
+    await FirebaseUtility.addData(
+        collection: "teacheres", doc: teacher.toMap());
     notifyListeners();
   }
 
   updateData() async {
+    var teacher = Teacher(
+      name: teacherName,
+      email: teacherEmail,
+      password: teacherPassword,
+      department: teacherDepartment,
+    );
+    await FirebaseUtility.updateData(
+        collection: "teacheres", docId: teacherId!, doc: teacher.toMap());
     notifyListeners();
   }
 
   deleteData() async {
+    await FirebaseUtility.deleteData(
+        collection: "teacheres", docId: teacherId!);
     notifyListeners();
   }
 
   getData() {
-    var data = FirebaseUtility.getData(collection: "Teacher", orderBy: "name");
+    var data =
+        FirebaseUtility.getData(collection: "teacheres", orderBy: "name");
     notifyListeners();
     return data;
   }

@@ -10,9 +10,11 @@ class Notifications {
   final String? sessionName;
   final String? semesterName;
   final String? className;
+    final String? fileUrl;
 
   Notifications(
       {this.notificationId,
+      this.fileUrl,
       this.notificationDes,
       this.notificationName,
       this.sessionId,

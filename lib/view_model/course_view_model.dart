@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../models/model.dart';
 import '../utils/utlis.dart';
 
@@ -13,8 +12,10 @@ class CourseViewModel extends ChangeNotifier {
   String? className = '';
   String? sessionName = '';
   String? semesterName = '';
+  String? fileUrl = '';
 
   CourseViewModel({
+    this.fileUrl,
     this.courseId,
     this.courseName,
     this.className,
@@ -45,7 +46,7 @@ class CourseViewModel extends ChangeNotifier {
         sessionName: sessionName,
         className: className);
     try {
-      await FirebaseUtility.addData(collection: "course", doc: courses.toMap());
+      await FirebaseUtility.addData(collection: "courses", doc: courses.toMap());
       notifyListeners();
     } catch (e) {
       print(e);
@@ -61,7 +62,7 @@ class CourseViewModel extends ChangeNotifier {
         className: className);
 
     await FirebaseUtility.updateData(
-        collection: 'course', docId: courseId!, doc: courses.toMap());
+        collection: 'courses', docId: courseId!, doc: courses.toMap());
     notifyListeners();
   }
 
@@ -70,7 +71,7 @@ class CourseViewModel extends ChangeNotifier {
       courseId: courseId,
     );
     await FirebaseUtility.deleteData(
-      collection: "course",
+      collection: "courses",
       docId: courseId!,
     );
     notifyListeners();
@@ -78,7 +79,7 @@ class CourseViewModel extends ChangeNotifier {
 
   getData() {
     var data = FirebaseUtility.getData(
-      collection: "course",
+      collection: "courses",
       orderBy: "courseName",
     );
     notifyListeners();

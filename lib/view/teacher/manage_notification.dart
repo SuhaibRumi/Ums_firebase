@@ -32,6 +32,9 @@ class _ManageNotificationState extends State<ManageNotification> {
   String? semesterId;
   String? courseId;
   String? notificationId;
+  String? className;
+  String? sessionName;
+  String? semesterName;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,7 @@ class _ManageNotificationState extends State<ManageNotification> {
                 child: Column(
                   children: [
                     StreamBuilder<QuerySnapshot>(
-                        stream: semesterViewModel.getData(),
+                        stream: sessionViewModel.getData(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
                             return const CircularProgressIndicator();
@@ -67,26 +70,20 @@ class _ManageNotificationState extends State<ManageNotification> {
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.book_outlined,
                                     color: kSecondary)),
-                            value: classId,
-                            key: classState,
+                            value: sessionName,
+                            key: sessionState,
                             hint: const Text("Select Session"),
                             items: sessions.map((session) {
                               return DropdownMenuItem(
-                                value: session.sessionId.toString(),
+                                value: session.sessionName.toString(),
                                 child: Text(session.sessionName ?? ""),
                               );
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                sessionId = value!.toString();
+                                sessionName = value.toString();
                               });
                             },
-                            // validator: (value) {
-                            //   if (value == null) {
-                            //     return "please select your session";
-                            //   }
-                            //   return null;
-                            // },
                           );
                         }),
                     StreamBuilder<QuerySnapshot>(
@@ -102,26 +99,20 @@ class _ManageNotificationState extends State<ManageNotification> {
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.book_outlined,
                                     color: kSecondary)),
-                            value: classId,
+                            value: className,
                             key: classState,
                             hint: const Text("Select Class"),
                             items: classes.map((cls) {
                               return DropdownMenuItem(
-                                value: cls.classId.toString(),
+                                value: cls.className.toString(),
                                 child: Text(cls.className ?? ""),
                               );
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                classId = value!.toString();
+                                className = value.toString();
                               });
                             },
-                            // validator: (value) {
-                            //   if (value == null) {
-                            //     return "please select your class";
-                            //   }
-                            //   return null;
-                            // },
                           );
                         }),
                     StreamBuilder<QuerySnapshot>(
@@ -138,18 +129,19 @@ class _ManageNotificationState extends State<ManageNotification> {
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.description_outlined,
                                     color: kSecondary)),
+                            value: semesterName,
                             key: semesterState,
-                            value: semesterId,
+
                             hint: const Text("Select Semester"),
                             items: semesters.map((semester) {
                               return DropdownMenuItem(
-                                value: semester.semesterId.toString(),
+                                value: semester.semesterName.toString(),
                                 child: Text(semester.semesterName ?? ""),
                               );
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                semesterId = value!.toString();
+                                semesterName = value.toString();
                               });
                             },
                             // validator: (value) {
@@ -312,9 +304,11 @@ class _ManageNotificationState extends State<ManageNotification> {
 
   _addData() {
     notificationViewModel = NotificationViewModel(
-      notificationName: _notificationNameController.text,
-      notificationDes: _notificationDescController.text,
-    );
+        notificationName: _notificationNameController.text,
+        notificationDes: _notificationDescController.text,
+        semesterName: semesterName,
+        sessionName: sessionName,
+        className: className);
     notificationViewModel.saveData();
     setState(() {});
   }

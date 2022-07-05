@@ -4,17 +4,19 @@ import '../models/model.dart';
 import '../utils/utlis.dart';
 
 class AssigmentViewModel extends ChangeNotifier {
-  final String? assignmentId;
-  final String? assignmentNo;
-  final String? sessionId;
-  final String? classId;
-  final String? semesterId;
-  final String? sessionName;
-  final String? semesterName;
-  final String? className;
+  String? assignmentId = '';
+  String? assignmentNo = '';
+  String? sessionId = '';
+  String? classId = '';
+  String? semesterId = '';
+  String? sessionName = '';
+  String? semesterName = '';
+  String? className = '';
+  String? fileUrl = '';
 
   AssigmentViewModel(
       {this.assignmentId,
+      this.fileUrl,
       this.assignmentNo,
       this.sessionId,
       this.classId,
@@ -25,7 +27,6 @@ class AssigmentViewModel extends ChangeNotifier {
 
   factory AssigmentViewModel.fromMap(DocumentSnapshot map) {
     var assignments = Assignment.fromMap(map);
-    // print(map);
     return AssigmentViewModel(
       assignmentId: assignments.assignmentId,
       assignmentNo: assignments.assignmentNo,
@@ -44,10 +45,13 @@ class AssigmentViewModel extends ChangeNotifier {
         semesterName: semesterName,
         sessionName: sessionName,
         className: className);
+
     try {
       await FirebaseUtility.addData(
-          collection: "assignment", doc: assignments.toMap());
+          collection: "assignments", doc: assignments.toMap());
+
       notifyListeners();
+      // print("doc : {$assignments.toMap()}");
     } catch (e) {
       print(e);
     }
@@ -61,24 +65,26 @@ class AssigmentViewModel extends ChangeNotifier {
         sessionName: sessionName,
         className: className);
     await FirebaseUtility.updateData(
-        collection: 'assignment',
+        collection: 'assignments',
         docId: assignmentId!,
         doc: assignments.toMap());
     notifyListeners();
   }
 
   deleteData() async {
-  
-  await FirebaseUtility.deleteData(collection: "assignment", docId: assignmentId!,);
+    await FirebaseUtility.deleteData(
+      collection: "assignments",
+      docId: assignmentId!,
+    );
     notifyListeners();
-
   }
 
   getData() {
     var data = FirebaseUtility.getData(
-      collection: "assignment",
+      collection: "assignments",
       orderBy: "assignmentNo",
     );
+
     notifyListeners();
     return data;
   }

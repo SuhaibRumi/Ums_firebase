@@ -9,9 +9,11 @@ class Course {
   final String? sessionName;
   final String? semesterName;
   final String? className;
+  final String? fileUrl;
 
   Course(
       {this.courseId,
+      this.fileUrl,
       this.courseName,
       this.sessionId,
       this.sessionName,

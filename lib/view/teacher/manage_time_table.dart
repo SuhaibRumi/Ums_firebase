@@ -31,7 +31,9 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
   String? semesterId;
   String? courseId;
   String? timetableId;
-
+  String? className;
+  String? sessionName;
+  String? semesterName;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +56,7 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
                 child: Column(
                   children: [
                     StreamBuilder<QuerySnapshot>(
-                        stream: semesterViewModel.getData(),
+                        stream: sessionViewModel.getData(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
                             return const CircularProgressIndicator();
@@ -66,18 +68,18 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.book_outlined,
                                     color: kSecondary)),
-                            value: classId,
+                            value: sessionName,
                             key: classState,
                             hint: const Text("Select Session"),
                             items: sessions.map((session) {
                               return DropdownMenuItem(
-                                value: session.sessionId.toString(),
+                                value: session.sessionName.toString(),
                                 child: Text(session.sessionName ?? ""),
                               );
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                sessionId = value!.toString();
+                                sessionName = value.toString();
                               });
                             },
                             // validator: (value) {
@@ -101,18 +103,18 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.book_outlined,
                                     color: kSecondary)),
-                            value: classId,
+                            value: className,
                             key: classState,
                             hint: const Text("Select Class"),
                             items: classes.map((cls) {
                               return DropdownMenuItem(
-                                value: cls.classId.toString(),
+                                value: cls.className.toString(),
                                 child: Text(cls.className ?? ""),
                               );
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                classId = value!.toString();
+                                className = value.toString();
                               });
                             },
                             // validator: (value) {
@@ -138,17 +140,17 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
                                 prefixIcon: Icon(Icons.description_outlined,
                                     color: kSecondary)),
                             key: semesterState,
-                            value: semesterId,
+                            value: semesterName,
                             hint: const Text("Select Semester"),
                             items: semesters.map((semester) {
                               return DropdownMenuItem(
-                                value: semester.semesterId.toString(),
+                                value: semester.semesterName.toString(),
                                 child: Text(semester.semesterName ?? ""),
                               );
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                semesterId = value!.toString();
+                                semesterName = value.toString();
                               });
                             },
                             // validator: (value) {
@@ -192,13 +194,13 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
                 color: kPrimaryColor,
                 text: "Save Data",
                 onPrseed: () {
-                   if (isUpdate == false) {
-                      _addData();
-                      _timeTableDecsController.clear();
-                    } else {
-                      _updateDta();
-                      _timeTableDecsController.clear();
-                    }
+                  if (isUpdate == false) {
+                    _addData();
+                    _timeTableDecsController.clear();
+                  } else {
+                    _updateDta();
+                    _timeTableDecsController.clear();
+                  }
                 },
                 height: 40,
                 width: 120,
@@ -286,8 +288,11 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
   }
 
   _addData() {
-    timeTableViewModel =
-        TimeTableViewModel(timeTableDesc: _timeTableDecsController.text);
+    timeTableViewModel = TimeTableViewModel(
+        timeTableDesc: _timeTableDecsController.text,
+        semesterName: semesterName,
+        sessionName: sessionName,
+        className: className);
     timeTableViewModel.saveData();
     setState(() {});
   }

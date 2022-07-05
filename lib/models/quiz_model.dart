@@ -9,10 +9,13 @@ class Quiz {
   final String? sessionName;
   final String? semesterName;
   final String? className;
+    final String? fileUrl;
+
 
   Quiz(
       {this.quizId,
       this.quizNo,
+      this.fileUrl,
       this.sessionId,
       this.classId,
       this.semesterId,

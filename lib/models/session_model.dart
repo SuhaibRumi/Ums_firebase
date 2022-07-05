@@ -3,8 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Session {
   final String? sessionId;
   final String? sessionName;
+    final String? fileUrl;
 
-  Session({this.sessionId, this.sessionName});
+  Session({this.sessionId, this.sessionName,
+  this.fileUrl});
 
   factory Session.fromMap(DocumentSnapshot map) {
     return Session(
@@ -23,9 +25,7 @@ class Session {
 
 class SessionList {
   final List<Session> sessionList;
-
   SessionList({required this.sessionList});
-
   factory SessionList.fromMap(List data) {
     List<Session> session = [];
     session = data.map((e) => Session.fromMap(e)).toList();

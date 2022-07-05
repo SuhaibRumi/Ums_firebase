@@ -25,7 +25,7 @@ class SessionViewModel extends ChangeNotifier {
     var sessions = Session(sessionName: sessionName);
     try {
       await FirebaseUtility.addData(
-          collection: "Session", doc: sessions.toMap());
+          collection: "session", doc: sessions.toMap());
       notifyListeners();
     } catch (e) {
       print(e);
@@ -36,19 +36,17 @@ class SessionViewModel extends ChangeNotifier {
   updateData() async {
     var sessions = Session(sessionName: sessionName);
     await FirebaseUtility.updateData(
-        collection: 'Session', docId: sessionId!, doc: sessions.toMap());
+        collection: 'session', docId: sessionId!, doc: sessions.toMap());
     notifyListeners();
   }
 
   deleteData() async {
-   
-    await FirebaseUtility.deleteData(collection: "Session", docId: sessionId!);
+    await FirebaseUtility.deleteData(collection: "session", docId: sessionId!);
     notifyListeners();
   }
 
   getData() {
-    var data =
-        FirebaseUtility.getData(collection: "Session", orderBy: "sessionsName");
+    var data = FirebaseUtility.getData(collection: "Session", orderBy: "sessionsName");
     notifyListeners();
     return data;
   }

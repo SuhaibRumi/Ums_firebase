@@ -4,23 +4,23 @@ import 'package:uni_mangement_system/models/model.dart';
 import 'package:uni_mangement_system/utils/firebase_utility.dart';
 
 class SemesterViewModel extends ChangeNotifier {
-  String? semesterId;
+  String? semesterId = '';
   String? semesterName = '';
+  String? fileUrl = '';
 
-  SemesterViewModel({this.semesterId, this.semesterName});
+  SemesterViewModel({this.semesterId, this.fileUrl, this.semesterName});
 
   factory SemesterViewModel.fromMap(DocumentSnapshot map) {
     var semesters = Semester.fromMap(map);
     return SemesterViewModel(
-        semesterId: semesters.semesterId, 
-        semesterName: semesters.semesterName);
+        semesterId: semesters.semesterId, semesterName: semesters.semesterName);
   }
 
   savaData() async {
     var semester = Semester(semesterName: semesterName);
     try {
       await FirebaseUtility.addData(
-          collection: "semester", doc: semester.toMap());
+          collection: "semesters", doc: semester.toMap());
       notifyListeners();
     } catch (e) {
       print(e);
@@ -30,20 +30,19 @@ class SemesterViewModel extends ChangeNotifier {
   updateData() async {
     var semester = Semester(semesterName: semesterName);
     await FirebaseUtility.updateData(
-        collection: "semester", docId: semesterId!, doc: semester.toMap());
+        collection: "semesters", docId: semesterId!, doc: semester.toMap());
     notifyListeners();
   }
 
   deleteData() async {
-   
     await FirebaseUtility.deleteData(
-        collection: "semester", docId: semesterId!);
+        collection: "semesters", docId: semesterId!);
     notifyListeners();
   }
 
-  
   getData() {
-    var data = FirebaseUtility.getData(collection: 'semester', orderBy: "semesterName");
+    var data = FirebaseUtility.getData(
+        collection: 'semesters', orderBy: "semesterName");
     notifyListeners();
     return data;
   }

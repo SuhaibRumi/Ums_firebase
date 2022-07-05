@@ -13,9 +13,10 @@ class QuizViewModel extends ChangeNotifier {
   String? sessionName = '';
   String? semesterName = '';
   String? className = '';
-
+String? fileUrl = '';
   QuizViewModel({
     this.quizId,
+    this.fileUrl,
     this.quizNo,
     this.sessionId,
     this.classId,
@@ -30,27 +31,52 @@ class QuizViewModel extends ChangeNotifier {
     return QuizViewModel(
       quizId: quizes.quizId,
       quizNo: quizes.quizNo,
+      className: quizes.className,
+      semesterName: quizes.semesterName,
+      sessionName: quizes.sessionName,
       classId: quizes.classId,
       sessionId: quizes.sessionId,
-      semesterId:quizes.semesterId,
+      semesterId: quizes.semesterId,
     );
   }
   saveData() async {
-    
+    var quizes = Quiz(
+      quizNo: quizNo,
+      className: className,
+      semesterName: semesterName,
+      sessionName: sessionName,
+    );
+    try {
+      await FirebaseUtility.addData(collection: "quizes", doc: quizes.toMap());
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
     notifyListeners();
   }
 
   updateData() async {
+    var quizes = Quiz(
+      quizNo: quizNo,
+      className: className,
+      semesterName: semesterName,
+      sessionName: sessionName,
+    );
+    await FirebaseUtility.updateData(
+        collection: "quizes", docId: quizId!, doc: quizes.toMap());
     notifyListeners();
   }
 
   deleteData() async {
+    await FirebaseUtility.deleteData(
+      collection: "quizes",
+      docId: quizId!,
+    );
     notifyListeners();
   }
 
   getData() {
-    var data =
-        FirebaseUtility.getData(collection: "class", orderBy: "className");
+    var data = FirebaseUtility.getData(collection: "quizes", orderBy: "quizNo");
     notifyListeners();
     return data;
   }

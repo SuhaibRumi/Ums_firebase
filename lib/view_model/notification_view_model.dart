@@ -13,10 +13,12 @@ class NotificationViewModel extends ChangeNotifier {
   String? sessionId = '';
   String? classId = '';
   String? semesterId = '';
+  String? fileUrl = '';
 
   NotificationViewModel({
     this.notificationId,
     this.notificationName,
+    this.fileUrl,
     this.notificationDes,
     this.semesterName,
     this.sessionName,
@@ -42,7 +44,6 @@ class NotificationViewModel extends ChangeNotifier {
   }
   saveData() async {
     var notification = Notifications(
-        notificationId: notificationId,
         notificationName: notificationName,
         notificationDes: notificationDes,
         className: className,
@@ -50,7 +51,7 @@ class NotificationViewModel extends ChangeNotifier {
         sessionName: sessionName);
     try {
       await FirebaseUtility.addData(
-          collection: "notification", doc: notification.toMap());
+          collection: "notifications", doc: notification.toMap());
       notifyListeners();
     } catch (e) {
       print(e);
@@ -60,27 +61,29 @@ class NotificationViewModel extends ChangeNotifier {
 
   updateData() async {
     var notification = Notifications(
-        notificationId: notificationId,
         notificationName: notificationName,
         notificationDes: notificationDes,
         className: className,
         semesterName: semesterName,
         sessionName: sessionName);
     await FirebaseUtility.updateData(
-        collection: "notification",
+        collection: "notifications",
         docId: notificationId!,
         doc: notification.toMap());
     notifyListeners();
   }
 
   deleteData() async {
-   await FirebaseUtility.deleteData(collection: "notification", docId: notificationId!,);
+    await FirebaseUtility.deleteData(
+      collection: "notifications",
+      docId: notificationId!,
+    );
     notifyListeners();
   }
 
   getData() {
     var data = FirebaseUtility.getData(
-        collection: "notification", orderBy: "notificationName");
+        collection: "notifications", orderBy: "notificationName");
     notifyListeners();
     return data;
   }
