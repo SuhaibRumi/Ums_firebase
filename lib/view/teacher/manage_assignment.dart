@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
 import '../../view_model/view_model.dart';
@@ -13,11 +16,10 @@ class AssignmentScreen extends StatefulWidget {
 }
 
 class _AssignmentScreenState extends State<AssignmentScreen> {
-  // final _assignmentNameController = TextEditingController();
   final _assignmentNoController = TextEditingController();
   var assignmentViewModel = AssigmentViewModel();
+  File? file;
 
-  var courseViewModel = CourseViewModel();
   var semesterViewModel = SemesterViewModel();
   var sessionViewModel = SessionViewModel();
   var classViewModel = ClassViewModel();
@@ -68,8 +70,9 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
 
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.book_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.cached,
+                            )),
                             value: sessionName,
                             key: sessionState,
                             hint: const Text("Select Session"),
@@ -100,8 +103,9 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
 
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.book_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.group_outlined,
+                            )),
                             value: className,
                             key: classState,
                             hint: const Text("Select Class"),
@@ -132,8 +136,9 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
 
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.description_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.bookmark_add_outlined,
+                            )),
                             key: semesterState,
                             value: semesterName,
                             hint: const Text("Select Semester"),
@@ -155,7 +160,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                       lableText: "Assignments No:",
                       hintText: "",
                       icon: const Icon(
-                        Icons.library_books_rounded,
+                        Icons.description_outlined,
                       ),
                       controller: _assignmentNoController,
                     ),
@@ -163,7 +168,18 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                       thickness: 1.2,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        FilePickerResult? result =
+                            await FilePicker.platform.pickFiles();
+
+                        if (result != null) {
+                          setState(() {
+                            file = File(result.files.single.path!);
+                          });
+                        } else {
+                          // User canceled the picker
+                        }
+                      },
                       child: const Text(
                         "Upload file",
                         style: TextStyle(
@@ -192,7 +208,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                   }
                 },
                 height: 40,
-                width: 110,
+                width: 120,
                 fontsize: 14),
             const SizedBox(
               height: 10,

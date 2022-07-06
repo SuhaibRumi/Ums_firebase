@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as path;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseUtility {
@@ -30,5 +33,20 @@ class FirebaseUtility {
           .orderBy(orderBy)
           .snapshots();
     }
+  }
+
+  Future<String?> uploadFile({
+    required File file,
+  }) async {
+    String _fileUrl = '';
+    String fileName = path.basename(file.path);
+    Reference storageRef = FirebaseStorage.instance.ref().child(fileName);
+    UploadTask task = storageRef.putFile(file);
+    TaskSnapshot snapshot = await task.whenComplete(() {});
+    print(snapshot.state.toString());
+    storageRef.getDownloadURL().then((value) => 
+      _fileUrl = value
+    );
+    return _fileUrl;
   }
 }

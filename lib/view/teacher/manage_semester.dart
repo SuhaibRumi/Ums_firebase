@@ -44,8 +44,7 @@ class _SemesterScreenState extends State<SemesterScreen> {
                       lableText: "Semester Name",
                       hintText: "Enter your semester",
                       icon: const Icon(
-                        Icons.menu_book,
-                        color: kSecondary,
+                        Icons.bookmark_add_outlined,
                       ),
                     ),
                   ],
@@ -57,7 +56,7 @@ class _SemesterScreenState extends State<SemesterScreen> {
             ),
             MyButton(
                 color: kPrimaryColor,
-                text: "Submit",
+                text: "Save Data",
                 onPrseed: () {
                   if (isUpdate == false) {
                     _addData();
@@ -68,7 +67,7 @@ class _SemesterScreenState extends State<SemesterScreen> {
                   }
                 },
                 height: 40,
-                width: 110,
+                width: 120,
                 fontsize: 14),
             const SizedBox(
               height: 20,

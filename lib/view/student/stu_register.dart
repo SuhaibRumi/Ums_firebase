@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../../view_model/view_model.dart';
 import '/../widgets/custom_button.dart';
 import '/../widgets/input_field.dart';
 
@@ -18,6 +20,15 @@ class _StudentRegisterState extends State<StudentRegister> {
   final _studentEmailController = TextEditingController();
   final _studentPasswordController = TextEditingController();
   final _studentRollNoController = TextEditingController();
+  final _studentRegNoController = TextEditingController();
+
+  var studentViewModel = StudentsViewModel();
+  var semesterViewModel = SemesterViewModel();
+  var sessionViewModel = SessionViewModel();
+  var classViewModel = ClassViewModel();
+  String? className;
+  String? sessionName;
+  String? semesterName;
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +125,7 @@ class _StudentRegisterState extends State<StudentRegister> {
                           indent: 15,
                         ),
                         InputField(
-                          controller: _studentRollNoController,
+                          controller: _studentRegNoController,
                           lableText: "Reg No",
                           hintText: "Enter your Reg no",
                           icon: const Icon(
@@ -126,85 +137,99 @@ class _StudentRegisterState extends State<StudentRegister> {
                           endIndent: 15,
                           indent: 15,
                         ),
-                        DropdownButtonFormField(
-                          alignment: Alignment.center,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.book_outlined,
-                            ),
-                          ),
-                          hint: const Text("Select Session"),
-                          items: [
-                            DropdownMenuItem(
-                                value: "data",
-                                child: Column(
-                                  children: const <Widget>[
-                                    Text("2021-2023"),
-                                  ],
-                                )),
-                          ],
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          validator: (value) {
-                            if (value == null) {
-                              return "please select your Session";
-                            }
-                            return null;
-                          },
-                        ),
-                        DropdownButtonFormField(
-                          alignment: Alignment.center,
-                          decoration: const InputDecoration(
-                              prefixIcon: Icon(
-                            Icons.crisis_alert_outlined,
-                          )),
-                          hint: const Text("Select Class"),
-                          items: [
-                            DropdownMenuItem(
-                                value: "data",
-                                child: Column(
-                                  children: const <Widget>[
-                                    Text("BSCS"),
-                                  ],
-                                ))
-                          ],
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          validator: (value) {
-                            if (value == null) {
-                              return "please select your class";
-                            }
-                            return null;
-                          },
-                        ),
-                        DropdownButtonFormField(
-                          alignment: Alignment.center,
-                          decoration: const InputDecoration(
-                              prefixIcon: Icon(
-                            Icons.description_outlined,
-                          )),
-                          hint: const Text("Select Semeter"),
-                          items: [
-                            DropdownMenuItem(
-                                value: "data",
-                                child: Column(
-                                  children: const <Widget>[
-                                    Text("1st"),
-                                  ],
-                                ))
-                          ],
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          validator: (value) {
-                            if (value == null) {
-                              return "please select your Semester";
-                            }
-                            return null;
-                          },
-                        ),
+                        StreamBuilder<QuerySnapshot>(
+                            stream: sessionViewModel.getData(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const CircularProgressIndicator();
+                              }
+                              List<SessionViewModel> sessions = snapshot
+                                  .data!.docs
+                                  .map((e) => SessionViewModel.fromMap(e))
+                                  .toList();
+
+                              return DropdownButtonFormField(
+                                decoration: const InputDecoration(
+                                    prefixIcon: Icon(Icons.book_outlined,
+                                        color: kSecondary)),
+                                value: sessionName,
+                                hint: const Text("Select Session"),
+                                items: sessions.map((session) {
+                                  return DropdownMenuItem(
+                                    value: session.sessionName.toString(),
+                                    child: Text(session.sessionName ?? ""),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    // sessionId = value!.toString();
+                                    sessionName = value.toString();
+                                  });
+                                },
+                              );
+                            }),
+                        StreamBuilder<QuerySnapshot>(
+                            stream: classViewModel.getData(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const CircularProgressIndicator();
+                              }
+
+                              List<ClassViewModel> classes = snapshot.data!.docs
+                                  .map((e) => ClassViewModel.fromMap(e))
+                                  .toList();
+
+                              return DropdownButtonFormField(
+                                decoration: const InputDecoration(
+                                    prefixIcon: Icon(Icons.book_outlined,
+                                        color: kSecondary)),
+                                value: className,
+                                hint: const Text("Select Class"),
+                                items: classes.map((cls) {
+                                  return DropdownMenuItem(
+                                    value: cls.className.toString(),
+                                    child: Text(cls.className ?? ""),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    // classId = value!.toString();
+                                    className = value.toString();
+                                  });
+                                },
+                              );
+                            }),
+                        StreamBuilder<QuerySnapshot>(
+                            stream: semesterViewModel.getData(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const CircularProgressIndicator();
+                              }
+                              List<SemesterViewModel> semesters = snapshot
+                                  .data!.docs
+                                  .map((e) => SemesterViewModel.fromMap(e))
+                                  .toList();
+
+                              return DropdownButtonFormField(
+                                decoration: const InputDecoration(
+                                    prefixIcon: Icon(Icons.description_outlined,
+                                        color: kSecondary)),
+                                value: semesterName,
+                                hint: const Text("Select Semester"),
+                                items: semesters.map((semester) {
+                                  return DropdownMenuItem(
+                                    value: semester.semesterName.toString(),
+                                    child: Text(semester.semesterName ?? ""),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    // semesterId = value!.toString();
+                                    semesterName = value.toString();
+                                  });
+                                },
+                              );
+                            }),
                       ],
                     ),
                   ),
@@ -226,5 +251,28 @@ class _StudentRegisterState extends State<StudentRegister> {
         ),
       ),
     );
+  }
+
+  _addData() {
+    studentViewModel = StudentsViewModel(
+        studentName: _studentNameController.text,
+        studentEmail: _studentEmailController.text,
+        studentRoll: _studentRollNoController.text,
+        studentRegNo: _studentRegNoController.text,
+        semesterName: semesterName,
+        sessionName: sessionName,
+        className: className);
+    studentViewModel.saveData();
+
+    setState(() {});
+    _clearData();
+  }
+
+  _clearData() {
+    _studentNameController.clear();
+    _studentRollNoController.clear();
+    _studentRegNoController.clear();
+    _studentEmailController.clear();
+    _studentPasswordController.clear();
   }
 }

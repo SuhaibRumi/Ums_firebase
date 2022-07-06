@@ -66,10 +66,11 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
                               .toList();
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.book_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.cached,
+                            )),
                             value: sessionName,
-                            key: classState,
+                            key: sessionState,
                             hint: const Text("Select Session"),
                             items: sessions.map((session) {
                               return DropdownMenuItem(
@@ -101,8 +102,9 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
                               .toList();
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.book_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.group_outlined,
+                            )),
                             value: className,
                             key: classState,
                             hint: const Text("Select Class"),
@@ -137,8 +139,9 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
                               .toList();
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.description_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.bookmark_add_outlined,
+                            )),
                             key: semesterState,
                             value: semesterName,
                             hint: const Text("Select Semester"),
@@ -165,7 +168,7 @@ class _ManageTimeTableState extends State<ManageTimeTable> {
                       lableText: "Time Table",
                       hintText: "Set your Time",
                       icon: const Icon(
-                        Icons.library_books_rounded,
+                        Icons.punch_clock_outlined,
                       ),
                       controller: _timeTableDecsController,
                     ),

@@ -13,7 +13,8 @@ class QuizViewModel extends ChangeNotifier {
   String? sessionName = '';
   String? semesterName = '';
   String? className = '';
-String? fileUrl = '';
+  String? fileUrl = '';
+
   QuizViewModel({
     this.quizId,
     this.fileUrl,

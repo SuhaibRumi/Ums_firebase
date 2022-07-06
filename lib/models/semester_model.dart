@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Semester {
   final String? semesterId;
   final String? semesterName;
-  final String? fileUrl;
+
   Semester({this.semesterId, this.semesterName,
-  this.fileUrl});
+  });
 
   factory Semester.fromMap(DocumentSnapshot map) {
     return Semester(semesterId: map.id, semesterName: map['semesterName']);

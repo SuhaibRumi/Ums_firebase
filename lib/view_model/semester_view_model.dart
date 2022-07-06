@@ -6,9 +6,9 @@ import 'package:uni_mangement_system/utils/firebase_utility.dart';
 class SemesterViewModel extends ChangeNotifier {
   String? semesterId = '';
   String? semesterName = '';
-  String? fileUrl = '';
 
-  SemesterViewModel({this.semesterId, this.fileUrl, this.semesterName});
+
+  SemesterViewModel({this.semesterId, this.semesterName});
 
   factory SemesterViewModel.fromMap(DocumentSnapshot map) {
     var semesters = Semester.fromMap(map);

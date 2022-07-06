@@ -20,7 +20,7 @@ class StudentLoginBody extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                "STUDENT'S ",
+                "Welcome",
                 style: TextStyle(
                     fontSize: 25,
                     color: kPrimaryColor,

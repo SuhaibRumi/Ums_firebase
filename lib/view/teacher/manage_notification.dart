@@ -68,8 +68,9 @@ class _ManageNotificationState extends State<ManageNotification> {
                               .toList();
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.book_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.cached,
+                            )),
                             value: sessionName,
                             key: sessionState,
                             hint: const Text("Select Session"),
@@ -97,8 +98,9 @@ class _ManageNotificationState extends State<ManageNotification> {
                               .toList();
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.book_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.group_outlined,
+                            )),
                             value: className,
                             key: classState,
                             hint: const Text("Select Class"),
@@ -127,8 +129,9 @@ class _ManageNotificationState extends State<ManageNotification> {
                               .toList();
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.description_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.bookmark_add_outlined,
+                            )),
                             value: semesterName,
                             key: semesterState,
 
@@ -156,36 +159,22 @@ class _ManageNotificationState extends State<ManageNotification> {
                       lableText: "Title",
                       hintText: "Enter Notification",
                       icon: const Icon(
-                        Icons.library_books_rounded,
-                        color: kSecondary,
+                        Icons.title_outlined,
                       ),
                       controller: _notificationNameController,
                     ),
                     const Divider(
                       indent: 15,
                       endIndent: 15,
+                      thickness: 2,
                     ),
                     InputField(
                       lableText: " Notification Description:",
                       hintText: "",
                       icon: const Icon(
-                        Icons.library_books_rounded,
-                        color: kSecondary,
+                        Icons.description_outlined,
                       ),
                       controller: _notificationDescController,
-                    ),
-                    const Divider(
-                      thickness: 1.2,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Upload file",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
                     ),
                   ],
                 ),
@@ -209,7 +198,7 @@ class _ManageNotificationState extends State<ManageNotification> {
                   _notificationDescController.clear();
                 },
                 height: 40,
-                width: 150,
+                width: 120,
                 fontsize: 14),
             const SizedBox(
               height: 10,

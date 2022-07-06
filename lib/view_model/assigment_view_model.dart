@@ -50,8 +50,8 @@ class AssigmentViewModel extends ChangeNotifier {
       await FirebaseUtility.addData(
           collection: "assignments", doc: assignments.toMap());
 
-      notifyListeners();
-      // print("doc : {$assignments.toMap()}");
+      
+   
     } catch (e) {
       print(e);
     }

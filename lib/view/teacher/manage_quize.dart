@@ -67,8 +67,9 @@ class _ManageQuizeState extends State<ManageQuize> {
                               .toList();
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.book_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.cached,
+                            )),
                             value: sessionName,
                             key: sessionState,
                             hint: const Text("Select Session"),
@@ -102,8 +103,9 @@ class _ManageQuizeState extends State<ManageQuize> {
                               .toList();
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.book_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.group_outlined,
+                            )),
                             value: className,
                             key: classState,
                             hint: const Text("Select Class"),
@@ -138,8 +140,9 @@ class _ManageQuizeState extends State<ManageQuize> {
                               .toList();
                           return DropdownButtonFormField(
                             decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.description_outlined,
-                                    color: kSecondary)),
+                                prefixIcon: Icon(
+                              Icons.bookmark_add_outlined,
+                            )),
                             value: semesterName,
                             key: semesterState,
 
@@ -171,8 +174,7 @@ class _ManageQuizeState extends State<ManageQuize> {
                       lableText: "Quiz No:",
                       hintText: "",
                       icon: const Icon(
-                        Icons.library_books_rounded,
-                        color: kSecondary,
+                        Icons.ads_click_outlined,
                       ),
                       controller: _quizNoController,
                     ),

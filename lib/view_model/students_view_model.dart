@@ -2,22 +2,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:uni_mangement_system/models/model.dart';
 
+import '../utils/utlis.dart';
+
 class StudentsViewModel extends ChangeNotifier {
-  String? studId;
-  String? classId;
-  String? sessionId;
-  String? semesterId;
+  String? studentId = '';
   String? studentName = '';
-  String? studRoll = '';
+  String? studentRoll = '';
+  String? studentEmail = '';
+  String? studentRegNo = '';
+
+  String? classId = '';
+  String? sessionId = '';
+  String? semesterId = '';
+
   String? className = '';
   String? sessionName = '';
   String? semesterName = '';
   bool? isActive = true;
 
   StudentsViewModel({
-    this.studId,
+    this.studentId,
     this.studentName,
-    this.studRoll,
+    this.studentRoll,
+    this.studentEmail,
+    this.studentRegNo,
     this.className,
     this.sessionName,
     this.semesterName,
@@ -34,34 +42,61 @@ class StudentsViewModel extends ChangeNotifier {
       active = true;
     }
     return StudentsViewModel(
-        studId:students.id,
+        studentId: students.id,
         studentName: students.name,
-        studRoll: students.rollNo,
-        sessionName:students.semesterName,
-        className:students.className,
+        studentRoll: students.rollNo,
+        studentEmail: students.email,
+        studentRegNo: students.regNo,
+        sessionName: students.sessionName,
+        className: students.className,
         semesterName: students.semesterName,
         semesterId: students.semtserId,
         sessionId: students.sessionId,
         classId: students.classId,
-
         isActive: active);
   }
   saveData() async {
-    
+    var students = Student(
+      name: studentName,
+      email: studentName,
+      rollNo: studentRoll,
+      regNo: studentRoll,
+      sessionName: sessionName,
+      semesterName: semesterName,
+      className: className,
+    );
+
+    await FirebaseUtility.addData(
+        collection: "Students", doc: students.toMap());
+
     notifyListeners();
   }
 
   updateData() async {
+    var students = Student(
+      name: studentName,
+      email: studentName,
+      rollNo: studentRoll,
+      regNo: studentRoll,
+      sessionName: sessionName,
+      semesterName: semesterName,
+      className: className,
+    );
+    await FirebaseUtility.updateData(
+        collection: "Students", docId: studentId!, doc: students.toMap());
     notifyListeners();
   }
 
   deletData() async {
+    await FirebaseUtility.deleteData(collection: "Students", docId: studentId!);
+
     notifyListeners();
   }
 
-  Future<List<StudentsViewModel>> getData() async {
-    List<StudentsViewModel> students = [];
+  getData() {
+    var data = FirebaseUtility.getData(
+        collection: "Students", orderBy: " StudentName");
     notifyListeners();
-    return students;
+    return data;
   }
 }

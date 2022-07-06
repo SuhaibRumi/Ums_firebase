@@ -3,21 +3,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Session {
   final String? sessionId;
   final String? sessionName;
-    final String? fileUrl;
+  
 
-  Session({this.sessionId, this.sessionName,
-  this.fileUrl});
+  Session({this.sessionId, this.sessionName, });
 
   factory Session.fromMap(DocumentSnapshot map) {
     return Session(
       sessionId: map.id,
-      sessionName: map['sessionsName'],
+      sessionName: map['sessionName'],
     );
   }
   toMap() {
     Map<String, dynamic> row = {};
     row = {
-      'sessionsName': sessionName,
+      'sessionName': sessionName,
     };
     return row;
   }

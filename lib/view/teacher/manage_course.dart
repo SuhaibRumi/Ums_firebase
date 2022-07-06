@@ -64,8 +64,9 @@ class _ManageCourseState extends State<ManageCourse> {
                                 .toList();
                             return DropdownButtonFormField(
                               decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.book_outlined,
-                                      color: kSecondary)),
+                                  prefixIcon: Icon(
+                                Icons.cached,
+                              )),
                               value: sessionName,
                               key: sessionState,
                               hint: const Text("Select Session"),
@@ -77,7 +78,6 @@ class _ManageCourseState extends State<ManageCourse> {
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
-                                  // sessionId = value!.toString();
                                   sessionName = value.toString();
                                 });
                               },
@@ -100,8 +100,9 @@ class _ManageCourseState extends State<ManageCourse> {
                                 .toList();
                             return DropdownButtonFormField(
                               decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.book_outlined,
-                                      color: kSecondary)),
+                                  prefixIcon: Icon(
+                                Icons.group_outlined,
+                              )),
                               value: className,
                               key: classState,
                               hint: const Text("Select Class"),
@@ -113,7 +114,6 @@ class _ManageCourseState extends State<ManageCourse> {
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
-                                  // classId = value!.toString();
                                   className = value.toString();
                                 });
                               },
@@ -137,8 +137,9 @@ class _ManageCourseState extends State<ManageCourse> {
                                 .toList();
                             return DropdownButtonFormField(
                               decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.description_outlined,
-                                      color: kSecondary)),
+                                  prefixIcon: Icon(
+                                Icons.bookmark_add_outlined,
+                              )),
                               value: semesterName,
                               key: semesterState,
 
@@ -165,9 +166,7 @@ class _ManageCourseState extends State<ManageCourse> {
                       InputField(
                         lableText: "Course Name",
                         hintText: "Enter your assignment",
-                        icon: const Icon(
-                          Icons.library_books_rounded,
-                        ),
+                        icon: const Icon(Icons.manage_search_outlined),
                         controller: _courseNameController,
                       ),
                       const Divider(
@@ -204,7 +203,7 @@ class _ManageCourseState extends State<ManageCourse> {
                     }
                   },
                   height: 40,
-                  width: 110,
+                  width: 120,
                   fontsize: 14),
               const SizedBox(
                 height: 50,
@@ -289,19 +288,17 @@ class _ManageCourseState extends State<ManageCourse> {
 
   _addData() {
     courseViewModel = CourseViewModel(
-      courseName: _courseNameController.text,
-       semesterName: semesterName,
+        courseName: _courseNameController.text,
+        semesterName: semesterName,
         sessionName: sessionName,
-        className: className
-    );
+        className: className);
     courseViewModel.saveData();
     setState(() {});
   }
 
   _updateDta() {
     courseViewModel = CourseViewModel(
-        courseId: courseId,
-         courseName: _courseNameController.text);
+        courseId: courseId, courseName: _courseNameController.text);
     courseViewModel.updateData();
     setState(() {
       isUpdate = false;

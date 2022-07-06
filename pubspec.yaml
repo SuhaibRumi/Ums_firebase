@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^1.18.0
   cloud_firestore: ^3.1.18
+  firebase_storage: ^10.3.1
+  file_picker: ^4.6.1
 
   flutter:
     sdk: flutter

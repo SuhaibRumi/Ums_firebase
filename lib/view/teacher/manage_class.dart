@@ -43,7 +43,7 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                         lableText: "Class Name",
                         hintText: "Enter your Class",
                         icon: const Icon(
-                          Icons.person,
+                          Icons.group_outlined,
                           size: 30,
                         ),
                       ),
@@ -67,7 +67,7 @@ class _ClassMangemnetScreenState extends State<ClassMangemnetScreen> {
                     }
                   },
                   height: 40,
-                  width: 110,
+                  width: 120,
                   fontsize: 14),
               const SizedBox(
                 height: 50,

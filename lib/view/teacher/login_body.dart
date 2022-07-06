@@ -20,7 +20,7 @@ class TeacherLoginBody extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                "TEACHER'S",
+                "Welcome",
                 style: TextStyle(
                     fontSize: 28,
                     color: kPrimaryColor,

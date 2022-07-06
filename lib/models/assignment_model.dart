@@ -11,7 +11,6 @@ class Assignment {
   final String? className;
   final String? fileUrl;
   Assignment(
-    
       {this.sessionId,
       this.fileUrl,
       this.classId,
@@ -26,11 +25,11 @@ class Assignment {
     return Assignment(
       assignmentId: map.id,
       assignmentNo: map['assignmentNo'],
-      // classId: map.id,
+      classId: map.id,
       className: map['className'],
-      // sessionId: map.id,
+      sessionId: map.id,
       sessionName: map['sessionName'],
-      // semesterId: map.id,
+      semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }

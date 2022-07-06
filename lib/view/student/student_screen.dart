@@ -257,7 +257,7 @@ class _StudentScreenState extends State<StudentScreen> {
                         rows: students.map((row) {
                           return DataRow(cells: [
                             DataCell(
-                              Text(row.studId.toString()),
+                              Text(row.studentId.toString()),
                             ),
                             DataCell(
                               Text(
@@ -270,7 +270,7 @@ class _StudentScreenState extends State<StudentScreen> {
                               ),
                             ),
                             DataCell(
-                              Text(row.studRoll ?? ""),
+                              Text(row.studentRoll ?? ""),
                             ),
                             DataCell(
                               Text(row.sessionName ?? ""),
@@ -294,11 +294,11 @@ class _StudentScreenState extends State<StudentScreen> {
                             DataCell(IconButton(
                               onPressed: () {
                                 setState(() {
-                                  studId = row.studId;
+                                  studId = row.studentId;
                                   isUpdate = true;
                                 });
                                 _studentNameController.text = row.studentName!;
-                                _studRollController.text = row.studRoll!;
+                                _studRollController.text = row.studentRoll!;
                                 _studSessionController.text = row.semesterName!;
                                 _studsemesterNameController.text =
                                     row.semesterName!;
@@ -310,7 +310,7 @@ class _StudentScreenState extends State<StudentScreen> {
                             DataCell(IconButton(
                               onPressed: () async {
                                 setState(() {
-                                  studId = row.studId;
+                                  studId = row.studentId;
                                 });
                                 _deleteDta();
                               },
@@ -332,7 +332,7 @@ class _StudentScreenState extends State<StudentScreen> {
   _addData() {
     studentViewModel = StudentsViewModel(
         studentName: _studentNameController.text,
-        studRoll: _studRollController.text,
+        studentRoll: _studRollController.text,
         semesterId: semesterId,
         sessionId: sessionId,
         classId: classId,
@@ -347,9 +347,9 @@ class _StudentScreenState extends State<StudentScreen> {
     studentViewModel = StudentsViewModel(
       sessionId: sessionId,
       semesterId: semesterId,
-      studId: studId,
+      studentId: studId,
       studentName: _studentNameController.text,
-      studRoll: _studRollController.text,
+      studentRoll: _studRollController.text,
       semesterName: _studsemesterNameController.text,
       sessionName: _studSessionController.text,
     );
@@ -361,7 +361,7 @@ class _StudentScreenState extends State<StudentScreen> {
 
   _deleteDta() {
     studentViewModel = StudentsViewModel(
-      studId: studId,
+      studentId: studId,
     );
     studentViewModel.deletData();
   }

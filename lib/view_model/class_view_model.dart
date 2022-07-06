@@ -7,10 +7,10 @@ import 'package:uni_mangement_system/utils/firebase_utility.dart';
 class ClassViewModel extends ChangeNotifier {
   String? classId = "";
   String? className = "";
-  String? fileUrl = '';
+
 
   ClassViewModel({
-    this.fileUrl,
+   
     this.classId,
     this.className,
   });

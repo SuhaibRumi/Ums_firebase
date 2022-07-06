@@ -40,9 +40,7 @@ class _SessionScreenState extends State<SessionScreen> {
                       InputField(
                         lableText: "Session Name",
                         hintText: "Enter your session",
-                        icon: const Icon(
-                          Icons.library_books_rounded,
-                        ),
+                        icon: const Icon(Icons.cached),
                         controller: _sessionController,
                       ),
                     ],
@@ -65,7 +63,7 @@ class _SessionScreenState extends State<SessionScreen> {
                     }
                   },
                   height: 40,
-                  width: 110,
+                  width: 120,
                   fontsize: 14),
               const SizedBox(
                 height: 50,
