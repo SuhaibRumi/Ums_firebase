@@ -46,7 +46,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                       height: 10,
                     ),
                     Text(
-                      "Punjab university".toUpperCase(),
+                      "University Management System".toUpperCase(),
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

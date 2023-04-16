@@ -26,11 +26,8 @@ class Course {
     return Course(
       courseId: map.id,
       courseName: map['courseName'],
-      classId: map.id,
       className: map['className'],
-      sessionId: map.id,
       sessionName: map['sessionName'],
-      semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }
@@ -41,6 +38,7 @@ class Course {
       'className': className,
       'sessionName': sessionName,
       'semesterName': semesterName,
+      'fileUrl':fileUrl,
     };
     return row;
   }

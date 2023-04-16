@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uni_mangement_system/utils/constants.dart';
-import 'package:uni_mangement_system/view/splash_screen.dart';
-import 'package:uni_mangement_system/view/teacher/teacher.dart';
+import 'package:uni_mangement_system/view/view.dart';
 
 void main() async {
+  // Firebase initializeApp
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
         backgroundColor: kCardColor,
-
         colorScheme: ColorScheme.fromSwatch()
             .copyWith(secondary: const Color(0xFF63CF93)),
       ),

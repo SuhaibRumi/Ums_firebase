@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../models/model.dart';
@@ -44,9 +46,12 @@ class CourseViewModel extends ChangeNotifier {
         courseName: courseName,
         semesterName: semesterName,
         sessionName: sessionName,
-        className: className);
+        className: className,
+        fileUrl: fileUrl,
+        );
     try {
-      await FirebaseUtility.addData(collection: "courses", doc: courses.toMap());
+      await FirebaseUtility.addData(
+          collection: "courses", doc: courses.toMap());
       notifyListeners();
     } catch (e) {
       print(e);
@@ -84,5 +89,10 @@ class CourseViewModel extends ChangeNotifier {
     );
     notifyListeners();
     return data;
+  }
+
+  Future<String?> uploadFile({required File file}) async {
+    var url = await FirebaseUtility.uploadFile(file: file);
+    return url;
   }
 }

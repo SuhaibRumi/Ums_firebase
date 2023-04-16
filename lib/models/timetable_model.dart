@@ -9,9 +9,11 @@ class TimeTable {
   final String? sessionName;
   final String? semesterName;
   final String? className;
+  final String? fileUrl;
 
   TimeTable(
-      {this.timeTableId,
+      {this.fileUrl,
+      this.timeTableId,
       this.timeTableDesc,
       this.sessionId,
       this.classId,
@@ -24,11 +26,8 @@ class TimeTable {
     return TimeTable(
       timeTableId: map.id,
       timeTableDesc: map['timeTableDesc'],
-      classId: map.id,
       className: map['className'],
-      sessionId: map.id,
       sessionName: map['sessionName'],
-      semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }
@@ -39,6 +38,7 @@ class TimeTable {
       'className': className,
       'sessionName': sessionName,
       'semesterName': semesterName,
+      'fileUrl': fileUrl,
     };
     return row;
   }

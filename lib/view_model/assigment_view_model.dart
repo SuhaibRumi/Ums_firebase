@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../models/model.dart';
@@ -44,14 +46,12 @@ class AssigmentViewModel extends ChangeNotifier {
         assignmentNo: assignmentNo,
         semesterName: semesterName,
         sessionName: sessionName,
-        className: className);
-
+        className: className,
+        fileUrl: fileUrl);
+    print(assignments.toMap());
     try {
       await FirebaseUtility.addData(
           collection: "assignments", doc: assignments.toMap());
-
-      
-   
     } catch (e) {
       print(e);
     }
@@ -87,5 +87,13 @@ class AssigmentViewModel extends ChangeNotifier {
 
     notifyListeners();
     return data;
+  }
+
+  Future<String?> uploadFile({required File file}) async {
+    var url = '';
+    url = await FirebaseUtility.uploadFile(file: file) ?? '';
+    notifyListeners();
+    print(url);
+    return url;
   }
 }

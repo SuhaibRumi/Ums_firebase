@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:uni_mangement_system/models/model.dart';
@@ -13,6 +15,7 @@ class TimeTableViewModel extends ChangeNotifier {
   String? sessionName = '';
   String? semesterName = '';
   String? className = '';
+  String? fileUrl = '';
 
   TimeTableViewModel({
     this.timeTableId,
@@ -23,6 +26,7 @@ class TimeTableViewModel extends ChangeNotifier {
     this.className,
     this.semesterName,
     this.sessionName,
+    this. fileUrl,
   });
 
   factory TimeTableViewModel.fromMap(DocumentSnapshot map) {
@@ -44,6 +48,7 @@ class TimeTableViewModel extends ChangeNotifier {
       className: className,
       semesterName: semesterName,
       sessionName: sessionName,
+      fileUrl:fileUrl,
     );
     try {
       await FirebaseUtility.addData(collection: "timeTables", doc: time.toMap());
@@ -76,5 +81,9 @@ class TimeTableViewModel extends ChangeNotifier {
         collection: "timeTables", orderBy: "timeTableDesc");
     notifyListeners();
     return data;
+  }
+   Future<String?> uploadFile({required File file}) async {
+    var url = await FirebaseUtility.uploadFile(file: file);
+    return url;
   }
 }

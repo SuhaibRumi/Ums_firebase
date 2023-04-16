@@ -35,18 +35,21 @@ class FirebaseUtility {
     }
   }
 
-  Future<String?> uploadFile({
+  static Future<String?> uploadFile({
     required File file,
   }) async {
-    String _fileUrl = '';
+    if (!file.existsSync()) {
+      return null;
+    }
+    String fileUrl = '';
     String fileName = path.basename(file.path);
     Reference storageRef = FirebaseStorage.instance.ref().child(fileName);
     UploadTask task = storageRef.putFile(file);
     TaskSnapshot snapshot = await task.whenComplete(() {});
     print(snapshot.state.toString());
-    storageRef.getDownloadURL().then((value) => 
-      _fileUrl = value
-    );
-    return _fileUrl;
+    storageRef.getDownloadURL().then((value) {
+      fileUrl = value;
+    });
+    return fileUrl;
   }
 }

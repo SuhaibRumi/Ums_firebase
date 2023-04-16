@@ -255,9 +255,7 @@ class _ManageCourseState extends State<ManageCourse> {
                                   onPressed: () {
                                     setState(() {
                                       courseId = row.courseId.toString();
-                                      sessionId = row.sessionId.toString();
-                                      semesterId = row.semesterId.toString();
-                                      classId = row.classId.toString();
+                                     
                                       isUpdate = true;
                                     });
                                     _courseNameController.text =

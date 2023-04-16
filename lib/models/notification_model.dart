@@ -10,7 +10,7 @@ class Notifications {
   final String? sessionName;
   final String? semesterName;
   final String? className;
-    final String? fileUrl;
+  final String? fileUrl;
 
   Notifications(
       {this.notificationId,
@@ -29,11 +29,8 @@ class Notifications {
       notificationId: map.id,
       notificationName: map['notificationName'],
       notificationDes: map['notificationDes'],
-      classId: map.id,
       className: map['className'],
-      sessionId: map.id,
       sessionName: map['sessionName'],
-      semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }
@@ -45,6 +42,7 @@ class Notifications {
       'className': className,
       'sessionName': sessionName,
       'semesterName': semesterName,
+      'fileUrl':fileUrl,
     };
     return row;
   }

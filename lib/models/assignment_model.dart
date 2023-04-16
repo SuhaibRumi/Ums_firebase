@@ -25,11 +25,8 @@ class Assignment {
     return Assignment(
       assignmentId: map.id,
       assignmentNo: map['assignmentNo'],
-      classId: map.id,
       className: map['className'],
-      sessionId: map.id,
       sessionName: map['sessionName'],
-      semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }
@@ -40,6 +37,7 @@ class Assignment {
       'className': className,
       'sessionName': sessionName,
       'semesterName': semesterName,
+      'fileUrl': fileUrl
     };
     // print(row);
     return row;

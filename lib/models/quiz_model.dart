@@ -9,8 +9,7 @@ class Quiz {
   final String? sessionName;
   final String? semesterName;
   final String? className;
-    final String? fileUrl;
-
+  final String? fileUrl;
 
   Quiz(
       {this.quizId,
@@ -26,11 +25,8 @@ class Quiz {
     return Quiz(
       quizId: map.id,
       quizNo: map['quizNo'],
-      classId: map.id,
       className: map['className'],
-      sessionId: map.id,
       sessionName: map['sessionName'],
-      semesterId: map.id,
       semesterName: map['semesterName'],
     );
   }
@@ -41,6 +37,7 @@ class Quiz {
       'className': className,
       'sessionName': sessionName,
       'semesterName': semesterName,
+      'fileUrl':fileUrl,
     };
     return row;
   }

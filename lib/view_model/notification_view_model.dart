@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_mangement_system/models/model.dart';
@@ -48,7 +50,9 @@ class NotificationViewModel extends ChangeNotifier {
         notificationDes: notificationDes,
         className: className,
         semesterName: semesterName,
-        sessionName: sessionName);
+        sessionName: sessionName,
+        fileUrl: fileUrl,
+        );
     try {
       await FirebaseUtility.addData(
           collection: "notifications", doc: notification.toMap());
@@ -86,5 +90,9 @@ class NotificationViewModel extends ChangeNotifier {
         collection: "notifications", orderBy: "notificationName");
     notifyListeners();
     return data;
+  }
+   Future<String?> uploadFile({required File file}) async {
+    var url = await FirebaseUtility.uploadFile(file: file);
+    return url;
   }
 }

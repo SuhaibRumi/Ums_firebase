@@ -37,9 +37,6 @@ class Student {
         password: map['password'],
         rollNo: map['rollNo'],
         regNo: map['regNo'],
-        classId: map.id,
-        semtserId: map.id,
-        sessionId: map.id,
         sessionName: map['sessionName'],
         semesterName: map['semesterName'],
         className: map['className']);

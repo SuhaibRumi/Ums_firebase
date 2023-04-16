@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:uni_mangement_system/utils/firebase_utility.dart';
 import '../../utils/constants.dart';
 import '../../view_model/view_model.dart';
 import '../../widgets/custom_button.dart';
@@ -84,7 +85,6 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                // sessionId = value!.toString();
                                 sessionName = value.toString();
                               });
                             },
@@ -195,21 +195,23 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
             const SizedBox(
               height: 20,
             ),
-            MyButton(
-                color: kPrimaryColor,
-                text: "Save Data",
-                onPrseed: () {
-                  if (isUpdate == false) {
-                    _addData();
-                    _assignmentNoController.clear();
-                  } else {
-                    _updateDta();
-                    _assignmentNoController.clear();
-                  }
-                },
-                height: 40,
-                width: 120,
-                fontsize: 14),
+            uploading == false
+                ? MyButton(
+                    color: kPrimaryColor,
+                    text: "Save Data",
+                    onPrseed: () async {
+                      if (isUpdate == false) {
+                        await _addData();
+                        _assignmentNoController.clear();
+                      } else {
+                        _updateDta();
+                        _assignmentNoController.clear();
+                      }
+                    },
+                    height: 40,
+                    width: 120,
+                    fontsize: 14)
+                : const CircularProgressIndicator(),
             const SizedBox(
               height: 10,
             ),
@@ -289,15 +291,30 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
     );
   }
 
-  _addData() {
-    assignmentViewModel = AssigmentViewModel(
-        assignmentNo: _assignmentNoController.text,
-        semesterName: semesterName,
-        sessionName: sessionName,
-        className: className);
-    assignmentViewModel.saveData();
+  bool uploading = false;
+  _addData() async {
+    String url = '';
+    setState(() {
+      uploading = true;
+    });
+    url = await assignmentViewModel.uploadFile(file: file!) ?? '';
+    Future.delayed(const Duration(seconds: 5), () {
+       if (url.isNotEmpty)
+      {
+        assignmentViewModel = AssigmentViewModel(
+            assignmentNo: _assignmentNoController.text,
+            semesterName: semesterName,
+            sessionName: sessionName,
+            className: className,
+            fileUrl: url);
+        assignmentViewModel.saveData();
 
-    setState(() {});
+        setState(() {
+          uploading = false;
+        });
+        print('url: $url');
+      }
+    });
   }
 
   _updateDta() {
