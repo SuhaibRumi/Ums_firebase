@@ -7,7 +7,7 @@ class ProfileDetails extends StatelessWidget {
     required this.desc,
   }) : super(key: key);
   final String title, desc;
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
