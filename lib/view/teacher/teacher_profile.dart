@@ -17,9 +17,9 @@ class TeacherProfile extends StatelessWidget {
             textScaleFactor: 1.2,
           ),
         ),
-        body: SingleChildScrollView(
+        body: const SingleChildScrollView(
           child: Column(
-            children: const <Widget>[
+            children: <Widget>[
               TeacherDashboard(
                 imgUrl: "assets/img/user-1.jpg",
                 heading: "Welcome Back!",

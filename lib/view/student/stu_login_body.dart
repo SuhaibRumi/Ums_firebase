@@ -7,15 +7,15 @@ class StudentLoginBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: SizedBox(
         width: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: 16.0,
           ),
           child: Column(
-            children: const [
+            children: [
               SizedBox(
                 height: 20,
               ),

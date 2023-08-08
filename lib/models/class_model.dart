@@ -29,8 +29,11 @@ class Class {
 class ClassList {
   final List<Class> classList;
   ClassList({required this.classList});
+
   factory ClassList.fromJson(List data) {
+    
     List<Class> classes = [];
+
     classes = data.map((i) => Class.fromMap(i)).toList();
     return ClassList(classList: classes);
   }
