@@ -43,12 +43,12 @@ class CourseViewModel extends ChangeNotifier {
   }
   saveData() async {
     var courses = Course(
-        courseName: courseName,
-        semesterName: semesterName,
-        sessionName: sessionName,
-        className: className,
-        fileUrl: fileUrl,
-        );
+      courseName: courseName,
+      semesterName: semesterName,
+      sessionName: sessionName,
+      className: className,
+      fileUrl: fileUrl,
+    );
     try {
       await FirebaseUtility.addData(
           collection: "courses", doc: courses.toMap());
@@ -72,7 +72,7 @@ class CourseViewModel extends ChangeNotifier {
   }
 
   deleteData() async {
-    var courses = Course(
+    Course(
       courseId: courseId,
     );
     await FirebaseUtility.deleteData(
